@@ -1,0 +1,12 @@
+.DS_Store
+
+.venv
+**/__pycache__/
+
+poetry.lock
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
