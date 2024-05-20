@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-streamlit run Introduction.py
+streamlit run Home.py

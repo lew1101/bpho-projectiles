@@ -1,0 +1,14 @@
+[runner]
+magicEnabled = true
+
+[server]
+runOnSave = true
+enableCORS = true
+enableXsrfProtection = true
+
+[client]
+showErrorDetails = false
+
+[theme]
+base = "dark"
+font = "sans serif"
