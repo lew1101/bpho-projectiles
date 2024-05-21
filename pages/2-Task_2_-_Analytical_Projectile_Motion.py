@@ -80,7 +80,7 @@ with tab1:
             
             **Flight Time**: {total_t:.3f} s
             """
-            st.plotly_chart(fig, config=config.config.plotly_chart_config)
+            st.plotly_chart(fig, config=config.plotly_chart_config)
         except Exception as e:
             st.exception(e)
 
