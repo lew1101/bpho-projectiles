@@ -1,9 +1,9 @@
 import streamlit as st
 
-import plotly.express as px
+import plotly.graph_objects as go
 import numpy as np
 
-from helpers.plotly_helpers import apply_custom_plotly_settings
+from presets import custom_go_layout
 
 st.set_page_config(page_title="Task 2", layout="wide")
 
@@ -25,11 +25,29 @@ with tab1:
 
     with st.expander("See Source Code"), st.echo():
 
-        # @apply_custom_plotly_settings
         def generate_task_2(theta: float, g: float, u: float, h: float, steps: int):
             from math import sin, cos, sqrt, radians
 
-            pass
+            rad = radians(theta)
+
+            ux = u * cos(rad)
+            uy = u * sin(rad)
+
+            x_max = ux * uy / g
+            y_max = h + (uy**2) / 2 / g
+
+            total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
+            total_x = ux * total_t
+
+            x = np.linspace(0, total_x, steps)
+            y = h + (uy / ux) * x - (g / 2 / ux**2) * x**2
+
+            fig = go.Figure(layout=custom_go_layout)\
+                .add_trace(go.Scatter(name="", x=x, y=y, mode="lines+markers",  line_shape='spline'))\
+                .add_traces(go.Scatter(name="", x=[x_max], y=[y_max], text=["Apogee"], textposition="bottom center", textfont=dict(size=16), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
+                .update_layout(autosize=True, template="seaborn", title="Analytical Projectile Motion", xaxis_title="x (m)",  yaxis_title="y (m)",  showlegend=False)
+            
+            return fig, (x_max, y_max), total_x, total_t
 
     with body.container():
         with st.form("task_1_form"):
@@ -38,26 +56,30 @@ with tab1:
             col1, col2 = st.columns(2, gap="large")
 
             with col1:
-                theta = st.number_input("Angle (deg)",
-                                        min_value=0.0,
-                                        max_value=90.0,
-                                        value=45.0,
-                                        key="theta")
-                gravity = st.number_input("Angle (m/s²)", min_value=0.0, value=9.81, key="gravity")
-                steps = st.number_input("Time Intervals (s)", min_value=0, value=1, key="dt")
+                theta = st.number_input("Angle (deg)", min_value=0.0, max_value=90.0, value=45.0)
+                gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=9.81)
+                steps = st.number_input("Intervals (m)", min_value=10, max_value=1000, value=30)
 
             with col2:
-                vel = st.number_input("Initial Velocity (m/s)",
-                                      min_value=0.0,
-                                      value=20.0,
-                                      key="vel")
-                height = st.number_input("Height (m)", value=2.0, key="height")
+                vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=20.0)
+                height = st.number_input("Height (m)", value=2.0)
 
             submitted = st.form_submit_button("Generate")
 
         try:
-            fig = generate_task_2(theta, gravity, vel, height, dt)
-            # st.plotly_chart(fig, config={"displaylogo": False})
+            fig, (x_max, y_max), total_x, total_t = generate_task_2(theta, gravity, vel, height, steps)
+            
+            st.write("")            
+            f"""
+            #### Calculated Values
+            
+            **Apex**: ({x_max:.3f} m, {y_max:.3f} m)
+            
+            **Range**: {total_x:.3f} m
+            
+            **Flight Time**: {total_t:.3f} s
+            """
+            st.plotly_chart(fig, config={"displaylogo": False})
         except Exception as e:
             st.exception(e)
 
