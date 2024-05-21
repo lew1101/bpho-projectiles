@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 
 page_config = dict(layout="wide", page_icon="res/favicon/favicon.ico")
 
-plotly_chart_config = dict(displaylog=False)
+plotly_chart_config = dict(displaylogo=False)
 
 custom_go_layout = go.Layout(modebar_remove=["select", "lasso"],
                              xaxis=dict(ticks="outside",
