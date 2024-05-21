@@ -3,9 +3,9 @@ import streamlit as st
 import plotly.graph_objects as go
 import numpy as np
 
-from presets import custom_go_layout
+import config
 
-st.set_page_config(page_title="Task 1", layout="wide")
+st.set_page_config(page_title="Task 1", **config.page_config)
 
 # ==================
 r"""
@@ -39,7 +39,7 @@ with tab1:
             x = ux * t
             y = h + uy * t - (g / 2) * t**2
 
-            fig = go.Figure(layout=custom_go_layout)\
+            fig = go.Figure(layout=config.go_layout)\
                 .add_trace(go.Scatter(x=x, y=y, mode="markers"))\
                 .update_layout(autosize=True, template="seaborn", title="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
 
@@ -71,7 +71,7 @@ with tab1:
             
             **Flight Time**: {total_t:.3f} s
             """
-            st.plotly_chart(fig, config={"displaylogo": False})
+            st.plotly_chart(fig, config=config.plotly_chart_config)
         except Exception as e:
             st.exception(e)
 

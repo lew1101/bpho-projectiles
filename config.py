@@ -1,6 +1,10 @@
 import plotly.graph_objects as go
 
-custom_go_layout = go.Layout(modebar_remove=["select", "lasso"],
+page_config = dict(layout="wide", page_icon="res/favicon/favicon.ico")
+
+plotly_chart_config = dict(displaylog=False)
+
+go_layout = go.Layout(modebar_remove=["select", "lasso"],
                              xaxis=dict(ticks="outside",
                                         minor_ticks="outside",
                                         zeroline=True,
@@ -13,3 +17,6 @@ custom_go_layout = go.Layout(modebar_remove=["select", "lasso"],
                                         zerolinecolor='silver',
                                         showgrid=True,
                                         showline=True))
+
+
+
