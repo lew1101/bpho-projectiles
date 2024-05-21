@@ -73,7 +73,7 @@ with tab1:
             f"""
             #### Calculated Values
             
-            **Apex**: ({x_max:.3f} m, {y_max:.3f} m)
+            **Apogee**: ({x_max:.3f} m, {y_max:.3f} m)
             
             **Range**: {total_x:.3f} m
             
