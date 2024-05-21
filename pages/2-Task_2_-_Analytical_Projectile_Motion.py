@@ -43,7 +43,7 @@ with tab1:
             x = np.linspace(0, total_x, steps)
             y = h + (uy / ux) * x - (g / 2 / ux**2) * x**2
 
-            fig = go.Figure(layout=config.go_layout)\
+            fig = go.Figure(layout=config.custom_go_layout)\
                 .add_trace(go.Scatter(name="", x=x, y=y, mode="lines+markers",  line_shape='spline'))\
                 .add_traces(go.Scatter(name="", x=[x_max], y=[y_max], text=["Apogee"], textposition="bottom center", textfont=dict(size=16), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
                 .update_layout(autosize=True, template="seaborn", title="Analytical Projectile Motion", xaxis_title="x (m)",  yaxis_title="y (m)",  showlegend=False)
