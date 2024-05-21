@@ -59,7 +59,7 @@ with tab1:
             with col1:
                 theta = st.number_input("Angle (deg)", min_value=0.0, max_value=90.0, value=45.0)
                 gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=9.81)
-                steps = st.number_input("Intervals (m)", min_value=10, max_value=1000, value=30)
+                steps = st.number_input("Number of Intervals", min_value=10, max_value=1000, value=30)
 
             with col2:
                 vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=20.0)
