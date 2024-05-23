@@ -41,7 +41,7 @@ with tab1:
 
             fig = go.Figure(layout=config.custom_go_layout)\
                 .add_trace(go.Scatter(x=x, y=y, mode="markers"))\
-                .update_layout(autosize=True, template="seaborn", title="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
+                .update_layout(title="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
 
             return fig, total_t
 
