@@ -1,10 +1,14 @@
 .DS_Store
+README.md
+
 Dockerfile
 .dockerignore
+
 **/.gitignore
-poetry.lock
-README.md
-.venv/
 **/.git/
+
+poetry.lock
+.venv/
 **/__pycache__/
+
 .vscode/

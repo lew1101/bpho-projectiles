@@ -20,4 +20,5 @@ RUN pip install poetry==${POETRY_VERSION} && \
 FROM base as final
 COPY --from=builder /app/.venv ./.venv
 COPY . .
+EXPOSE ${PORT}
 CMD .venv/bin/streamlit run app.py --server.port=${PORT} --server.address=0.0.0.0
