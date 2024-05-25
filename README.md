@@ -9,7 +9,7 @@ Our submission is a website written completely using [`Streamlit`](https://strea
 Make sure you have [`git`](https://git-scm.com/) installed on your machine. Then, clone this repo using the following command:
 
 ```shell
-git clone https://github.com/lew1101/projectiles-cc.git
+git clone https://github.com/lew1101/bpho-projectiles.git
 ```
 
 ## Installing Dependencies
@@ -33,4 +33,5 @@ streamlit run Home.py
 ## Authors
 
 [Kenneth Lew](https://github.com/lew1101)
+
 Timothy Ka
