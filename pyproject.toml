@@ -17,7 +17,7 @@ st-pages = "^0.4.5"
 watchdog = "^4.0.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.8"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.yapf]

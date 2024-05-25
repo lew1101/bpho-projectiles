@@ -9,7 +9,7 @@ st.set_page_config(page_title="Task 3", **config.page_config)
 
 # ==================
 r"""
-## Task 3 - Projectile to hit X, Yn  
+## Task 3 - Projectile to hit X, Y  
 
 **Description:** Create a new projectile model which is based upon calculating trajectories that are launched from (0, $h$) and pass through a fixed position ($x$, $y$). Calculate the minimum launch speed to achieve this, and hence determine "low ball" and "high ball" trajectories.
 """

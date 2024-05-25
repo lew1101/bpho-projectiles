@@ -1,0 +1,10 @@
+.DS_Store
+Dockerfile
+.dockerignore
+**/.gitignore
+poetry.lock
+README.md
+.venv/
+**/.git/
+**/__pycache__/
+.vscode/

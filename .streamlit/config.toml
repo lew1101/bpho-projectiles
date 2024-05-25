@@ -6,7 +6,11 @@ runOnSave = true
 enableCORS = true
 enableXsrfProtection = true
 
+[ui]
+hideTopBar = true
+
 [client]
+toolbarMode = "minimal"
 showErrorDetails = false
 
 [theme]
