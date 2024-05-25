@@ -12,10 +12,17 @@ streamlit = "^1.34.0"
 numpy = "^1.26.4"
 plotly = "^5.22.0"
 
-
 [tool.poetry.group.dev.dependencies]
 watchdog = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.yapf]
+based_on_style = "yapf"
+column_limit = 110
+indent_width = 4
+continuation_indent_width = 4
+spaces_before_comment = "15, 20"
+blank_lines_around_top_level_definition = 2

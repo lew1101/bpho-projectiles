@@ -14,71 +14,69 @@ r"""
 **Description:** Create a simple model of _drag-free_ projectile motion in a spreadsheet or via a programming language. Inputs are: launch angle from horizontal $\theta$, strength of gravity $g$, launch speed $u$, and launch height $h$. Use a fixed increment of time $\mathrm{d}t$. The graph must automatically update when inputs are changed.
 """
 
-tab1, tab2 = st.tabs(["Model", "Derivations"])
+tab1, tab2, tab3 = st.tabs(["Model", "Derivations", "Source Code"])
 
-# ==================
+# =====================
 # MODEL
-# ==================
+# =====================
+
+with tab3, st.echo():
+
+    def generate_task_1(theta: float, g: float, u: float, h: float, dt: float):
+        from math import sin, cos, sqrt, radians
+
+        rad = radians(theta)
+
+        ux = u * sin(rad)
+        uy = u * cos(rad)
+
+        total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
+
+        t = np.arange(0, total_t, dt)
+        x = ux * t
+        y = h + uy * t - (g / 2) * t**2
+
+        fig = (go.Figure(layout=config.custom_go_layout).add_trace(
+            go.Scatter(x=x, y=y, mode="markers")).update_layout(title="Projectile Motion",
+                                                                xaxis_title="x (m)",
+                                                                yaxis_title="y (m)"))
+
+        return fig, total_t
+
 
 with tab1:
-    body = st.empty()
+    with st.form("task_1_form"):
+        "#### **Parameters**"
 
-    with st.expander("See Source Code"), st.echo():
+        col1, col2 = st.columns(2, gap="large")
 
-        def generate_task_1(theta: float, g: float, u: float, h: float, dt: float):
-            from math import sin, cos, sqrt, radians
+        with col1:
+            theta = st.number_input("Launch Angle (deg)", min_value=0.0, max_value=90.0, value=45.0)
+            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=9.81)
+            dt = st.number_input("Time Intervals (s)", min_value=0.0, value=0.05, step=0.01)
 
-            rad = radians(theta)
+        with col2:
+            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=20.0)
+            height = st.number_input("Height (m)", value=2.0)
 
-            ux = u * sin(rad)
-            uy = u * cos(rad)
+        submitted = st.form_submit_button("Generate")
 
-            total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
+    try:
+        fig, total_t = generate_task_1(theta, gravity, vel, height, dt)
 
-            t = np.arange(0, total_t, dt)
-            x = ux * t
-            y = h + uy * t - (g / 2) * t**2
+        st.write("")
+        f"""
+        ##### Calculated Values
+        
+        **Flight Time**: {total_t:.3f} s
+        """
+        st.plotly_chart(fig, config=config.plotly_chart_config)
+    except Exception as e:
+        st.exception(e)
 
-            fig = go.Figure(layout=config.custom_go_layout)\
-                .add_trace(go.Scatter(x=x, y=y, mode="markers"))\
-                .update_layout(title="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
-
-            return fig, total_t
-
-    with body.container():
-        with st.form("task_1_form"):
-            "#### **Parameters**"
-
-            col1, col2 = st.columns(2, gap="large")
-
-            with col1:
-                theta = st.number_input("Angle (deg)", min_value=0.0, max_value=90.0, value=45.0)
-                gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=9.81)
-                dt = st.number_input("Time Intervals (s)", min_value=0.0, value=0.05, step=0.01)
-
-            with col2:
-                vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=20.0)
-                height = st.number_input("Height (m)", value=2.0)
-
-            submitted = st.form_submit_button("Generate")
-
-        try:
-            fig, total_t = generate_task_1(theta, gravity, vel, height, dt)
-
-            st.write("")
-            f"""
-            ##### Calculated Values
-            
-            **Flight Time**: {total_t:.3f} s
-            """
-            st.plotly_chart(fig, config=config.plotly_chart_config)
-        except Exception as e:
-            st.exception(e)
-
-
-# ==================
-# DERVIATIONS
-# ==================
+# =====================
+# DERIVATION
+# =====================
 
 with tab2:
     r"""
