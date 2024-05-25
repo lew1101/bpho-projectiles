@@ -14,7 +14,7 @@ git clone https://github.com/lew1101/bpho-projectiles.git && cd bpho-projectiles
 
 ## Installing Dependencies
 
-This repo relies on [`poetry`](https://python-poetry.org/) for dependency management. Make sure it is installed on your machine, then run the following commands:
+This repo relies on [`poetry`](https://python-poetry.org/) for dependency management. Make sure it is installed on your machine, then run the following command to install dependencies:
 
 ```shell
 poetry install 
