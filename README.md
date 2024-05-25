@@ -17,6 +17,8 @@ git clone https://github.com/lew1101/bpho-projectiles.git
 This repo relies on [`poetry`](https://python-poetry.org/) for dependency management. Make sure it is installed on your machine, then run the following commands:
 
 ```shell
+cd bpho-projectiles
+
 # start virtual environment
 poetry shell
 
