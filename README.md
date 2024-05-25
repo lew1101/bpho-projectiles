@@ -27,7 +27,7 @@ poetry install
 ## Running the Web App
 
 ```shell
-streamlit run Home.py
+streamlit run app.py
 ```
 
 ## Authors

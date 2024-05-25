@@ -5,7 +5,7 @@ import numpy as np
 
 import config
 
-st.set_page_config(page_title="Task 2", **config.page_config)
+st.set_page_config(page_title="Task 3", **config.page_config)
 
 # ==================
 r"""
