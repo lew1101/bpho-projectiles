@@ -54,4 +54,4 @@ docker run --env PORT=8501 --publish 8501:8501 bp-image
 
 [Kenneth Lew](https://github.com/lew1101)
 
-Timothy Ka
+[Timothy Ka](https://github.com/TimothyKa100)
