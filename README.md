@@ -30,7 +30,7 @@ pip3 install -r requirements.txt
 
 ```shell
 # initialize virtual env (not necessary if using pip without venv)
-source ./venv/bin
+source ./venv/bin/activate
 
 # initiate server (another port could be used)
 streamlit run app.py --server.port 8501
