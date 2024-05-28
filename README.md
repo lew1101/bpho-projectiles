@@ -36,7 +36,7 @@ source ./venv/bin/activate
 streamlit run app.py --server.port 8501
 ```
 
-## Alternative: Deploying using Docker 
+## Alternative: Deploying using Docker
 
 First, clone the repo. Then, make sure you have the [`Docker`](https://docs.docker.com/) client and daemon installed. Ensure the daemon is started, then build the image:
 
