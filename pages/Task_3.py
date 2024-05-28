@@ -6,21 +6,22 @@ import numpy as np
 import config
 
 st.set_page_config(page_title="Task 3", **config.page_config)
+config.apply_custom_styles()
 
 # ==================
 r"""
 ## Task 3 - Projectile to hit X, Y  
 
-**Description:** Create a new projectile model which is based upon calculating trajectories that are launched from (0, $h$) and pass through a fixed position ($x$, $y$). Calculate the minimum launch speed to achieve this, and hence determine "low ball" and "high ball" trajectories.
+**Description:** Create a new projectile model which is based upon calculating trajectories that are launched from $(0, h)$ and pass through a fixed position $(x, y)$. Calculate the minimum launch speed to achieve this, and hence determine "low ball" and "high ball" trajectories.
 """
 
-tab1, tab2, tab3 = st.tabs(["Model", "Derivations", "Source Code"])
+model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
 
 # =====================
-# MODEL
+# CODE
 # =====================
 
-with tab3, st.echo():
+with code_tab, st.echo():
 
     def generate_task_3(target_x: float, target_y: float, g: float, u: float, h: float):
         from math import sqrt, atan
@@ -28,7 +29,7 @@ with tab3, st.echo():
         fig = go.Figure(layout=config.custom_go_layout)\
             .add_traces(go.Scatter(name="target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
                                     textfont=dict(size=15), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
-            .update_layout(title="Projectile to hit X, Y", xaxis_title="x (m)", yaxis_title="y (m)")
+            .update_layout(title_text="Projectile to hit X, Y", xaxis_title="x (m)", yaxis_title="y (m)")
 
         SAMPLES = 50
         x = np.linspace(0, target_x, SAMPLES)
@@ -69,7 +70,11 @@ with tab3, st.echo():
             return fig, min_u, atan(min_tan_theta), None, None
 
 
-with tab1:
+# =====================
+# MODEL
+# =====================
+
+with model_tab:
     with st.form("task_1_form"):
         "#### **Parameters**"
 
@@ -114,7 +119,7 @@ with tab1:
         **Launch Angle of Minimum Velocity Parabola**: {degrees(min_theta):.2f} deg
         """
 
-        st.plotly_chart(fig, config=config.plotly_chart_config)
+        st.plotly_chart(fig, **config.plotly_chart_config)
     except Exception as e:
         st.exception(e)
 
@@ -122,6 +127,6 @@ with tab1:
 # DERIVATION
 # =====================
 
-with tab2:
+with math_tab:
     r"""
     """

@@ -6,6 +6,7 @@ import numpy as np
 import config
 
 st.set_page_config(page_title="Task 2", **config.page_config)
+config.apply_custom_styles()
 
 # ==================
 r"""
@@ -14,13 +15,13 @@ r"""
 **Description:** Create a more sophisticated exact ("analytical") model using equations for the projectile trajectory. In this case define a equally spaced _array_ of $x$ coordinate values between 0 and the maximum horizontal range, $R$. Plot the trajectory and the apogee.
 """
 
-tab1, tab2, tab3 = st.tabs(["Model", "Derivations", "Source Code"])
+model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
 
 # =====================
-# MODEL
+# CODE
 # =====================
 
-with tab3, st.echo():
+with code_tab, st.echo():
 
     def generate_task_2(theta: float, g: float, u: float, h: float, steps: int):
         from math import sin, cos, sqrt, radians
@@ -43,12 +44,16 @@ with tab3, st.echo():
             .add_trace(go.Scatter(name="", x=x, y=y, mode="lines+markers",  line_shape='spline'))\
             .add_trace(go.Scatter(name="", x=[x_max], y=[y_max], text=["Apogee"], textposition="bottom center",
                                     textfont=dict(size=16), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
-            .update_layout(title="Analytical Projectile Motion", xaxis_title="x (m)",  yaxis_title="y (m)", showlegend=False)
+            .update_layout(title_text="Analytical Projectile Motion", xaxis_title="x (m)",  yaxis_title="y (m)", showlegend=False)
 
         return fig, (x_max, y_max), total_x, total_t
 
 
-with tab1:
+# =====================
+# MODEL
+# =====================
+
+with model_tab:
     with st.form("task_1_form"):
         "#### **Parameters**"
 
@@ -78,7 +83,7 @@ with tab1:
         
         **Flight Time**: {total_t:.3f} s
         """
-        st.plotly_chart(fig, config=config.plotly_chart_config)
+        st.plotly_chart(fig, **config.plotly_chart_config)
     except Exception as e:
         st.exception(e)
 
@@ -86,6 +91,6 @@ with tab1:
 # DERIVATION
 # =====================
 
-with tab2:
+with math_tab:
     r"""
     """

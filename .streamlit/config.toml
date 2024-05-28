@@ -2,17 +2,18 @@
 magicEnabled = true
 
 [server]
+enableStaticServing = true
 runOnSave = true
 enableCORS = true
 enableXsrfProtection = true
-
-[ui]
-hideTopBar = true
 
 [client]
 toolbarMode = "minimal"
 showErrorDetails = false
 
 [theme]
-base = "dark"
+textColor = "#FFE8C8"
+primaryColor = '#FFBD45' # Bright Orange
+backgroundColor = '#292625' # background
+secondaryBackgroundColor = '#0D0C0C' # nav bar
 font = "sans serif"

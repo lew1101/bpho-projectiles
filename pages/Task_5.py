@@ -5,14 +5,14 @@ import numpy as np
 
 import config
 
-st.set_page_config(page_title="Task 4", **config.page_config)
+st.set_page_config(page_title="Task 5", **config.page_config)
 config.apply_custom_styles()
 
 # ==================
 r"""
-## Task 4 - Maximize Projectile Range 
+## Task 5 - Bounding Parabola
 
-**Description:** Create a new projectile model which compares a trajectory to the trajectory which maximizes horizontal range given the same launch height and launch speed. Inputs are $u$, $h$, $g$ and $\theta$. For the maximum range trajectory you need to calculate the optimum angle. For $h > 0$ note this is not $45^\circ$...
+**Description:** Update your projectile model of a trajectory which passes through $(x, y)$ with the _bounding parabola_, in addition to minimum speed, max range and high and low ball curves. The bounding parabola marks the region where possible $(x, y)$ coordinates could be reached given $u$, $h$, $g$ inputs.
 """
 
 model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])

@@ -6,21 +6,22 @@ import numpy as np
 import config
 
 st.set_page_config(page_title="Task 1", **config.page_config)
+config.apply_custom_styles()
 
 # ==================
 r"""
-## Task 1 - Projectile Motion  
+## Task 1 - Projectile Motion
 
-**Description:** Create a simple model of _drag-free_ projectile motion in a spreadsheet or via a programming language. Inputs are: launch angle from horizontal $\theta$, strength of gravity $g$, launch speed $u$, and launch height $h$. Use a fixed increment of time $\mathrm{d}t$. The graph must automatically update when inputs are changed.
+**Description:** Create a simple model of _drag-free_ projectile motion in a spreadsheet or via a programming language. Inputs are: launch angle from horizontal $\theta$, strength of gravity $g$, launch speed $u$, and launch height $h$. Use a fixed increment of time $\Delta t$. The graph must automatically update when inputs are changed.
 """
 
-tab1, tab2, tab3 = st.tabs(["Model", "Derivations", "Source Code"])
+model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
 
 # =====================
-# MODEL
+# CODE
 # =====================
 
-with tab3, st.echo():
+with code_tab, st.echo():
 
     def generate_task_1(theta: float, g: float, u: float, h: float, dt: float):
         from math import sin, cos, sqrt, radians
@@ -37,14 +38,18 @@ with tab3, st.echo():
         y = h + uy * t - (g / 2) * t**2
 
         fig = (go.Figure(layout=config.custom_go_layout).add_trace(
-            go.Scatter(x=x, y=y, mode="markers")).update_layout(title="Projectile Motion",
+            go.Scatter(x=x, y=y, mode="markers")).update_layout(title_text="Projectile Motion",
                                                                 xaxis_title="x (m)",
                                                                 yaxis_title="y (m)"))
 
         return fig, total_t
 
 
-with tab1:
+# =====================
+# MODEL
+# =====================
+
+with model_tab:
     with st.form("task_1_form"):
         "#### **Parameters**"
 
@@ -66,11 +71,11 @@ with tab1:
 
         st.write("")
         f"""
-        ##### Calculated Values
+        #### Calculated Values
         
         **Flight Time**: {total_t:.3f} s
         """
-        st.plotly_chart(fig, config=config.plotly_chart_config)
+        st.plotly_chart(fig, **config.plotly_chart_config)
     except Exception as e:
         st.exception(e)
 
@@ -78,7 +83,7 @@ with tab1:
 # DERIVATION
 # =====================
 
-with tab2:
+with math_tab:
     r"""
     The dynamics of the projectile can be analyzed by decomposing its motion into the x and y axes. Given the initial speed of the projectile $u$ and the launch angle $\theta$, the initial speed in the x direction $u_x$ and the initial speed in the y direction $u_y$ are:
     

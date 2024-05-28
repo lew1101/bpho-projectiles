@@ -5,14 +5,14 @@ import numpy as np
 
 import config
 
-st.set_page_config(page_title="Task 4", **config.page_config)
+st.set_page_config(page_title="Task 6", **config.page_config)
 config.apply_custom_styles()
 
 # ==================
 r"""
-## Task 4 - Maximize Projectile Range 
+## Task 6 - Arc Length of Projectile Motion
 
-**Description:** Create a new projectile model which compares a trajectory to the trajectory which maximizes horizontal range given the same launch height and launch speed. Inputs are $u$, $h$, $g$ and $\theta$. For the maximum range trajectory you need to calculate the optimum angle. For $h > 0$ note this is not $45^\circ$...
+**Description:** Now update your projectile model with a calculation of the _distance travelled_ by the projectile i.e. the length of the inverted parabolic arc. This can be computed exactly!
 """
 
 model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
