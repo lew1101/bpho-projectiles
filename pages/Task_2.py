@@ -10,7 +10,7 @@ config.apply_custom_styles()
 
 # ==================
 r"""
-## Task 2 - Analytical Projectile Motion  
+## Task 2 - Analytical Model
 
 **Description:** Create a more sophisticated exact ("analytical") model using equations for the projectile trajectory. In this case define a equally spaced _array_ of $x$ coordinate values between 0 and the maximum horizontal range, $R$. Plot the trajectory and the apogee.
 """
@@ -44,7 +44,7 @@ with code_tab, st.echo():
             .add_trace(go.Scatter(name="", x=x, y=y, mode="lines+markers",  line_shape='spline'))\
             .add_trace(go.Scatter(name="", x=[x_max], y=[y_max], text=["Apogee"], textposition="bottom center",
                                     textfont=dict(size=16), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
-            .update_layout(title_text="Analytical Projectile Motion", xaxis_title="x (m)",  yaxis_title="y (m)", showlegend=False)
+            .update_layout(title_text="Analytical Model", xaxis_title="x (m)",  yaxis_title="y (m)", showlegend=False)
 
         return fig, (x_max, y_max), total_x, total_t
 

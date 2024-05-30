@@ -10,7 +10,7 @@ config.apply_custom_styles()
 
 # ==================
 r"""
-## Task 3 - Projectile to hit X, Y  
+## Task 3 - Hitting a Target 
 
 **Description:** Create a new projectile model which is based upon calculating trajectories that are launched from $(0, h)$ and pass through a fixed position $(x, y)$. Calculate the minimum launch speed to achieve this, and hence determine "low ball" and "high ball" trajectories.
 """
@@ -29,7 +29,7 @@ with code_tab, st.echo():
         fig = go.Figure(layout=config.custom_go_layout)\
             .add_traces(go.Scatter(name="target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
                                     textfont=dict(size=15), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
-            .update_layout(title_text="Projectile to hit X, Y", xaxis_title="x (m)", yaxis_title="y (m)")
+            .update_layout(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")
 
         SAMPLES = 50
         x = np.linspace(0, target_x, SAMPLES)
