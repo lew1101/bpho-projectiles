@@ -1,7 +1,7 @@
 from st_pages import Page, show_pages
 
 
-def main() -> None:
+def app() -> None:
     show_pages([
         Page("pages/Home.py", "Home"),
         Page("pages/Task_1.py", "Task 1 - Projectile Motion"),
@@ -17,4 +17,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    app()
