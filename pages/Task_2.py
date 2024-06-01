@@ -58,7 +58,7 @@ with code_tab, st.echo():
 # =====================
 
 with model_tab:
-    with st.form("task_1_form"):
+    with st.form("task_2_form"):
         "#### **Parameters**"
 
         col1, col2 = st.columns(2, gap="large")
