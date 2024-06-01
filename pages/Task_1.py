@@ -112,7 +112,7 @@ with math_tab:
     \end{align}
     $$
     
-    In the y direction, the projectile is accelerated downwards by gravity $g = -9.81\,\mathrm{m\cdot s^{-2}}$. Thus the y velocity $v_y$ of the projectile is constantly changing, and $v_y$ at time $t$ is equal to the integral the accleration in the y direction:
+    In the y direction, the projectile is constantly accelerated downwards by gravity $g = -9.81\,\mathrm{m\cdot s^{-2}}$. Thus the y velocity $v_y$ of the projectile is constantly changing, and $v_y$ at time $t$ is equal to the integral the accleration in the y direction:
         
     $$
     \begin{align}
