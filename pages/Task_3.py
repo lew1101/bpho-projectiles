@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
+from utils import cache_data_default
 
 st.set_page_config(page_title="Task 3", **config.page_config)
 config.apply_custom_styles()
@@ -21,9 +22,12 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
+PLOT_DEFAULTS = {"target_x": 20.0, "target_y": 10.0, "g": 9.81, "u": 20.0, "h": 0.0}
+
 with code_tab, st.echo():
 
-    def generate_task_3(target_x: float, target_y: float, g: float, u: float, h: float):
+    @cache_data_default(**PLOT_DEFAULTS)
+    def generate_task_3(*, target_x: float, target_y: float, g: float, u: float, h: float):
         from math import sqrt, atan
 
         fig = go.Figure(layout=config.custom_go_layout)\
@@ -81,32 +85,32 @@ with model_tab:
         col1, col2 = st.columns(2, gap="large")
 
         with col1:
-            target_x = st.number_input("Target X (m)", min_value=0.0, value=20.0)
-            target_y = st.number_input("Target Y (m)", min_value=0.0, value=10.0)
-            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=9.81)
+            x = st.number_input("Target X (m)", min_value=0.0, value=PLOT_DEFAULTS["target_x"])
+            y = st.number_input("Target Y (m)", min_value=0.0, value=PLOT_DEFAULTS["target_y"])
+            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
 
         with col2:
-            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=20.0)
-            height = st.number_input("Height (m)", value=0.0)
+            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
 
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, min_u, min_theta, low_theta, high_theta = generate_task_3(
-            target_x, target_y, gravity, vel, height)
+        fig, min_u, min_theta, low_theta, high_theta = generate_task_3(  #
+            target_x=x, target_y=y, g=gravity, u=vel, h=height)
 
-        sufficient_vel = low_theta is not None and high_theta is not None
+        has_sufficient_vel = not (low_theta is None and high_theta is None)
 
         from math import degrees
 
         st.write("")
-        if not sufficient_vel:
+        if not has_sufficient_vel:
             st.warning("The input velocity (m/s) is not sufficient to reach target.", icon="⚠️")
         f"""
         #### Calculated Values
         """
 
-        if sufficient_vel:
+        if has_sufficient_vel:
             f"""
             **High Ball Launch Angle**: {degrees(high_theta):.2f} deg
             

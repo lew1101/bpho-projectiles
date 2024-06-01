@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
+from utils import cache_data_default
 
 st.set_page_config(page_title="Task 2", **config.page_config)
 config.apply_custom_styles()
@@ -21,9 +22,12 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
+PLOT_DEFAULTS = {"theta": 45.0, "g": 9.81, "u": 20.0, "h": 2.0, "steps": 30}
+
 with code_tab, st.echo():
 
-    def generate_task_2(theta: float, g: float, u: float, h: float, steps: int):
+    @cache_data_default(**PLOT_DEFAULTS)
+    def generate_task_2(*, theta: float, g: float, u: float, h: float, steps: int):
         from math import sin, cos, sqrt, radians
 
         rad = radians(theta)
@@ -60,18 +64,28 @@ with model_tab:
         col1, col2 = st.columns(2, gap="large")
 
         with col1:
-            theta = st.number_input("Launch Angle (deg)", min_value=0.0, max_value=90.0, value=45.0)
-            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=9.81)
-            steps = st.number_input("Number of Intervals", min_value=10, max_value=1000, value=30)
+            theta = st.number_input("Launch Angle (deg)",
+                                    min_value=0.0,
+                                    max_value=90.0,
+                                    value=PLOT_DEFAULTS["theta"])
+            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
+            steps = st.number_input("Number of Intervals",
+                                    min_value=10,
+                                    max_value=1000,
+                                    value=PLOT_DEFAULTS["steps"])
 
         with col2:
-            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=20.0)
-            height = st.number_input("Height (m)", value=2.0)
+            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
 
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, (x_max, y_max), total_x, total_t = generate_task_2(theta, gravity, vel, height, steps)
+        fig, (x_max, y_max), total_x, total_t = generate_task_2(theta=theta,
+                                                                g=gravity,
+                                                                u=vel,
+                                                                h=height,
+                                                                steps=steps)
 
         st.write("")
         f"""

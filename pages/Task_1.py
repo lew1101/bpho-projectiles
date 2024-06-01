@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
+from utils import cache_data_default
 
 st.set_page_config(page_title="Task 1", **config.page_config)
 config.apply_custom_styles()
@@ -21,9 +22,12 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
+PLOT_DEFAULTS = {"theta": 45.0, "g": 9.81, "u": 20.0, "h": 2.0, "dt": 0.05}
+
 with code_tab, st.echo():
 
-    def generate_task_1(theta: float, g: float, u: float, h: float, dt: float):
+    @cache_data_default(**PLOT_DEFAULTS)
+    def generate_task_1(*, theta: float, g: float, u: float, h: float, dt: float):
         from math import sin, cos, sqrt, radians
 
         rad = radians(theta)
@@ -37,10 +41,9 @@ with code_tab, st.echo():
         x = ux * t
         y = h + uy * t - (g / 2) * t**2
 
-        fig = (go.Figure(layout=config.custom_go_layout).add_trace(
-            go.Scatter(x=x, y=y, mode="markers")).update_layout(title_text="Projectile Motion",
-                                                                xaxis_title="x (m)",
-                                                                yaxis_title="y (m)"))
+        fig = go.Figure(layout=config.custom_go_layout)\
+            .add_trace(go.Scatter(x=x, y=y, mode="markers"))\
+            .update_layout(title_text="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
 
         return fig, total_t
 
@@ -56,18 +59,24 @@ with model_tab:
         col1, col2 = st.columns(2, gap="large")
 
         with col1:
-            theta = st.number_input("Launch Angle (deg)", min_value=0.0, max_value=90.0, value=45.0)
-            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=9.81)
-            dt = st.number_input("Time Intervals (s)", min_value=0.0, value=0.05, step=0.01)
+            theta = st.number_input("Launch Angle (deg)",
+                                    min_value=0.0,
+                                    max_value=90.0,
+                                    value=PLOT_DEFAULTS["theta"])
+            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
+            dt = st.number_input("Time Intervals (s)",
+                                 min_value=0.0,
+                                 value=PLOT_DEFAULTS["dt"],
+                                 step=0.01)
 
         with col2:
-            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=20.0)
-            height = st.number_input("Height (m)", value=2.0)
+            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
 
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, total_t = generate_task_1(theta, gravity, vel, height, dt)
+        fig, total_t = generate_task_1(theta=theta, g=gravity, u=vel, h=height, dt=dt)
 
         st.write("")
         f"""

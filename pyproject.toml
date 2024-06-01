@@ -22,8 +22,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.yapf]
 based_on_style = "yapf"
-column_limit = 110
+column_limit = 80
 indent_width = 4
 continuation_indent_width = 4
 spaces_before_comment = "15, 20"
+coalesce_brackets = true
+dedent_closing_brackets = true
 blank_lines_around_top_level_definition = 2
+blank_line_before_nested_class_or_def = 0

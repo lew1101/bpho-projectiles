@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
+from utils import cache_data_default
 
 st.set_page_config(page_title="Task 9", **config.page_config)
 config.apply_custom_styles()
