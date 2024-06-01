@@ -94,7 +94,7 @@ with model_tab:
 
 with math_tab:
     r"""
-    The dynamics of the projectile can be analyzed by decomposing its motion into the x and y axes. Given the initial speed of the projectile $u$ and the launch angle $\theta$, the initial speed in the x direction $u_x$ and the initial speed in the y direction $u_y$ are:
+    The dynamics of a projectile can be analyzed by decomposing its motion into the x and y axes. Given the initial speed of the projectile $u$ and the launch angle $\theta$, the initial speed in the x direction $u_x$ and the initial speed in the y direction $u_y$ are:
     
     $$
     \begin{gather*}
@@ -103,17 +103,47 @@ with math_tab:
     \end{gather*}
     $$
     
-    FirstSince there is no force acting on the projectile horizonally, there is no horizontal acceleration. Thus, its $x$ position is equal to its horizontal velocity, $u_x$, times time, $t$.
+    There is no force acting on the projectile horizonally. Thus, the acceleration of the projectile in the x direction is 0, meaning that the velocity of the projectile in the x direction is constant for the entire duration of the flight. The $x$ position of the projectile at time $t$ is equal to the integral of the velocity in the x direction:
+    
     $$
-    \begin{equation}
-    x = u_xt
-    \end{equation}
+    \begin{align}
+    x &= \int_0^t{u_x \,\mathrm{d}t} \notag \\ 
+      &= u_x t
+    \end{align}
     $$
     
-    The projectile is accelerated downwards by gravity
+    In the y direction, the projectile is accelerated downwards by gravity $g = -9.81\,\mathrm{m\cdot s^{-2}}$. Thus the y velocity $v_y$ of the projectile is constantly changing, and $v_y$ at time $t$ is equal to the integral the accleration in the y direction:
+        
+    $$
+    \begin{align}
+    v_y &= \int_0^t{g \,\mathrm{d}t} \notag \\
+        &= u_y + g t
+    \end{align}
+    $$
+    
+    where $u_y$ is the initial velocity of the projectile in the y direction. The y position of the projectile at time $t$ is equal to the integral of the velocity in the y direction $v_y$:
+    
+    $$
+    \begin{align}
+    y &= \int_0^t{v_y \,\mathrm{d}t}  \notag \\
+      &= \int_0^t{\left(u_y + g t\right) \,\mathrm{d}t} \notag \\
+      &= h + u_yt + \frac{1}{2}gt^2 
+    \end{align} 
+    $$ 
+    
+    where $h$ is the initial height of the projectile. The total flight time of the projectile is a solution of $t$ where $y = 0$ in equation 3:
+    
+    $$
+    \begin{equation*}
+    0 = h + u_yt + \frac{1}{2}gt^2 
+    \end{equation*}
+    $$
+    
+    The equation is quadratic, which has two solutions. Assuming that projectile is moving in the positive direction, we take the larger answer.
+    
     $$
     \begin{equation}
-    y = h + u_yt - \frac{1}{2}gt^2 
+    \Rightarrow t_{tot} = \frac{-u_y - \sqrt{u_y^2-2gh}}{g}  \qquad (u_x \geq 0)
     \end{equation}
-    $$ 
+    $$
     """
