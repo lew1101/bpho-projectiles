@@ -22,15 +22,45 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
+PLOT_DEFAULTS = {}
+
 with code_tab, st.echo():
-    pass
+
+    @cache_data_default(**PLOT_DEFAULTS)
+    def generate_task_4(*, kwarg):
+        pass
+
 
 # =====================
 # MODEL
 # =====================
 
 with model_tab:
-    pass
+    with st.form("task_4_form"):
+        "#### **Parameters**"
+
+        col1, col2 = st.columns(2, gap="large")
+
+        with col1:
+            pass
+
+        with col2:
+            pass
+
+        submitted = st.form_submit_button("Generate")
+
+    try:
+        # fig, *args = generate_task_4()
+
+        st.write("")
+        f"""
+        #### Calculated Values
+
+        """
+
+        # st.plotly_chart(fig, **config.plotly_chart_config)
+    except Exception as e:
+        st.exception(e)
 
 # =====================
 # DERIVATION
