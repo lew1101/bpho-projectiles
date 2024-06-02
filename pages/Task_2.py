@@ -107,4 +107,77 @@ with model_tab:
 
 with math_tab:
     r"""
+    ##### Finding $y$ as a Function of $x$
+    
+    The x position of the projectile at any given time $t$ is given by $x = ut\cos{\theta}$. If we isolate $t$ in the equation, we get time $t$ as a function of $x$:
+    
+    $$
+    \begin{equation}
+    t = \frac{x}{u\cos{\theta}}
+    \end{equation}
+    $$
+    
+    We can then plug this into the equation $y = h + ut\sin{\theta} + \frac{1}{2}gt^2$, allowing us to find $y$ as a function of $x$. 
+    
+    $$
+    \begin{align}
+    y &= h + u\sin{\theta}\left(\frac{x}{u\cos{\theta}}\right) + \frac{g}{2}\left(\frac{x}{u\cos{\theta}}\right)^2 \notag \\ 
+      &= h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}
+    \end{align}
+    $$
+    
+    ##### Finding the Apogee 
+    
+    The apogee is maximum of the projectile's trajectory, where the velocity of the projectile in the y direction, $v_y$, is equal to 0. Recall that $v_y = u\sin{\theta} + gt$. Thus:
+    
+    $$
+    \begin{gather*}
+    0 = u\sin{\theta} + gt \\
+    \Rightarrow t_a = \frac{-u\sin{\theta}}{g}
+    \end{gather*}
+    $$
+    
+    where $t_a$ is the time at which the projectile reaches the apogee. From this, we can find the position of the apogee. Recall that $x = ut\cos{\theta}$. Thus, the x coordinate of the apogee $x_a$ is equal to:
+    
+    $$
+    \begin{align}
+    x_a &= u\cos{\theta} \cdot t_a \notag \\
+        &= u\cos{\theta}\left(\frac{-u\sin{\theta}}{g}\right) \notag \\
+        &= \frac{-u^2}{g}\sin{\theta}\cos{\theta}
+    \end{align}
+    $$
+    
+    Similarly, recall that $y = h + ut\sin{\theta} + \frac{1}{2}gt^2$. Thus, the y coordinate of the apogee $y_a$ is equal to:
+    
+    $$
+    \begin{align}
+    y_a &= h + u\sin{\theta} \cdot t_a + \frac{1}{2}gt_a^2  \notag \\
+        &= h + u\sin{\theta}\left(\frac{-u\sin{\theta}}{g}\right) + \frac{g}{2}\left(\frac{-u\sin{\theta}}{g}\right)^2 \notag \\
+        &= h - \frac{u^2}{g}\sin^2{\theta} + \frac{u^2}{2g}\sin^2{\theta} \notag \\
+        &= h - \frac{u^2}{2g}\sin^2{\theta}
+    \end{align}
+    $$
+    
+    ##### Finding the Maximum Horizontal Range $R$ 
+    
+    From Task 1, we found that the total flight time $T$ of the projectile is equal to:
+    
+    
+    $$
+    \begin{align}
+    T &= \frac{-u_y - \sqrt{u_y^2-2gh}}{g}  \notag \\
+            &= \frac{-u\sin{\theta} - \sqrt{u^2\sin^2{\theta}-2gh}}{g} \notag \\
+            &= \frac{-u}{g}\left(\sin{\theta} + \sqrt{\sin^2{\theta} - \frac{2gh}{u^2}}\right)
+    \end{align}
+    $$
+    
+    Since the x position of the projectile is equal to $x = ut\cos{\theta}$:
+    
+    $$
+    \begin{align}
+    R &= uT\cos{\theta} \notag \\
+            &= u\cos{\theta}\cdot \frac{-u}{g}\left(\sin{\theta} + \sqrt{\sin^2{\theta} - \frac{2gh}{u^2}}\right) \notag \\
+            &= \frac{-u^2}{g}\left(\sin{\theta}\cos{\theta} + \cos{\theta}\sqrt{\sin^2{\theta} - \frac{2gh}{u^2}}\right)
+    \end{align}
+    $$
     """
