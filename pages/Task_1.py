@@ -6,7 +6,7 @@ import numpy as np
 import config
 from utils import cache_data_default
 
-st.set_page_config(page_title="Task 1", **config.page_config)
+st.set_page_config(page_title="Task 1", **config.PAGE_CONFIG)
 config.apply_custom_styles()
 
 # ==================
@@ -41,7 +41,7 @@ with code_tab, st.echo():
         x = ux * t
         y = h + uy * t - (g / 2) * t**2
 
-        fig = go.Figure(layout=config.custom_go_layout)\
+        fig = go.Figure(layout=config.GO_BASE)\
             .add_trace(go.Scatter(x=x, y=y, mode="markers"))\
             .update_layout(title_text="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
 
@@ -84,7 +84,7 @@ with model_tab:
         
         **Flight Time**: {total_t:.3f} s
         """
-        st.plotly_chart(fig, **config.plotly_chart_config)
+        st.plotly_chart(fig, **config.PLOTLY_CONFIG)
     except Exception as e:
         st.exception(e)
 

@@ -2,7 +2,7 @@ import streamlit as st
 
 import config
 
-st.set_page_config(page_title="Home", **config.page_config)
+st.set_page_config(page_title="Home", **config.PAGE_CONFIG)
 config.apply_custom_styles()
 
 st.markdown(r"""

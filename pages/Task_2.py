@@ -6,7 +6,7 @@ import numpy as np
 import config
 from utils import cache_data_default
 
-st.set_page_config(page_title="Task 2", **config.page_config)
+st.set_page_config(page_title="Task 2", **config.PAGE_CONFIG)
 config.apply_custom_styles()
 
 # ==================
@@ -22,12 +22,12 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
-PLOT_DEFAULTS = {"theta": 45.0, "g": 9.81, "u": 20.0, "h": 2.0, "steps": 30}
+PLOT_DEFAULTS = {"theta": 45.0, "g": 9.81, "u": 20.0, "h": 2.0}
 
 with code_tab, st.echo():
 
     @cache_data_default(**PLOT_DEFAULTS)
-    def generate_task_2(*, theta: float, g: float, u: float, h: float, steps: int):
+    def generate_task_2(*, theta: float, g: float, u: float, h: float):
         from math import sin, cos, sqrt, radians
 
         rad = radians(theta)
@@ -41,14 +41,14 @@ with code_tab, st.echo():
         total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
         total_x = ux * total_t
 
-        x = np.linspace(0, total_x, steps)
+        x = np.linspace(0, total_x, config.GRAPH_SAMPLES)
         y = h + (uy / ux) * x - (g / 2 / ux**2) * x**2
 
-        fig = go.Figure(layout=config.custom_go_layout)\
-            .add_trace(go.Scatter(name="", x=x, y=y, mode="lines+markers",  line_shape='spline'))\
-            .add_trace(go.Scatter(name="", x=[x_max], y=[y_max], text=["Apogee"], textposition="bottom center",
+        fig = go.Figure(layout=config.GO_BASE)\
+            .add_trace(go.Scatter(name="Trajectory", x=x, y=y, mode="lines",  line_shape='spline'))\
+            .add_trace(go.Scatter(name="Apogee", x=[x_max], y=[y_max], text=["Apogee"], textposition="bottom center",
                                     textfont=dict(size=16), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
-            .update_layout(title_text="Analytical Model", xaxis_title="x (m)",  yaxis_title="y (m)", showlegend=False)
+            .update_layout(title_text="Analytical Model", xaxis_title="x (m)",  yaxis_title="y (m)")
 
         return fig, (x_max, y_max), total_x, total_t
 
@@ -69,10 +69,6 @@ with model_tab:
                                     max_value=90.0,
                                     value=PLOT_DEFAULTS["theta"])
             gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
-            steps = st.number_input("Number of Intervals",
-                                    min_value=10,
-                                    max_value=1000,
-                                    value=PLOT_DEFAULTS["steps"])
 
         with col2:
             vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
@@ -84,8 +80,7 @@ with model_tab:
         fig, (x_max, y_max), total_x, total_t = generate_task_2(theta=theta,
                                                                 g=gravity,
                                                                 u=vel,
-                                                                h=height,
-                                                                steps=steps)
+                                                                h=height)
 
         st.write("")
         f"""
@@ -97,7 +92,7 @@ with model_tab:
         
         **Flight Time**: {total_t:.3f} s
         """
-        st.plotly_chart(fig, **config.plotly_chart_config)
+        st.plotly_chart(fig, **config.PLOTLY_CONFIG)
     except Exception as e:
         st.exception(e)
 

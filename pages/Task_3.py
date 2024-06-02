@@ -6,7 +6,7 @@ import numpy as np
 import config
 from utils import cache_data_default
 
-st.set_page_config(page_title="Task 3", **config.page_config)
+st.set_page_config(page_title="Task 3", **config.PAGE_CONFIG)
 config.apply_custom_styles()
 
 # ==================
@@ -30,13 +30,12 @@ with code_tab, st.echo():
     def generate_task_3(*, target_x: float, target_y: float, g: float, u: float, h: float):
         from math import sqrt, atan
 
-        fig = go.Figure(layout=config.custom_go_layout)\
+        fig = go.Figure(layout=config.GO_BASE)\
             .add_traces(go.Scatter(name="target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
                                     textfont=dict(size=15), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
             .update_layout(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")
 
-        SAMPLES = 50
-        x = np.linspace(0, target_x, SAMPLES)
+        x = np.linspace(0, target_x, config.GRAPH_SAMPLES)
 
         # min vel trajectory
         min_u = sqrt(g) * sqrt(target_y - h + sqrt(target_x**2 + (target_y - h)**2))
@@ -124,7 +123,7 @@ with model_tab:
         **Launch Angle of Minimum Velocity Trajectory**: {degrees(min_theta):.2f} deg
         """
 
-        st.plotly_chart(fig, **config.plotly_chart_config)
+        st.plotly_chart(fig, **config.PLOTLY_CONFIG)
     except Exception as e:
         st.exception(e)
 
