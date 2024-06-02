@@ -143,7 +143,7 @@ with math_tab:
     
     $$
     \begin{equation}
-    \Rightarrow t_{tot} = \frac{-u_y - \sqrt{u_y^2-2gh}}{g}  \qquad (u_x \geq 0)
+    T = \frac{-u_y - \sqrt{u_y^2-2gh}}{g}  \qquad (u_x \geq 0)
     \end{equation}
     $$
     """
