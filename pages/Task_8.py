@@ -71,3 +71,5 @@ with model_tab:
 with math_tab:
     r"""
     """
+
+st.divider()

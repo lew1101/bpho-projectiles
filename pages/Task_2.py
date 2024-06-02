@@ -181,3 +181,5 @@ with math_tab:
     \end{align}
     $$
     """
+
+st.divider()

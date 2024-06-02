@@ -147,3 +147,5 @@ with math_tab:
     \end{equation}
     $$
     """
+
+st.divider()
