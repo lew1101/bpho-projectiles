@@ -31,7 +31,7 @@ with code_tab, st.echo():
         from math import sqrt, atan
 
         fig = go.Figure(layout=config.GO_BASE)\
-            .add_traces(go.Scatter(name="target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
+            .add_traces(go.Scatter(name="Target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
                                     textfont=dict(size=15), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
             .update_layout(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")
 
@@ -44,8 +44,8 @@ with code_tab, st.echo():
 
         min_y_traj = h + x * min_tan_theta - x**2 * g * (1 + min_tan_theta**2) / 2 / min_u**2
 
-        fig.add_trace(go.Scatter(name="min u", x=x, y=min_y_traj, mode="lines",
-                                 line_shape='spline'))
+        fig.add_trace(
+            go.Scatter(name="Min. vel.", x=x, y=min_y_traj, mode="lines", line_shape='spline'))
 
         if u > min_u:
             # find high and low ball trajectories
@@ -60,13 +60,13 @@ with code_tab, st.echo():
             low_y_traj = h + x * low_tan_theta - x**2 * g * (1 + low_tan_theta**2) / 2 / u**2
 
             fig.add_trace(
-                go.Scatter(name="min u", x=x, y=low_y_traj, mode="lines", line_shape='spline'))
+                go.Scatter(name="Low ball", x=x, y=low_y_traj, mode="lines", line_shape='spline'))
 
             high_tan_theta = (-b + sqrt_discrim) / 2 / a  # ditto
             high_y_traj = h + x * high_tan_theta - x**2 * g * (1 + high_tan_theta**2) / 2 / u**2
 
             fig.add_trace(
-                go.Scatter(name="high ball", x=x, y=high_y_traj, mode="lines", line_shape='spline'))
+                go.Scatter(name="High ball", x=x, y=high_y_traj, mode="lines", line_shape='spline'))
 
             return fig, min_u, atan(min_tan_theta), atan(low_tan_theta), atan(high_tan_theta)
         else:
