@@ -118,9 +118,10 @@ with model_tab:
             """
 
         f"""
+        
         **Minimum Initial Velocity**: {min_u:.2f} m/s
         
-        **Launch Angle of Minimum Velocity Parabola**: {degrees(min_theta):.2f} deg
+        **Launch Angle of Minimum Velocity Trajectory**: {degrees(min_theta):.2f} deg
         """
 
         st.plotly_chart(fig, **config.plotly_chart_config)
