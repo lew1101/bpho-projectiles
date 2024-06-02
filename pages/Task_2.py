@@ -46,8 +46,8 @@ with code_tab, st.echo():
 
         fig = go.Figure(layout=config.GO_BASE)\
             .add_trace(go.Scatter(name="Trajectory", x=x, y=y, mode="lines",  line_shape='spline'))\
-            .add_trace(go.Scatter(name="Apogee", x=[x_max], y=[y_max], text=["Apogee"], textposition="bottom center",
-                                    textfont=dict(size=16), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
+            .add_trace(go.Scatter(name="Apogee", x=[x_max], y=[y_max], text=[f"({x_max:.3f}, {y_max:.3f})"], textposition="bottom center",
+                                    textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
             .update_layout(title_text="Analytical Model", xaxis_title="x (m)",  yaxis_title="y (m)")
 
         return fig, (x_max, y_max), total_x, total_t
