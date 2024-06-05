@@ -139,7 +139,7 @@ with math_tab:
     \end{equation*}
     $$
     
-    The equation is quadratic, which has two solutions. Assuming that projectile is moving in the positive direction, we take the larger answer.
+    The equation is quadratic, which has two solutions. As such, assuming that projectile is moving in the positive direction, the total flight time $T$ is the larger answer.
     
     $$
     \begin{equation}
