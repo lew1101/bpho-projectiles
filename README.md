@@ -20,12 +20,6 @@ This repo relies on [`poetry`](https://python-poetry.org/) for dependency manage
 poetry install 
 ```
 
-An alternative to `poetry` would be to use `pip`:
-
-```shell
-pip3 install -r requirements.txt
-```
-
 ## Running the Web App using Streamlit
 
 ```shell
