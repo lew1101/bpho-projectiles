@@ -38,8 +38,8 @@ with code_tab, st.echo():
         ux = u * cos(rad)
         uy = u * sin(rad)
 
-        x_max = ux * uy / g
-        y_max = h + (uy**2) / 2 / g
+        xa = ux * uy / g
+        ya = h + (uy**2) / 2 / g
 
         total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
         total_x = ux * total_t
@@ -49,10 +49,10 @@ with code_tab, st.echo():
 
 
         fig.add_trace(go.Scatter(name="Trajectory", x=x, y=y, mode="lines",  line_shape='spline'))\
-           .add_trace(go.Scatter(name="Apogee", x=[x_max], y=[y_max], text=[f"({x_max:.3f}, {y_max:.3f})"],
+           .add_trace(go.Scatter(name="Apogee", x=[xa], y=[ya], text=[f"({xa:.3f}, {ya:.3f})"],
                 textposition="bottom center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
 
-        return fig, (x_max, y_max), total_x, total_t
+        return fig, (xa, ya), total_x, total_t
 
 
 # =====================

@@ -35,7 +35,7 @@ with code_tab, st.echo():
         ux = u * cos(rad)
         uy = u * sin(rad)
 
-        x_max = ux * uy / g
+        range = ux * uy / g
         total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
 
         rad_max = asin(1 / sqrt(2 + 2 * g * h / u**2))
