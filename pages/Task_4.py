@@ -27,8 +27,18 @@ PLOT_DEFAULTS = {}
 with code_tab, st.echo():
 
     @cache_data_default(**PLOT_DEFAULTS)
-    def generate_task_4(*, kwarg):
-        pass
+    def generate_task_4(*, theta: float, g: float, u: float, h: float):
+        from math import sin, cos, sqrt, radians, asin
+
+        rad = radians(theta)
+
+        ux = u * cos(rad)
+        uy = u * sin(rad)
+
+        x_max = ux * uy / g
+        total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
+
+        rad_max = asin(1 / sqrt(2 + 2 * g * h / u**2))
 
 
 # =====================

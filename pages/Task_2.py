@@ -30,6 +30,9 @@ with code_tab, st.echo():
     def generate_task_2(*, theta: float, g: float, u: float, h: float):
         from math import sin, cos, sqrt, radians
 
+        fig = go.Figure(layout=config.GO_BASE)\
+            .update_layout(title_text="Analytical Model", xaxis_title="x (m)",  yaxis_title="y (m)")
+
         rad = radians(theta)
 
         ux = u * cos(rad)
@@ -44,11 +47,10 @@ with code_tab, st.echo():
         x = np.linspace(0, total_x, config.GRAPH_SAMPLES)
         y = h + (uy / ux) * x - (g / 2 / ux**2) * x**2
 
-        fig = go.Figure(layout=config.GO_BASE)\
-            .add_trace(go.Scatter(name="Trajectory", x=x, y=y, mode="lines",  line_shape='spline'))\
-            .add_trace(go.Scatter(name="Apogee", x=[x_max], y=[y_max], text=[f"({x_max:.3f}, {y_max:.3f})"], textposition="bottom center",
-                                    textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
-            .update_layout(title_text="Analytical Model", xaxis_title="x (m)",  yaxis_title="y (m)")
+
+        fig.add_trace(go.Scatter(name="Trajectory", x=x, y=y, mode="lines",  line_shape='spline'))\
+           .add_trace(go.Scatter(name="Apogee", x=[x_max], y=[y_max], text=[f"({x_max:.3f}, {y_max:.3f})"],
+                textposition="bottom center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
 
         return fig, (x_max, y_max), total_x, total_t
 

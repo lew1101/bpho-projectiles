@@ -30,6 +30,9 @@ with code_tab, st.echo():
     def generate_task_1(*, theta: float, g: float, u: float, h: float, dt: float):
         from math import sin, cos, sqrt, radians
 
+        fig = go.Figure(layout=config.GO_BASE)\
+            .update_layout(title_text="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
+
         rad = radians(theta)
 
         ux = u * sin(rad)
@@ -41,9 +44,7 @@ with code_tab, st.echo():
         x = ux * t
         y = h + uy * t - (g / 2) * t**2
 
-        fig = go.Figure(layout=config.GO_BASE)\
-            .add_trace(go.Scatter(x=x, y=y, mode="markers"))\
-            .update_layout(title_text="Projectile Motion", xaxis_title="x (m)", yaxis_title="y (m)")
+        fig.add_trace(go.Scatter(x=x, y=y, mode="markers"))
 
         return fig, total_t
 

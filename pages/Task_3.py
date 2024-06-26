@@ -63,19 +63,16 @@ with code_tab, st.echo():
             b = -target_x
             c = target_y - h + g / 2 / u**2 * target_x**2
 
-            low_tan_theta = (-b - sqrt(b**2 - 4 * a * c)) / 2 / a
             # low ball
+            low_tan_theta = (-b - sqrt(b**2 - 4 * a * c)) / 2 / a
             low_y_traj = h + x * low_tan_theta - x**2 * g * (1 + low_tan_theta**2) / 2 / u**2
 
-            fig.add_trace(
-                go.Scatter(name="Low ball", x=x, y=low_y_traj, mode="lines", line_shape='spline'))
-
-            high_tan_theta = (-b + sqrt(b**2 - 4 * a * c)) / 2 / a
             # high ball
+            high_tan_theta = (-b + sqrt(b**2 - 4 * a * c)) / 2 / a
             high_y_traj = h + x * high_tan_theta - x**2 * g * (1 + high_tan_theta**2) / 2 / u**2
 
-            fig.add_trace(
-                go.Scatter(name="High ball", x=x, y=high_y_traj, mode="lines", line_shape='spline'))
+            fig.add_trace(go.Scatter(name="Low ball", x=x, y=low_y_traj, mode="lines", line_shape='spline'))\
+               .add_trace(go.Scatter(name="High ball", x=x, y=high_y_traj, mode="lines", line_shape='spline'))
 
             return fig, min_u, atan(min_tan_theta), atan(low_tan_theta), atan(high_tan_theta)
         else:
