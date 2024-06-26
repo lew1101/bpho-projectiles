@@ -31,17 +31,27 @@ with code_tab, st.echo():
         from math import sqrt, atan
 
         fig = go.Figure(layout=config.GO_BASE)\
-            .add_traces(go.Scatter(name="Target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
-                                    textfont=dict(size=15), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
             .update_layout(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")
+
+        # add target
+        fig.add_traces(
+            go.Scatter(name="Target",
+                       x=[target_x],
+                       y=[target_y],
+                       text=[f"({target_x}, {target_y})"],
+                       textposition="bottom center",
+                       textfont=dict(size=15),
+                       marker_symbol="x",
+                       marker=dict(size=11),
+                       mode='markers+text'))
 
         x = np.linspace(0, target_x, config.GRAPH_SAMPLES)
 
-        # min vel trajectory
         min_u = sqrt(g) * sqrt(target_y - h + sqrt(target_x**2 + (target_y - h)**2))
         # since only tan(theta) is used in the equation for the parabola, we can optimize by not taking atan and use value directly
         min_tan_theta = (target_y - h + sqrt(target_x**2 + (target_y - h)**2)) / target_x
 
+        # min vel trajectory
         min_y_traj = h + x * min_tan_theta - x**2 * g * (1 + min_tan_theta**2) / 2 / min_u**2
 
         fig.add_trace(
@@ -53,16 +63,15 @@ with code_tab, st.echo():
             b = -target_x
             c = target_y - h + g / 2 / u**2 * target_x**2
 
-            sqrt_discrim = sqrt(b**2 - 4 * a * c)
-
-            low_tan_theta = (-b -
-                             sqrt_discrim) / 2 / a  # we don't take atan for the same reason above
+            low_tan_theta = (-b - sqrt(b**2 - 4 * a * c)) / 2 / a
+            # low ball
             low_y_traj = h + x * low_tan_theta - x**2 * g * (1 + low_tan_theta**2) / 2 / u**2
 
             fig.add_trace(
                 go.Scatter(name="Low ball", x=x, y=low_y_traj, mode="lines", line_shape='spline'))
 
-            high_tan_theta = (-b + sqrt_discrim) / 2 / a  # ditto
+            high_tan_theta = (-b + sqrt(b**2 - 4 * a * c)) / 2 / a
+            # high ball
             high_y_traj = h + x * high_tan_theta - x**2 * g * (1 + high_tan_theta**2) / 2 / u**2
 
             fig.add_trace(
