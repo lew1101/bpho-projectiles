@@ -51,8 +51,6 @@ with model_tab:
 
     try:
         # fig, *args = generate_task_5()
-
-        st.write("")
         f"""
         #### Calculated Values
 

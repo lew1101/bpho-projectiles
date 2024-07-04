@@ -49,8 +49,10 @@ with code_tab, st.echo():
 
 
         fig.add_trace(go.Scatter(name="Trajectory", x=x, y=y, mode="lines",  line_shape='spline'))\
-           .add_trace(go.Scatter(name="Apogee", x=[xa], y=[ya], text=[f"({xa:.3f}, {ya:.3f})"],
-                textposition="bottom center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
+           .add_trace(go.Scatter(name="Apogee", x=[xa], y=[ya], text=[f"({xa:.2f}, {ya:.2f})"],
+                textposition="bottom center", textfont=dict(size=14), marker_symbol="0", marker=dict(size=8), mode='markers+text'))\
+           .add_trace(go.Scatter(name="Range", x=[total_x], y=[0], text=[f"({total_x:.2f}, {0})"],
+                textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
 
         return fig, (xa, ya), total_x, total_t
 

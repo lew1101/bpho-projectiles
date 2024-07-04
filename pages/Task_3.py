@@ -121,9 +121,8 @@ with model_tab:
             
             **Low Ball Launch Angle**: {degrees(low_theta):.2f} deg
             """
-
+            st.write("")
         f"""
-        
         **Minimum Initial Velocity**: {min_u:.2f} m/s
         
         **Launch Angle of Minimum Velocity Trajectory**: {degrees(min_theta):.2f} deg
