@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
-from utils import cache_data_default
+from cache import cache_data_default
 
 st.set_page_config(page_title="Task 4", **config.PAGE_CONFIG)
 config.apply_custom_styles()
@@ -29,21 +29,21 @@ with code_tab, st.echo():
     @cache_data_default(**PLOT_DEFAULTS)
     def generate_task_6(*, theta: float, g: float, u: float, h: float):
         from math import sin, cos, sqrt, radians, asin, log, tan
-        
-        def calcDist(rad, x, max = False):
+
+        def calcDist(rad, x, max=False):
             if h == 0 and max:
-                return u**2/g*(log(1+sqrt(2))+sqrt(2))/2 
-            elif h==0:
-                return u**2/g*(log((1+sin(rad))/cos(rad))*cos(rad)**2+sin(rad))
+                return u**2 / g * (log(1 + sqrt(2)) + sqrt(2)) / 2
+            elif h == 0:
+                return u**2 / g * (log((1 + sin(rad)) / cos(rad)) * cos(rad)**2 + sin(rad))
             else:
                 z1 = tan(rad)
-                z2 = tan(rad)-g*x/u**2*(1+tan(rad)**2)
+                z2 = tan(rad) - g * x / u**2 * (1 + tan(rad)**2)
                 calc_z1 = calc_z_part(z1)
                 calc_z2 = calc_z_part(z2)
-                return u**2/g/(1+tan(rad)**2)*(calc_z1-calc_z2)
-        
+                return u**2 / g / (1 + tan(rad)**2) * (calc_z1 - calc_z2)
+
         def calc_z_part(z):
-            return 0.5*log(abs(sqrt(1+z**2) + z ) ) + 0.5*z*sqrt( 1+ z**2 )
+            return 0.5 * log(abs(sqrt(1 + z**2) + z)) + 0.5 * z * sqrt(1 + z**2)
 
         fig = go.Figure(layout=config.GO_BASE)\
             .update_layout(title_text="Arc Length of Projectile Motion (with Analytical Model)", xaxis_title="x (m)",  yaxis_title="y (m)")
@@ -106,10 +106,8 @@ with model_tab:
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, range, total_t, rad_max, range_max, max_range_t, dist, max_dist = generate_task_6(theta=theta,
-                                                                               g=gravity,
-                                                                               u=vel,
-                                                                               h=height)
+        fig, range, total_t, rad_max, range_max, max_range_t, dist, max_dist = generate_task_6(
+            theta=theta, g=gravity, u=vel, h=height)
 
         from math import degrees
 
@@ -121,18 +119,20 @@ with model_tab:
         
         **Flight Time**: {total_t:.3f} s
         
-        **Distance Travelled by Projectile**: {dist:.3f} m
+        **Arc Length**: {dist:.3f} m
 
         """
         st.write("")
         f"""
-        **Launch Angle of Trajectory Maximizing Range**: {degrees(rad_max):.3f} deg
+        ##### _Trajectory Maximizing Range_ 
+        
+        **Launch Angle**: {degrees(rad_max):.3f} deg
         
         **Maximum Range**: {range_max:.3f} m
         
-        **Flight Time of Trajectory Maximizing Range**: {max_range_t:.3f} s
+        **Flight Time**: {max_range_t:.3f} s
         
-        **Distance Travelled by Projectile With Maximising Range**: {max_dist:.3f} m
+        **Arc Length**: {max_dist:.3f} m
         """
 
         st.plotly_chart(fig, **config.PLOTLY_CONFIG)

@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
-from utils import cache_data_default
+from cache import cache_data_default
 
 st.set_page_config(page_title="Task 4", **config.PAGE_CONFIG)
 config.apply_custom_styles()
@@ -99,7 +99,7 @@ with model_tab:
         st.write("")
         f"""
         #### Calculated Values
-        
+
         **Range**: {range:.3f} m
         
         **Flight Time**: {total_t:.3f} s
@@ -107,11 +107,13 @@ with model_tab:
         """
         st.write("")
         f"""
-        **Launch Angle of Trajectory Maximizing Range**: {degrees(rad_max):.3f} deg
-        
+        ##### _Trajectory Maximizing Range_    
+    
         **Maximum Range**: {range_max:.3f} m
         
-        **Flight Time of Trajectory Maximizing Range**: {max_range_t:.3f} s
+        **Launch Angle of Trajectory**: {degrees(rad_max):.3f} deg
+        
+        **Flight Time of Trajectory**: {max_range_t:.3f} s
         """
 
         st.plotly_chart(fig, **config.PLOTLY_CONFIG)

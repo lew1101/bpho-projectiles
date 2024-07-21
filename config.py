@@ -5,7 +5,7 @@ GRAPH_SAMPLES = 50
 
 PAGE_CONFIG = dict(layout="wide", page_icon="static/favicon/favicon.ico")
 
-PLOTLY_CONFIG = dict(use_container_width=True, displaylogo=False)
+PLOTLY_CONFIG = dict(use_container_width=True, displaylogo=False, include_mathjax="cdn")
 
 GO_BASE = go.Layout(template="seaborn",
                     modebar_remove=["select", "lasso"],
@@ -25,7 +25,7 @@ GO_BASE = go.Layout(template="seaborn",
 
 custom_styles = r"""
 <style>
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
     color: #ffbd45
 }
 [data-testid="stSidebarNav"] {

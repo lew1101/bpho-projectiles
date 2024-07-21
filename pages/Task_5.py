@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
-from utils import cache_data_default
+from cache import cache_data_default
 
 st.set_page_config(page_title="Task 5", **config.PAGE_CONFIG)
 config.apply_custom_styles()
@@ -34,43 +34,36 @@ with code_tab, st.echo():
         fig = go.Figure(layout=config.GO_BASE)\
             .update_layout(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")
 
-        # add target
-        fig.add_traces(
-            go.Scatter(name="Target",
-                       x=[target_x],
-                       y=[target_y],
-                       text=[f"({target_x}, {target_y})"],
-                       textposition="bottom center",
-                       textfont=dict(size=15),
-                       marker_symbol="x",
-                       marker=dict(size=11),
-                       mode='markers+text'))
-
         min_u = sqrt(g) * sqrt(target_y - h + sqrt(target_x**2 + (target_y - h)**2))
         # since only tan(theta) is used in the equation for the parabola, we can optimize by not taking atan and use value directly
         min_tan_theta = (target_y - h + sqrt(target_x**2 + (target_y - h)**2)) / target_x
 
         # min vel x values
-        min_x = (min_tan_theta + sqrt(min_tan_theta**2 - 4 * (-h) * g*(1+min_tan_theta**2)/2/min_u**2)) / 2 / (g*(1+min_tan_theta**2)/2/min_u**2)
+        min_x = (min_tan_theta + sqrt(min_tan_theta**2 - 4 * (-h) * g *
+                                      (1 + min_tan_theta**2) / 2 / min_u**2)) / 2 / (
+                                          g * (1 + min_tan_theta**2) / 2 / min_u**2)
         min_x_traj = np.linspace(0, min_x, config.GRAPH_SAMPLES)
-        
+
         # min vel trajectory
-        min_y_traj = h + min_x_traj * min_tan_theta - min_x_traj**2 * g * (1 + min_tan_theta**2) / 2 / min_u**2
-        
+        min_y_traj = h + min_x_traj * min_tan_theta - min_x_traj**2 * g * (
+            1 + min_tan_theta**2) / 2 / min_u**2
+
         # max range (used for both max range and bounding parabola calculation)
         max_x = u / g * sqrt(u**2 + 2 * g * h)
         bound_x = np.linspace(0, max_x, config.GRAPH_SAMPLES)
-        
+
         # y values of the bounding parabola
-        bound_parabola = u**2/(2*g)-g/(2*u**2)*bound_x**2+h
-        
+        bound_parabola = u**2 / (2 * g) - g / (2 * u**2) * bound_x**2 + h
+
         # y values of the maximum range
-        max_range_y = bound_x*(-h+sqrt(max_x**2+h**2))/max_x - bound_x**2*sqrt(max_x**2+h**2)/max_x**2 +h
-        
-        fig.add_trace(go.Scatter(name="Min. vel.", x=min_x_traj, y=min_y_traj, mode="lines", line_shape='spline'))\
+        max_range_y = bound_x * (
+            -h + sqrt(max_x**2 + h**2)) / max_x - bound_x**2 * sqrt(max_x**2 + h**2) / max_x**2 + h
+
+        fig.add_trace(go.Scatter(name="Target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
+                                 textfont=dict(size=15), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
+           .add_trace(go.Scatter(name="Min. Velocity", x=min_x_traj, y=min_y_traj, mode="lines", line_shape='spline'))\
            .add_trace(go.Scatter(name="Bounding Parabola", x=bound_x, y = bound_parabola, mode="lines", line_shape='spline'))\
-           .add_trace(go.Scatter(name="Max. ran.", x=bound_x, y = max_range_y, mode='lines', line_shape='spline'))
-            
+           .add_trace(go.Scatter(name="Max. Range", x=bound_x, y = max_range_y, mode='lines', line_shape='spline'))
 
         if u > min_u:
             # find high and low ball trajectories
@@ -80,17 +73,23 @@ with code_tab, st.echo():
 
             # low ball
             low_tan_theta = (-b - sqrt(b**2 - 4 * a * c)) / 2 / a
-            low_x = (low_tan_theta + sqrt(low_tan_theta**2 - 4 * (-h) * g*(1+low_tan_theta**2)/2/u**2)) / 2 / (g*(1+low_tan_theta**2)/2/u**2)
+            low_x = (low_tan_theta + sqrt(low_tan_theta**2 - 4 * (-h) * g *
+                                          (1 + low_tan_theta**2) / 2 / u**2)) / 2 / (
+                                              g * (1 + low_tan_theta**2) / 2 / u**2)
             low_x_list = np.linspace(0, low_x, config.GRAPH_SAMPLES)
-            low_y_traj = h + low_x_list * low_tan_theta - low_x_list**2 * g * (1 + low_tan_theta**2) / 2 / u**2
+            low_y_traj = h + low_x_list * low_tan_theta - low_x_list**2 * g * (
+                1 + low_tan_theta**2) / 2 / u**2
 
             # high ball
             high_tan_theta = (-b + sqrt(b**2 - 4 * a * c)) / 2 / a
-            high_x = (high_tan_theta + sqrt(high_tan_theta**2 + 4 * h * g*(1+high_tan_theta**2)/2/u**2)) / 2 / (g*(1+high_tan_theta**2)/2/u**2)
+            high_x = (high_tan_theta + sqrt(high_tan_theta**2 + 4 * h * g *
+                                            (1 + high_tan_theta**2) / 2 / u**2)) / 2 / (
+                                                g * (1 + high_tan_theta**2) / 2 / u**2)
             high_x_list = np.linspace(0, high_x, config.GRAPH_SAMPLES)
-            high_y_traj = h + high_x_list * high_tan_theta - high_x_list**2 * g * (1 + high_tan_theta**2) / 2 / u**2
-            
-            # 
+            high_y_traj = h + high_x_list * high_tan_theta - high_x_list**2 * g * (
+                1 + high_tan_theta**2) / 2 / u**2
+
+            #
 
             fig.add_trace(go.Scatter(name="Low ball", x=low_x_list, y=low_y_traj, mode="lines", line_shape='spline'))\
                .add_trace(go.Scatter(name="High ball", x=high_x_list, y=high_y_traj, mode="lines", line_shape='spline'))
