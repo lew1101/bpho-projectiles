@@ -30,13 +30,13 @@ with code_tab, st.echo():
     def generate_task_7(*, u: float, g: float):
         from math import sqrt, sin, cos, asin, radians
 
+        ANGLES = (30, 45, 60, 70.5, 78, 85)
+
         fig1 = go.Figure(layout=config.GO_BASE)\
             .update_layout(title_text="Range vs. Time", xaxis_title="t (s)",  yaxis_title="r (m)")
 
         fig2 = go.Figure(layout=config.GO_BASE)\
             .update_layout(title_text="XY Graph with Stationary Points", xaxis_title="x (m)",  yaxis_title="y (m)")
-
-        ANGLES = (30, 45, 60, 70.5, 78, 85)
 
         t = np.linspace(0, 2.5, config.GRAPH_SAMPLES)
 
@@ -47,24 +47,10 @@ with code_tab, st.echo():
             fig1.add_trace(
                 go.Scatter(name=rf"{theta} deg", x=t, y=range, mode="lines", line_shape="spline"))
 
-            if theta > 70.5:
-                minima_x = 3 * u / 2 / g * (sin(rad) - sqrt(sin(rad)**2 - 8 / 9))
-                maxima_x = 3 * u / 2 / g * (sin(rad) + sqrt(sin(rad)**2 - 8 / 9))
-
-                minima_y = sqrt(u**2 * minima_x**2 - g * minima_x**3 * u * sin(rad) +
-                                g**2 * minima_x**4 / 4)
-                maxima_y = sqrt(u**2 * maxima_x**2 - g * maxima_x**3 * u * sin(rad) +
-                                g**2 * maxima_x**4 / 4)
-
-                fig1.add_trace(go.Scatter(name="minima", x=[minima_x], y=[minima_y], textfont=dict(size=14), marker_symbol="x",
-                                marker=dict(size=8, color="lightblue"), mode='markers+text', showlegend=False))\
-                    .add_trace(go.Scatter(name="maxima", x=[maxima_x], y=[maxima_y], textfont=dict(size=14), marker_symbol="x",
-                                marker=dict(size=8, color="lightgreen"), mode='markers+text', showlegend=False))
-
-            # Using what we did in task 2 for fig2
             ux = u * cos(rad)
             uy = u * sin(rad)
 
+            # Using what we did in task 2 for figure
             total_t = uy * 2 / g
             total_x = ux * total_t
 
@@ -74,15 +60,56 @@ with code_tab, st.echo():
             fig2.add_trace(
                 go.Scatter(name=rf"{theta} deg", x=x, y=y, mode="lines", line_shape="spline"))
 
+            if theta > 70.5:
+                minima_x = 3 * u / 2 / g * (sin(rad) - sqrt(sin(rad)**2 - 8 / 9))
+                minima_y = sqrt(u**2 * minima_x**2 - g * minima_x**3 * u * sin(rad) +
+                                g**2 * minima_x**4 / 4)
+
+                maxima_x = 3 * u / 2 / g * (sin(rad) + sqrt(sin(rad)**2 - 8 / 9))
+                maxima_y = sqrt(u**2 * maxima_x**2 - g * maxima_x**3 * u * sin(rad) +
+                                g**2 * maxima_x**4 / 4)
+
+                fig1.add_trace(go.Scatter(name="Range Minima", x=[minima_x], y=[minima_y], textfont=dict(size=14), marker_symbol="x",
+                                marker=dict(size=8, color="deepskyblue"), mode='markers+text', showlegend=False))\
+                    .add_trace(go.Scatter(name="Range Maxima", x=[maxima_x], y=[maxima_y], textfont=dict(size=14), marker_symbol="x",
+                                marker=dict(size=8, color="limegreen"), mode='markers+text', showlegend=False))
+
+                # plot corresponding point on XY graph
+                xy_minima_x = ux * minima_x
+                xy_minima_y = uy * minima_x - g / 2 * minima_x**2
+
+                xy_maxima_x = ux * maxima_x
+                xy_maxima_y = uy * maxima_x - g / 2 * maxima_x**2
+
+                fig2.add_trace(go.Scatter(name="Range Minima", x=[xy_minima_x], y=[xy_minima_y], textfont=dict(size=14), marker_symbol="x",
+                                marker=dict(size=8, color="deepskyblue"), mode='markers+text', showlegend=False))\
+                    .add_trace(go.Scatter(name="Range Maxima", x=[xy_maxima_x], y=[xy_maxima_y], textfont=dict(size=14), marker_symbol="x",
+                                marker=dict(size=8, color="limegreen"), mode='markers+text', showlegend=False))
+
         # Point of equality (ie having one saddle point instead of a maxima and minima)
         rad = asin(2 * sqrt(2) / 3)
+
         saddle_x = u / g * sqrt(2)
         saddle_y = sqrt(u**2 * saddle_x**2 - g * saddle_x**3 * u * sin(rad) +
                         g**2 * saddle_x**4 / 4)
         fig1.add_trace(
-            go.Scatter(name='saddle point',
+            go.Scatter(name='Saddle Point',
                        x=[saddle_x],
                        y=[saddle_y],
+                       textfont=dict(size=14),
+                       marker_symbol="x",
+                       marker=dict(size=8, color="salmon"),
+                       mode='markers+text',
+                       showlegend=False))
+
+        # plot corresponding point on XY graph
+        xy_maxima_x = u * cos(rad) * saddle_x
+        xy_maxima_y = u * sin(rad) * saddle_x - g / 2 * saddle_x**2
+
+        fig2.add_trace(
+            go.Scatter(name='Saddle Point',
+                       x=[xy_maxima_x],
+                       y=[xy_maxima_y],
                        textfont=dict(size=14),
                        marker_symbol="x",
                        marker=dict(size=8, color="salmon"),
@@ -113,13 +140,9 @@ with model_tab:
     try:
         fig1, fig2 = generate_task_7(u=vel, g=gravity)
 
-        colA, colB = st.columns(2)
+        st.plotly_chart(fig1, **config.PLOTLY_CONFIG)
+        st.plotly_chart(fig2, **config.PLOTLY_CONFIG)
 
-        with colA:
-            st.plotly_chart(fig1, **config.PLOTLY_CONFIG)
-
-        with colB:
-            st.plotly_chart(fig2, **config.PLOTLY_CONFIG)
     except Exception as e:
         st.exception(e)
 
