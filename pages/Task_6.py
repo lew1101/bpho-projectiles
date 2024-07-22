@@ -30,20 +30,20 @@ with code_tab, st.echo():
     def generate_task_6(*, theta: float, g: float, u: float, h: float):
         from math import sin, cos, sqrt, radians, asin, log, tan
 
-        def calcDist(rad, x, max=False):
-            if h == 0 and max:
-                return u**2 / g * (log(1 + sqrt(2)) + sqrt(2)) / 2
-            elif h == 0:
-                return u**2 / g * (log((1 + sin(rad)) / cos(rad)) * cos(rad)**2 + sin(rad))
+        def calc_dist(rad, x, is_max=False):
+            calc_z_part = lambda z: 0.5 * log(abs(sqrt(1 + z**2) + z)) + 0.5 * z * sqrt(1 + z**2)
+
+            if h == 0:
+                if is_max:
+                    return u**2 / g * (log(1 + sqrt(2)) + sqrt(2)) / 2
+                else:
+                    return u**2 / g * (log((1 + sin(rad)) / cos(rad)) * cos(rad)**2 + sin(rad))
             else:
                 z1 = tan(rad)
                 z2 = tan(rad) - g * x / u**2 * (1 + tan(rad)**2)
                 calc_z1 = calc_z_part(z1)
                 calc_z2 = calc_z_part(z2)
                 return u**2 / g / (1 + tan(rad)**2) * (calc_z1 - calc_z2)
-
-        def calc_z_part(z):
-            return 0.5 * log(abs(sqrt(1 + z**2) + z)) + 0.5 * z * sqrt(1 + z**2)
 
         fig = go.Figure(layout=config.GO_BASE)\
             .update_layout(title_text="Arc Length of Projectile Motion (with Analytical Model)", xaxis_title="x (m)",  yaxis_title="y (m)")
@@ -55,7 +55,7 @@ with code_tab, st.echo():
 
         total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
         range = ux * total_t
-        dist = calcDist(rad, range)
+        dist = calc_dist(rad, range)
 
         original_x = np.linspace(0, range, config.GRAPH_SAMPLES)
         inputted_traj = h + (uy / ux) * original_x - (g / 2 / ux**2) * original_x**2
@@ -67,7 +67,7 @@ with code_tab, st.echo():
 
         max_range_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
         range_max = u / g * sqrt(u**2 + 2 * g * h)
-        max_dist = calcDist(rad, range_max, True)
+        max_dist = calc_dist(rad, range_max, is_max=True)
 
         max_range_x = np.linspace(0, range_max, config.GRAPH_SAMPLES)
         max_range_traj = h + (uy / ux) * max_range_x - (g / 2 / ux**2) * max_range_x**2
