@@ -69,9 +69,9 @@ with code_tab, st.echo():
                 maxima_y = sqrt(u**2 * maxima_x**2 - g * maxima_x**3 * u * sin(rad) +
                                 g**2 * maxima_x**4 / 4)
 
-                fig1.add_trace(go.Scatter(name="Range Minima", x=[minima_x], y=[minima_y], textfont=dict(size=14), marker_symbol="x",
+                fig1.add_trace(go.Scatter(name="Minima", x=[minima_x], y=[minima_y], textfont=dict(size=14), marker_symbol="x",
                                 marker=dict(size=8, color="deepskyblue"), mode='markers+text', showlegend=False))\
-                    .add_trace(go.Scatter(name="Range Maxima", x=[maxima_x], y=[maxima_y], textfont=dict(size=14), marker_symbol="x",
+                    .add_trace(go.Scatter(name="Maxima", x=[maxima_x], y=[maxima_y], textfont=dict(size=14), marker_symbol="x",
                                 marker=dict(size=8, color="limegreen"), mode='markers+text', showlegend=False))
 
                 # plot corresponding point on XY graph
@@ -81,9 +81,9 @@ with code_tab, st.echo():
                 xy_maxima_x = ux * maxima_x
                 xy_maxima_y = uy * maxima_x - g / 2 * maxima_x**2
 
-                fig2.add_trace(go.Scatter(name="Range Minima", x=[xy_minima_x], y=[xy_minima_y], textfont=dict(size=14), marker_symbol="x",
+                fig2.add_trace(go.Scatter(name="R vs. t Minima", x=[xy_minima_x], y=[xy_minima_y], textfont=dict(size=14), marker_symbol="x",
                                 marker=dict(size=8, color="deepskyblue"), mode='markers+text', showlegend=False))\
-                    .add_trace(go.Scatter(name="Range Maxima", x=[xy_maxima_x], y=[xy_maxima_y], textfont=dict(size=14), marker_symbol="x",
+                    .add_trace(go.Scatter(name="R vs. t Maxima", x=[xy_maxima_x], y=[xy_maxima_y], textfont=dict(size=14), marker_symbol="x",
                                 marker=dict(size=8, color="limegreen"), mode='markers+text', showlegend=False))
 
         # Point of equality (ie having one saddle point instead of a maxima and minima)
