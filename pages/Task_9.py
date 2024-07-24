@@ -129,7 +129,7 @@ with model_tab:
     with st.form("task_9_form"):
         "#### **Parameters**"
 
-        col1, col2 = st.columns(2, gap="large")
+        col1, col2 = st.columns(2)
 
         with col1:
             theta = st.number_input("Launch Angle (deg)",
