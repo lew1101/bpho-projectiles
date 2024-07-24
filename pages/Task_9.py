@@ -4,9 +4,9 @@ import plotly.graph_objects as go
 import numpy as np
 
 import config
-from cache import cache_data_default
+from utils import cache_data_default
 
-st.set_page_config(page_title="Task 9", **config.page_config)
+st.set_page_config(page_title="Task 9", **config.PAGE_CONFIG)
 config.apply_custom_styles()
 
 # ==================
@@ -22,15 +22,105 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
-PLOT_DEFAULTS = {}
+PLOT_DEFAULTS = {"theta": 60.0, "g": 9.81, "u": 10.0, "h": 2.0, 'Cd':0.3, 'a':0.01, 'P':1, 'm':0.1, "dt":0.01}
 
 with code_tab, st.echo():
 
     @cache_data_default(**PLOT_DEFAULTS)
-    def generate_task_9(*, kwarg):
-        pass
+    def generate_task_9(*, theta: float, u: float, h: float, g: float, Cd:float, a:float, P:float, m:float, dt:float):
+        from math import sqrt, sin, cos,radians
+        
+        y_x = go.Figure(layout=config.GO_BASE)\
+            .update_layout(title_text="Projectile Motion Model", xaxis_title="x (m)",  yaxis_title="y (m)")
+        y_t = go.Figure(layout=config.GO_BASE)\
+            .update_layout(title_text="Projectile Motion Model y vs t", xaxis_title="t (s)",  yaxis_title="y (m)")
+        vx_t = go.Figure(layout=config.GO_BASE)\
+            .update_layout(title_text="Projectile Motion Model vx", xaxis_title="t (s)",  yaxis_title="vx (ms⁻¹)")
+        vy_t = go.Figure(layout=config.GO_BASE)\
+            .update_layout(title_text="Projectile Motion Model vy", xaxis_title="t (s)",  yaxis_title="vy (ms⁻¹)")
+        v_t = go.Figure(layout=config.GO_BASE)\
+            .update_layout(title_text="Projectile Motion Model v", xaxis_title="t (s)",  yaxis_title="v (ms⁻¹)")
 
+        rad = radians(theta)
 
+        ux = u * cos(rad)
+        uy = u * sin(rad)
+        
+        #Drag Free Model As in Task 2
+
+        drag_free_apogee_x = ux * uy / g
+        drag_free_apogee_y = h + (uy**2) / 2 / g
+
+        total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
+        drag_free_t = np.linspace(0,total_t)
+
+        drag_free_x = ux*drag_free_t
+        drag_free_y = h + uy*drag_free_t -g*drag_free_t**2/2
+        drag_free_vx = [ux]*config.PLOTLY_CONFIG
+        drag_free_vy = uy-g*drag_free_t
+        drag_free_v = sqrt(drag_free_vx**2+drag_free_vy**2)
+
+        y_x.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_x, y=drag_free_y, mode="lines",  line_shape='spline'))\
+            .add_trace(go.Scatter(name="Drag Free Apogee", x=[drag_free_apogee_x], y=[drag_free_apogee_y], text=[f"({drag_free_apogee_x:.2f}, {drag_free_apogee_y:.2f})"],
+                    textposition="bottom center", textfont=dict(size=14), marker_symbol="0", marker=dict(size=8), mode='markers+text'))\
+            .add_trace(go.Scatter(name="Drag Free Range", x=[drag_free_x[:-1]], y=[0], text=[f"({drag_free_x[:-1]:.2f}, {0})"],
+                    textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
+        
+        y_t.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_t, y=drag_free_y, mode="lines",  line_shape='spline'))
+        
+        vx_t.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_t, y=drag_free_vx, mode="lines",  line_shape='spline'))
+        
+        vy_t.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_t, y=drag_free_vy, mode="lines",  line_shape='spline'))
+        
+        v_t.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_t, y=drag_free_v, mode="lines",  line_shape='spline'))
+        
+        #Resistance Included Model Using Verlet Method
+        
+        k = Cd*P*a/m/2
+        current_t = 0
+        current_x = 0
+        current_y = h
+        current_vx = ux
+        current_vy = uy
+        current_v = u
+        drag_t = []
+        drag_x = []
+        drag_y = []
+        drag_vx = []
+        drag_vy = []
+        drag_v = []
+        while current_y >0:
+            current_t += dt
+            drag_t.append(current_t)
+            drag_x.append(current_x)
+            drag_y.append(current_y)
+            drag_vx.append(current_vx)
+            drag_vy.append(current_vy)
+            drag_v.append(current_v)
+            ax = -current_vx*current_v*k
+            ay = -g-current_vx*current_v*k
+            current_x += current_vx*dt+ax*dt**2/2
+            current_y += current_vy*dt+ay*dt**2/2
+            current_vx += ax*dt
+            current_vy += ay*dt
+            current_v = sqrt(current_vx**2+current_vy**2)
+            
+        '''exact apogee calculation not possible as graph plotted using verlet method'''
+        
+        y_x.add_trace(go.Scatter(name="Drag Included Traj", x=drag_x, y=drag_y, mode="lines",  line_shape='spline'))\
+            .add_trace(go.Scatter(name="Drag Included Range", x=[drag_x[:-1]], y=[0], text=[f"({drag_x[:-1]:.2f}, {0})"],
+                    textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
+        
+        y_t.add_trace(go.Scatter(name="Drag Included Traj", x=drag_t, y=drag_y, mode="lines",  line_shape='spline'))
+        
+        vx_t.add_trace(go.Scatter(name="Drag Included Traj", x=drag_t, y=drag_vx, mode="lines",  line_shape='spline'))
+        
+        vy_t.add_trace(go.Scatter(name="Drag Included Traj", x=drag_t, y=drag_vy,mode="lines",  line_shape='spline'))
+        
+        v_t.add_trace(go.Scatter(name="Drag Included Traj", x=drag_t, y=drag_v, mode="lines",  line_shape='spline'))
+        
+        return y_x, y_t, vx_t, vy_t, v_t
+    
 # =====================
 # MODEL
 # =====================
@@ -42,23 +132,38 @@ with model_tab:
         col1, col2 = st.columns(2, gap="large")
 
         with col1:
-            pass
+            theta = st.number_input("Launch Angle (deg)",
+                                    min_value=0.0,
+                                    max_value=90.0,
+                                    value=PLOT_DEFAULTS["theta"])
+            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
+            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
+            time_step = st.number_input("Time Step (s)", min_value=0.001, value=PLOT_DEFAULTS["dt"])
 
         with col2:
-            pass
+            Cd = st.number_input("Drag Coefficient Cd", min_value=0.001,value=PLOT_DEFAULTS["Cd"])
+            area = st.number_input("Cross Sectional Area (m²)", min_value=0.001, value=PLOT_DEFAULTS["a"])
+            density = st.number_input("Air Density (kgm⁻³)", min_value=0.001, value=PLOT_DEFAULTS["P"])
+            mass = st.number_input("Object Mass (m)", min_value=0.001, value=PLOT_DEFAULTS["m"])
 
         submitted = st.form_submit_button("Generate")
 
     try:
-        # fig, *args = generate_task_9()
+        y_x, y_t, vx_t, vy_t, v_t = generate_task_9(theta=theta, u=vel, h=height, g=gravity,
+                                                    Cd=Cd, a=area, P=density, m=mass, dt=time_step)
 
-        st.write("")
-        f"""
-        #### Calculated Values
-
-        """
-
-        # st.plotly_chart(fig, **config.plotly_chart_config)
+        colA, colB = st.columns(2)
+        
+        with colA:
+            st.plotly_chart(y_x, **config.PLOTLY_CONFIG)
+            st.plotly_chart(vx_t, **config.PLOTLY_CONFIG)
+            st.plotly_chart(vy_t, **config.PLOTLY_CONFIG)
+        
+        with colB:
+            st.plotly_chart(y_t, **config.PLOTLY_CONFIG)
+            st.plotly_chart(v_t, **config.PLOTLY_CONFIG)
+            
     except Exception as e:
         st.exception(e)
 
