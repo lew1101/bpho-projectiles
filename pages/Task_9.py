@@ -22,7 +22,7 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
-PLOT_DEFAULTS = {"theta": 60.0, "g": 9.81, "u": 10.0, "h": 2.0, 'Cd':0.3, 'a':0.01, 'P':1, 'm':0.1, "dt":0.01}
+PLOT_DEFAULTS = {"theta": 60.0, "g": 9.81, "u": 10.0, "h": 2.0, 'Cd':0.3, 'a':0.01, 'P':1.0, 'm':0.1, "dt":0.01}
 
 with code_tab, st.echo():
 
@@ -52,13 +52,13 @@ with code_tab, st.echo():
         drag_free_apogee_y = h + (uy**2) / 2 / g
 
         total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
-        drag_free_t = np.linspace(0,total_t)
+        drag_free_t = np.linspace(0,total_t,config.GRAPH_SAMPLES)
 
         drag_free_x = ux*drag_free_t
         drag_free_y = h + uy*drag_free_t -g*drag_free_t**2/2
-        drag_free_vx = [ux]*config.PLOTLY_CONFIG
+        drag_free_vx = np.ones(config.GRAPH_SAMPLES)*ux
         drag_free_vy = uy-g*drag_free_t
-        drag_free_v = sqrt(drag_free_vx**2+drag_free_vy**2)
+        drag_free_v = np.sqrt(drag_free_vx**2+drag_free_vy**2)
 
         y_x.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_x, y=drag_free_y, mode="lines",  line_shape='spline'))\
             .add_trace(go.Scatter(name="Drag Free Apogee", x=[drag_free_apogee_x], y=[drag_free_apogee_y], text=[f"({drag_free_apogee_x:.2f}, {drag_free_apogee_y:.2f})"],
@@ -108,7 +108,7 @@ with code_tab, st.echo():
         '''exact apogee calculation not possible as graph plotted using verlet method'''
         
         y_x.add_trace(go.Scatter(name="Drag Included Traj", x=drag_x, y=drag_y, mode="lines",  line_shape='spline'))\
-            .add_trace(go.Scatter(name="Drag Included Range", x=[drag_x[:-1]], y=[0], text=[f"({drag_x[:-1]:.2f}, {0})"],
+            .add_trace(go.Scatter(name="Drag Included Range", x=[drag_x[:-1]], y=[0], text=[f"({float(drag_x[:-1]):.2f}, {0})"],
                     textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
         
         y_t.add_trace(go.Scatter(name="Drag Included Traj", x=drag_t, y=drag_y, mode="lines",  line_shape='spline'))
