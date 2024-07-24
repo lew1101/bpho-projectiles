@@ -6,7 +6,7 @@ import numpy as np
 import config
 from cache import cache_data_default
 
-st.set_page_config(page_title="Task 4", **config.PAGE_CONFIG)
+st.set_page_config(page_title="Task 6", **config.PAGE_CONFIG)
 config.apply_custom_styles()
 
 # ==================
