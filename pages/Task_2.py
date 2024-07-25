@@ -90,10 +90,10 @@ with model_tab:
                                     min_value=0.0,
                                     max_value=90.0,
                                     value=PLOT_DEFAULTS["theta"])
-            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
+            gravity = st.number_input("Gravity (m⋅s⁻²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
 
         with col2:
-            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            vel = st.number_input("Initial Speed (m⋅s⁻¹)", min_value=0.0, value=PLOT_DEFAULTS["u"])
             height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
 
         submitted = st.form_submit_button("Generate")

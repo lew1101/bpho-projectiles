@@ -71,8 +71,18 @@ with code_tab, st.echo():
             high_y_traj = h + x * high_tan_theta - x**2 * g * (1 + high_tan_theta**2) / 2 / u**2
 
             fig.add_traces(data=[
-                go.Scatter(name="Low ball", x=x, y=low_y_traj, mode="lines", line_shape='spline'),
-                go.Scatter(name="High ball", x=x, y=high_y_traj, mode="lines", line_shape='spline')
+                go.Scatter(name="Low ball",
+                           x=x,
+                           y=low_y_traj,
+                           mode="lines",
+                           line_dash="dot",
+                           line_shape='spline'),
+                go.Scatter(name="High ball",
+                           x=x,
+                           y=high_y_traj,
+                           mode="lines",
+                           line_dash="dot",
+                           line_shape='spline')
             ])
 
             return fig, min_u, atan(min_tan_theta), atan(low_tan_theta), atan(high_tan_theta)
@@ -93,10 +103,10 @@ with model_tab:
         with col1:
             x = st.number_input("Target X (m)", min_value=0.0, value=PLOT_DEFAULTS["target_x"])
             y = st.number_input("Target Y (m)", min_value=0.0, value=PLOT_DEFAULTS["target_y"])
-            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
+            gravity = st.number_input("Gravity (m⋅s⁻²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
 
         with col2:
-            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            vel = st.number_input("Initial Speed (m⋅s⁻¹)", min_value=0.0, value=PLOT_DEFAULTS["u"])
             height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
 
         submitted = st.form_submit_button("Generate")
@@ -111,7 +121,7 @@ with model_tab:
 
         st.write("")
         if not has_sufficient_vel:
-            st.warning("The input velocity (m/s) is not sufficient to reach target.", icon="⚠️")
+            st.warning("The input velocity (m⋅s⁻¹) is not sufficient to reach target.", icon="⚠️")
         f"""
         #### Calculated Values
         """
@@ -124,7 +134,7 @@ with model_tab:
             """
             st.write("")
         f"""
-        **Minimum Initial Velocity**: {min_u:.2f} m/s
+        **Minimum Initial Velocity**: {min_u:.2f} m⋅s⁻¹
         
         **Launch Angle of Minimum Velocity Trajectory**: {degrees(min_theta):.2f} deg
         """

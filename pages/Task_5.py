@@ -23,7 +23,7 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
-PLOT_DEFAULTS = {"target_x": 20.0, "target_y": 10.0, "g": 9.81, "u": 20.0, "h": 0.0}
+PLOT_DEFAULTS = {"target_x": 15.0, "target_y": 15.0, "g": 9.81, "u": 20.0, "h": 0.0}
 
 with code_tab, st.echo():
 
@@ -58,6 +58,11 @@ with code_tab, st.echo():
 
         fig = go.Figure(
             data=[
+                go.Scatter(name="Min. Velocity",
+                           x=min_x_traj,
+                           y=min_y_traj,
+                           mode="lines",
+                           line_shape='spline'),
                 go.Scatter(name="Target",
                            x=[target_x],
                            y=[target_y],
@@ -67,20 +72,17 @@ with code_tab, st.echo():
                            marker_symbol="x",
                            marker=dict(size=11),
                            mode='markers+text'),
-                go.Scatter(name="Min. Velocity",
-                           x=min_x_traj,
-                           y=min_y_traj,
-                           mode="lines",
-                           line_shape='spline'),
                 go.Scatter(name="Bounding Parabola",
                            x=bound_x,
                            y=bound_parabola,
                            mode="lines",
+                           line_dash="longdash",
                            line_shape='spline'),
                 go.Scatter(name="Max. Range",
                            x=bound_x,
                            y=max_range_y,
                            mode='lines',
+                           line_dash="dashdot",
                            line_shape='spline')
             ],
             layout=config.GO_BASE_LAYOUT.update(title_text="Hitting a Target",
@@ -113,12 +115,17 @@ with code_tab, st.echo():
                 1 + high_tan_theta**2) / 2 / u**2
 
             fig.add_traces(data=[
-                go.Scatter(
-                    name="Low Ball", x=low_x_list, y=low_y_traj, mode="lines", line_shape='spline'),
+                go.Scatter(name="Low Ball",
+                           x=low_x_list,
+                           y=low_y_traj,
+                           mode="lines",
+                           line_dash="dot",
+                           line_shape='spline'),
                 go.Scatter(name="High Ball",
                            x=high_x_list,
                            y=high_y_traj,
                            mode="lines",
+                           line_dash="dot",
                            line_shape='spline')
             ])
 
@@ -140,10 +147,10 @@ with model_tab:
         with col1:
             x = st.number_input("Target X (m)", min_value=0.0, value=PLOT_DEFAULTS["target_x"])
             y = st.number_input("Target Y (m)", min_value=0.0, value=PLOT_DEFAULTS["target_y"])
-            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
+            gravity = st.number_input("Gravity (m⋅s⁻²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
 
         with col2:
-            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            vel = st.number_input("Initial Speed (m⋅s⁻¹)", min_value=0.0, value=PLOT_DEFAULTS["u"])
             height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
 
         submitted = st.form_submit_button("Generate")
@@ -158,7 +165,7 @@ with model_tab:
 
         st.write("")
         if not has_sufficient_vel:
-            st.warning("The input velocity (m/s) is not sufficient to reach target.", icon="⚠️")
+            st.warning("The input velocity (m⋅s⁻¹) is not sufficient to reach target.", icon="⚠️")
         f"""
         #### Calculated Values
         """
@@ -171,7 +178,7 @@ with model_tab:
             """
             st.write("")
         f"""
-        **Minimum Initial Velocity**: {min_u:.2f} m/s
+        **Minimum Initial Velocity**: {min_u:.2f} m⋅s⁻¹
         
         **Launch Angle of Minimum Velocity Trajectory**: {degrees(min_theta):.2f} deg
         """

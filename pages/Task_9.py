@@ -110,6 +110,12 @@ with code_tab, st.echo():
                            y=drag_y,
                            mode="lines",
                            line_shape='spline'),
+                go.Scatter(name="Drag Free",
+                           x=drag_free_x,
+                           y=drag_free_y,
+                           mode="lines",
+                           line_dash="dashdot",
+                           line_shape='spline'),
                 go.Scatter(name="Drag Included Range",
                            x=[drag_x[-1]],
                            y=[0],
@@ -120,11 +126,6 @@ with code_tab, st.echo():
                            marker=dict(size=11),
                            mode='markers+text',
                            showlegend=False),
-                go.Scatter(name="Drag Free",
-                           x=drag_free_x,
-                           y=drag_free_y,
-                           mode="lines",
-                           line_shape='spline'),
                 go.Scatter(name="Drag Free Apogee",
                            x=[drag_free_apogee_x],
                            y=[drag_free_apogee_y],
@@ -151,16 +152,17 @@ with code_tab, st.echo():
                                                             xaxis_title="t (s)",
                                                             yaxis_title="y (m)"),
                         data=[
-                            go.Scatter(name="Drag Free",
-                                       x=drag_free_t,
-                                       y=drag_free_y,
-                                       mode="lines",
-                                       line_shape='spline'),
                             go.Scatter(name="Drag Included",
                                        x=drag_t,
                                        y=drag_y,
                                        mode="lines",
-                                       line_shape='spline')
+                                       line_shape='spline'),
+                            go.Scatter(name="Drag Free",
+                                       x=drag_free_t,
+                                       y=drag_free_y,
+                                       mode="lines",
+                                       line_dash="dashdot",
+                                       line_shape='spline'),
                         ])
 
         vx_t = go.Figure(
@@ -177,12 +179,13 @@ with code_tab, st.echo():
                            x=drag_free_t,
                            y=drag_free_vx,
                            mode="lines",
+                           line_dash="dashdot",
                            line_shape='spline')
             ],
         )
 
         vy_t = go.Figure(
-            layout=config.GO_BASE_LAYOUT.update(title_text="Y Velocity vs Time",
+            layout=config.GO_BASE_LAYOUT.update(title_text="Y Velocity vs. Time",
                                                 xaxis_title="t (s)",
                                                 yaxis_title="vy (ms⁻¹)"),
             data=[
@@ -195,6 +198,7 @@ with code_tab, st.echo():
                            x=drag_free_t,
                            y=drag_free_vy,
                            mode="lines",
+                           line_dash="dashdot",
                            line_shape='spline')
             ],
         )
@@ -213,6 +217,7 @@ with code_tab, st.echo():
                            x=drag_free_t,
                            y=drag_free_v,
                            mode="lines",
+                           line_dash="dashdot",
                            line_shape='spline')
             ],
         )
@@ -235,9 +240,9 @@ with model_tab:
                                     min_value=0.0,
                                     max_value=90.0,
                                     value=PLOT_DEFAULTS["theta"])
-            vel = st.number_input("Initial Speed (m/s)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            vel = st.number_input("Initial Speed (m⋅s⁻¹)", min_value=0.0, value=PLOT_DEFAULTS["u"])
             height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
-            gravity = st.number_input("Gravity (m/s²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
+            gravity = st.number_input("Gravity (m⋅s⁻²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
             time_step = st.number_input("Time Step (s)",
                                         min_value=0.001,
                                         step=0.001,
@@ -245,7 +250,7 @@ with model_tab:
                                         format="%.3f")
 
         with col2:
-            Cd = st.number_input("Drag Coefficient Cd",
+            Cd = st.number_input("Drag Coefficient",
                                  min_value=0.001,
                                  step=0.001,
                                  value=PLOT_DEFAULTS["Cd"],
@@ -255,12 +260,12 @@ with model_tab:
                                    step=0.001,
                                    value=PLOT_DEFAULTS["a"],
                                    format="%.3f")
-            density = st.number_input("Air Density (kgm⁻³)",
+            density = st.number_input("Air Density (kg⋅m⁻³)",
                                       min_value=0.001,
                                       step=0.001,
                                       value=PLOT_DEFAULTS["P"],
                                       format="%.3f")
-            mass = st.number_input("Object Mass (m)",
+            mass = st.number_input("Object Mass (kg)",
                                    min_value=0.001,
                                    step=0.001,
                                    value=PLOT_DEFAULTS["m"],
