@@ -22,7 +22,7 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
-PLOT_DEFAULTS = {"theta": 60.0, "g": 9.81, "u": 10.0, "h": 2.0, 'Cd':0.3, 'a':0.01, 'P':1.0, 'm':0.1, "dt":0.01}
+PLOT_DEFAULTS = {"theta": 30.0, "g": 9.81, "u": 20.0, "h": 2.0, 'Cd':1.0, 'a':0.007854, 'P':1.0, 'm':0.1, "dt":0.01}
 
 with code_tab, st.echo():
 
@@ -63,7 +63,7 @@ with code_tab, st.echo():
         y_x.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_x, y=drag_free_y, mode="lines",  line_shape='spline'))\
             .add_trace(go.Scatter(name="Drag Free Apogee", x=[drag_free_apogee_x], y=[drag_free_apogee_y], text=[f"({drag_free_apogee_x:.2f}, {drag_free_apogee_y:.2f})"],
                     textposition="bottom center", textfont=dict(size=14), marker_symbol="0", marker=dict(size=8), mode='markers+text'))\
-            .add_trace(go.Scatter(name="Drag Free Range", x=[drag_free_x[:-1]], y=[0], text=[f"({drag_free_x[:-1]:.2f}, {0})"],
+            .add_trace(go.Scatter(name="Drag Free Range", x=[drag_free_x[-1]], y=[0], text=[f"({drag_free_x[-1]:.2f}, {0})"],
                     textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
         
         y_t.add_trace(go.Scatter(name="Drag Free Traj", x=drag_free_t, y=drag_free_y, mode="lines",  line_shape='spline'))
@@ -105,10 +105,10 @@ with code_tab, st.echo():
             current_vy += ay*dt
             current_v = sqrt(current_vx**2+current_vy**2)
             
-        '''exact apogee calculation not possible as graph plotted using verlet method'''
+        #exact apogee calculation not possible as graph plotted using verlet method
         
         y_x.add_trace(go.Scatter(name="Drag Included Traj", x=drag_x, y=drag_y, mode="lines",  line_shape='spline'))\
-            .add_trace(go.Scatter(name="Drag Included Range", x=[drag_x[:-1]], y=[0], text=[f"({float(drag_x[:-1]):.2f}, {0})"],
+            .add_trace(go.Scatter(name="Drag Included Range", x=[drag_x[-1]], y=[0], text=[f"({drag_x[-1]:.2f}, {0})"],
                     textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
         
         y_t.add_trace(go.Scatter(name="Drag Included Traj", x=drag_t, y=drag_y, mode="lines",  line_shape='spline'))
