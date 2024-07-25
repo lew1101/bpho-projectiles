@@ -99,6 +99,8 @@ with model_tab:
         st.write("")
         f"""
         #### Calculated Values
+        
+        ##### _Original Trajectory_ 
 
         **Range**: {range:.3f} m
         
@@ -111,9 +113,9 @@ with model_tab:
     
         **Maximum Range**: {range_max:.3f} m
         
-        **Launch Angle of Trajectory**: {degrees(rad_max):.3f} deg
+        **Launch Angle**: {degrees(rad_max):.3f} deg
         
-        **Flight Time of Trajectory**: {max_range_t:.3f} s
+        **Flight Time**: {max_range_t:.3f} s
         """
 
         st.plotly_chart(fig, **config.PLOTLY_CONFIG)

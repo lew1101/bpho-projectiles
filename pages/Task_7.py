@@ -36,7 +36,7 @@ with code_tab, st.echo():
             .update_layout(title_text="Range vs. Time", xaxis_title="t (s)",  yaxis_title="r (m)")
 
         fig2 = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="XY Graph with Stationary Points", xaxis_title="x (m)",  yaxis_title="y (m)")
+            .update_layout(title_text="XY Graph", xaxis_title="x (m)",  yaxis_title="y (m)")
 
         t = np.linspace(0, 2.5, config.GRAPH_SAMPLES)
 

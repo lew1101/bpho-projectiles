@@ -115,6 +115,8 @@ with model_tab:
         f"""
         #### Calculated Values
         
+        ##### _Original Trajectory_ 
+        
         **Range**: {range:.3f} m
         
         **Flight Time**: {total_t:.3f} s
