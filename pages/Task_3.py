@@ -29,22 +29,6 @@ with code_tab, st.echo():
     @cache_data_default(**PLOT_DEFAULTS)
     def generate_task_3(*, target_x: float, target_y: float, g: float, u: float, h: float):
         from math import sqrt, atan
-
-        fig = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")
-
-        # add target
-        fig.add_traces(
-            go.Scatter(name="Target",
-                       x=[target_x],
-                       y=[target_y],
-                       text=[f"({target_x}, {target_y})"],
-                       textposition="bottom center",
-                       textfont=dict(size=15),
-                       marker_symbol="x",
-                       marker=dict(size=11),
-                       mode='markers+text'))
-
         x = np.linspace(0, target_x, config.GRAPH_SAMPLES)
 
         min_u = sqrt(g) * sqrt(target_y - h + sqrt(target_x**2 + (target_y - h)**2))
@@ -54,8 +38,23 @@ with code_tab, st.echo():
         # min vel trajectory
         min_y_traj = h + x * min_tan_theta - x**2 * g * (1 + min_tan_theta**2) / 2 / min_u**2
 
-        fig.add_trace(
-            go.Scatter(name="Min. vel.", x=x, y=min_y_traj, mode="lines", line_shape='spline'))
+        fig = go.Figure(
+            data=[
+                go.Scatter(name="Min. vel.", x=x, y=min_y_traj, mode="lines", line_shape='spline'),
+                go.Scatter(name="Target",
+                           x=[target_x],
+                           y=[target_y],
+                           text=[f"({target_x}, {target_y})"],
+                           textposition="bottom center",
+                           textfont=dict(size=15),
+                           marker_symbol="x",
+                           marker=dict(size=11),
+                           mode='markers+text')
+            ],
+            layout=config.GO_BASE_LAYOUT.update(title_text="Hitting a Target",
+                                                xaxis_title="x (m)",
+                                                yaxis_title="y (m)"),
+        )
 
         if u > min_u:
             # find high and low ball trajectories
@@ -71,8 +70,10 @@ with code_tab, st.echo():
             high_tan_theta = (-b + sqrt(b**2 - 4 * a * c)) / 2 / a
             high_y_traj = h + x * high_tan_theta - x**2 * g * (1 + high_tan_theta**2) / 2 / u**2
 
-            fig.add_trace(go.Scatter(name="Low ball", x=x, y=low_y_traj, mode="lines", line_shape='spline'))\
-               .add_trace(go.Scatter(name="High ball", x=x, y=high_y_traj, mode="lines", line_shape='spline'))
+            fig.add_traces(data=[
+                go.Scatter(name="Low ball", x=x, y=low_y_traj, mode="lines", line_shape='spline'),
+                go.Scatter(name="High ball", x=x, y=high_y_traj, mode="lines", line_shape='spline')
+            ])
 
             return fig, min_u, atan(min_tan_theta), atan(low_tan_theta), atan(high_tan_theta)
         else:
@@ -101,8 +102,8 @@ with model_tab:
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, min_u, min_theta, low_theta, high_theta = generate_task_3(  #
-            target_x=x, target_y=y, g=gravity, u=vel, h=height)
+        results = generate_task_3(target_x=x, target_y=y, g=gravity, u=vel, h=height)
+        fig, min_u, min_theta, low_theta, high_theta = results
 
         has_sufficient_vel = not (low_theta is None and high_theta is None)
 

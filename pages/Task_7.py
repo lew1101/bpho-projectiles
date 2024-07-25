@@ -32,11 +32,11 @@ with code_tab, st.echo():
 
         ANGLES = (30, 45, 60, 70.5, 78, 85)
 
-        fig1 = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Range vs. Time", xaxis_title="t (s)",  yaxis_title="r (m)")
+        fig1 = go.Figure(layout=config.GO_BASE_LAYOUT.update(
+            title_text="Range vs. Time", xaxis_title="t (s)", yaxis_title="r (m)"))
 
-        fig2 = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="XY Graph", xaxis_title="x (m)",  yaxis_title="y (m)")
+        fig2 = go.Figure(layout=config.GO_BASE_LAYOUT.update(
+            title_text="XY Graph", xaxis_title="x (m)", yaxis_title="y (m)"))
 
         t = np.linspace(0, 2.5, config.GRAPH_SAMPLES)
 
@@ -69,10 +69,24 @@ with code_tab, st.echo():
                 maxima_y = sqrt(u**2 * maxima_x**2 - g * maxima_x**3 * u * sin(rad) +
                                 g**2 * maxima_x**4 / 4)
 
-                fig1.add_trace(go.Scatter(name="Minima", x=[minima_x], y=[minima_y], textfont=dict(size=14), marker_symbol="x",
-                                marker=dict(size=8, color="deepskyblue"), mode='markers+text', showlegend=False))\
-                    .add_trace(go.Scatter(name="Maxima", x=[maxima_x], y=[maxima_y], textfont=dict(size=14), marker_symbol="x",
-                                marker=dict(size=8, color="limegreen"), mode='markers+text', showlegend=False))
+                fig1.add_traces(data=[
+                    go.Scatter(name="Minima",
+                               x=[minima_x],
+                               y=[minima_y],
+                               textfont=dict(size=14),
+                               marker_symbol="x",
+                               marker=dict(size=8, color="deepskyblue"),
+                               mode='markers+text',
+                               showlegend=False),
+                    go.Scatter(name="Maxima",
+                               x=[maxima_x],
+                               y=[maxima_y],
+                               textfont=dict(size=14),
+                               marker_symbol="x",
+                               marker=dict(size=8, color="limegreen"),
+                               mode='markers+text',
+                               showlegend=False)
+                ])
 
                 # plot corresponding point on XY graph
                 xy_minima_x = ux * minima_x
@@ -81,10 +95,24 @@ with code_tab, st.echo():
                 xy_maxima_x = ux * maxima_x
                 xy_maxima_y = uy * maxima_x - g / 2 * maxima_x**2
 
-                fig2.add_trace(go.Scatter(name="R vs. t Minima", x=[xy_minima_x], y=[xy_minima_y], textfont=dict(size=14), marker_symbol="x",
-                                marker=dict(size=8, color="deepskyblue"), mode='markers+text', showlegend=False))\
-                    .add_trace(go.Scatter(name="R vs. t Maxima", x=[xy_maxima_x], y=[xy_maxima_y], textfont=dict(size=14), marker_symbol="x",
-                                marker=dict(size=8, color="limegreen"), mode='markers+text', showlegend=False))
+                fig2.add_traces(data=[
+                    go.Scatter(name="R vs. t Minima",
+                               x=[xy_minima_x],
+                               y=[xy_minima_y],
+                               textfont=dict(size=14),
+                               marker_symbol="x",
+                               marker=dict(size=8, color="deepskyblue"),
+                               mode='markers+text',
+                               showlegend=False),
+                    go.Scatter(name="R vs. t Maxima",
+                               x=[xy_maxima_x],
+                               y=[xy_maxima_y],
+                               textfont=dict(size=14),
+                               marker_symbol="x",
+                               marker=dict(size=8, color="limegreen"),
+                               mode='markers+text',
+                               showlegend=False)
+                ])
 
         # Point of equality (ie having one saddle point instead of a maxima and minima)
         rad = asin(2 * sqrt(2) / 3)

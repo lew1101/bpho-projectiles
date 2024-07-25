@@ -28,5 +28,6 @@ continuation_indent_width = 4
 spaces_before_comment = "15, 20"
 coalesce_brackets = true
 dedent_closing_brackets = true
+split_before_first_argument = true
 blank_lines_around_top_level_definition = 2
 blank_line_before_nested_class_or_def = 0

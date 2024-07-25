@@ -41,17 +41,6 @@ with code_tab, st.echo():
                         P: float, m: float, dt: float):
         from math import sqrt, sin, cos, radians
 
-        y_x = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Projectile Motion Model", xaxis_title="x (m)",  yaxis_title="y (m)")
-        y_t = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Y Position vs. Time", xaxis_title="t (s)",  yaxis_title="y (m)")
-        vx_t = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="X Velocity vs. Time", xaxis_title="t (s)",  yaxis_title="vx (ms⁻¹)")
-        vy_t = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Y Velocity vs Time", xaxis_title="t (s)",  yaxis_title="vy (ms⁻¹)")
-        v_t = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Velocity vs. Time", xaxis_title="t (s)",  yaxis_title="v (ms⁻¹)")
-
         rad = radians(theta)
 
         ux = u * cos(rad)
@@ -70,40 +59,6 @@ with code_tab, st.echo():
         drag_free_vx = np.ones(config.GRAPH_SAMPLES) * ux
         drag_free_vy = uy - g * drag_free_t
         drag_free_v = np.sqrt(drag_free_vx**2 + drag_free_vy**2)
-
-        y_x.add_trace(go.Scatter(name="Drag Free", x=drag_free_x, y=drag_free_y, mode="lines",  line_shape='spline'))\
-            .add_trace(go.Scatter(name="Drag Free Apogee", x=[drag_free_apogee_x], y=[drag_free_apogee_y], text=[f"({drag_free_apogee_x:.2f}, {drag_free_apogee_y:.2f})"],
-                    textposition="bottom center", textfont=dict(size=14), marker_symbol="0", marker=dict(size=8), mode='markers+text'))\
-            .add_trace(go.Scatter(name="Drag Free Range", x=[drag_free_x[-1]], y=[0], text=[f"({drag_free_x[-1]:.2f}, {0})"],
-                    textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
-
-        y_t.add_trace(
-            go.Scatter(name="Drag Free",
-                       x=drag_free_t,
-                       y=drag_free_y,
-                       mode="lines",
-                       line_shape='spline'))
-
-        vx_t.add_trace(
-            go.Scatter(name="Drag Free",
-                       x=drag_free_t,
-                       y=drag_free_vx,
-                       mode="lines",
-                       line_shape='spline'))
-
-        vy_t.add_trace(
-            go.Scatter(name="Drag Free",
-                       x=drag_free_t,
-                       y=drag_free_vy,
-                       mode="lines",
-                       line_shape='spline'))
-
-        v_t.add_trace(
-            go.Scatter(name="Drag Free",
-                       x=drag_free_t,
-                       y=drag_free_v,
-                       mode="lines",
-                       line_shape='spline'))
 
         #Resistance Included Model Using Verlet Method
 
@@ -145,23 +100,122 @@ with code_tab, st.echo():
 
         #exact apogee calculation not possible as graph plotted using verlet method
 
-        y_x.add_trace(go.Scatter(name="Drag Included", x=drag_x, y=drag_y, mode="lines",  line_shape='spline'))\
-            .add_trace(go.Scatter(name="Drag Included Range", x=[drag_x[-1]], y=[0], text=[f"({drag_x[-1]:.2f}, {0})"],
-                    textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
+        y_x = go.Figure(
+            layout=config.GO_BASE_LAYOUT.update(title_text="Projectile Motion Model",
+                                                xaxis_title="x (m)",
+                                                yaxis_title="y (m)"),
+            data=[
+                go.Scatter(name="Drag Included",
+                           x=drag_x,
+                           y=drag_y,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Drag Included Range",
+                           x=[drag_x[-1]],
+                           y=[0],
+                           text=[f"({drag_x[-1]:.2f}, {0})"],
+                           textposition="top center",
+                           textfont=dict(size=14),
+                           marker_symbol="x",
+                           marker=dict(size=11),
+                           mode='markers+text',
+                           showlegend=False),
+                go.Scatter(name="Drag Free",
+                           x=drag_free_x,
+                           y=drag_free_y,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Drag Free Apogee",
+                           x=[drag_free_apogee_x],
+                           y=[drag_free_apogee_y],
+                           text=[f"({drag_free_apogee_x:.2f}, {drag_free_apogee_y:.2f})"],
+                           textposition="bottom center",
+                           textfont=dict(size=14),
+                           marker_symbol="0",
+                           marker=dict(size=8),
+                           mode='markers+text'),
+                go.Scatter(name="Drag Free Range",
+                           x=[drag_free_x[-1]],
+                           y=[0],
+                           text=[f"({drag_free_x[-1]:.2f}, {0})"],
+                           textposition="top center",
+                           textfont=dict(size=14),
+                           marker_symbol="x",
+                           marker=dict(size=11),
+                           mode='markers+text',
+                           showlegend=False)
+            ],
+        )
 
-        y_t.add_trace(
-            go.Scatter(name="Drag Included", x=drag_t, y=drag_y, mode="lines", line_shape='spline'))
+        y_t = go.Figure(layout=config.GO_BASE_LAYOUT.update(title_text="Y Position vs. Time",
+                                                            xaxis_title="t (s)",
+                                                            yaxis_title="y (m)"),
+                        data=[
+                            go.Scatter(name="Drag Free",
+                                       x=drag_free_t,
+                                       y=drag_free_y,
+                                       mode="lines",
+                                       line_shape='spline'),
+                            go.Scatter(name="Drag Included",
+                                       x=drag_t,
+                                       y=drag_y,
+                                       mode="lines",
+                                       line_shape='spline')
+                        ])
 
-        vx_t.add_trace(
-            go.Scatter(name="Drag Included", x=drag_t, y=drag_vx, mode="lines",
-                       line_shape='spline'))
+        vx_t = go.Figure(
+            layout=config.GO_BASE_LAYOUT.update(title_text="X Velocity vs. Time",
+                                                xaxis_title="t (s)",
+                                                yaxis_title="vx (ms⁻¹)"),
+            data=[
+                go.Scatter(name="Drag Included",
+                           x=drag_t,
+                           y=drag_vx,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Drag Free",
+                           x=drag_free_t,
+                           y=drag_free_vx,
+                           mode="lines",
+                           line_shape='spline')
+            ],
+        )
 
-        vy_t.add_trace(
-            go.Scatter(name="Drag Included", x=drag_t, y=drag_vy, mode="lines",
-                       line_shape='spline'))
+        vy_t = go.Figure(
+            layout=config.GO_BASE_LAYOUT.update(title_text="Y Velocity vs Time",
+                                                xaxis_title="t (s)",
+                                                yaxis_title="vy (ms⁻¹)"),
+            data=[
+                go.Scatter(name="Drag Included",
+                           x=drag_t,
+                           y=drag_vy,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Drag Free",
+                           x=drag_free_t,
+                           y=drag_free_vy,
+                           mode="lines",
+                           line_shape='spline')
+            ],
+        )
 
-        v_t.add_trace(
-            go.Scatter(name="Drag Included", x=drag_t, y=drag_v, mode="lines", line_shape='spline'))
+        v_t = go.Figure(
+            layout=config.GO_BASE_LAYOUT.update(title_text="Velocity vs. Time",
+                                                xaxis_title="t (s)",
+                                                yaxis_title="v (ms⁻¹)"),
+            data=[
+                go.Scatter(name="Drag Included",
+                           x=drag_t,
+                           y=drag_v,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Drag Free",
+                           x=drag_free_t,
+                           y=drag_free_v,
+                           mode="lines",
+                           line_shape='spline')
+            ],
+        )
 
         return y_x, y_t, vx_t, vy_t, v_t, total_t, total_t_drag, k
 

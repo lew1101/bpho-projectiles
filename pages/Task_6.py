@@ -45,9 +45,6 @@ with code_tab, st.echo():
                 calc_z2 = calc_z_part(z2)
                 return u**2 / g / (1 + tan(rad)**2) * (calc_z1 - calc_z2)
 
-        fig = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Arc Length of Projectile Motion (with Analytical Model)", xaxis_title="x (m)",  yaxis_title="y (m)")
-
         # inputted trajectory
         rad = radians(theta)
         ux = u * cos(rad)
@@ -72,12 +69,44 @@ with code_tab, st.echo():
         max_range_x = np.linspace(0, range_max, config.GRAPH_SAMPLES)
         max_range_traj = h + (uy / ux) * max_range_x - (g / 2 / ux**2) * max_range_x**2
 
-        fig.add_trace(go.Scatter(name="Trajectory", x=original_x, y=inputted_traj, mode="lines", line_shape='spline'))\
-           .add_trace(go.Scatter(name="Max Range", x=max_range_x, y=max_range_traj, mode="lines", line_shape='spline'))\
-           .add_trace(go.Scatter(name="Range", x=[range], y=[0], text=[f"({range:.2f}, {0})"],
-                textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend=False))\
-           .add_trace(go.Scatter(name="Max. Range", x=[range_max], y=[0], text=[f"({range_max:.2f}, {0})"],
-                textposition="bottom center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend=False))\
+        fig = go.Figure(
+            data=[
+                go.Scatter(name="Trajectory",
+                           x=original_x,
+                           y=inputted_traj,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Max Range",
+                           x=max_range_x,
+                           y=max_range_traj,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Range",
+                           x=[range],
+                           y=[0],
+                           text=[f"({range:.2f}, {0})"],
+                           textposition="top center",
+                           textfont=dict(size=14),
+                           marker_symbol="x",
+                           marker=dict(size=11),
+                           mode='markers+text',
+                           showlegend=False),
+                go.Scatter(name="Max. Range",
+                           x=[range_max],
+                           y=[0],
+                           text=[f"({range_max:.2f}, {0})"],
+                           textposition="bottom center",
+                           textfont=dict(size=14),
+                           marker_symbol="x",
+                           marker=dict(size=11),
+                           mode='markers+text',
+                           showlegend=False),
+            ],
+            layout=config.GO_BASE_LAYOUT.update(
+                title_text="Arc Length of Projectile Motion (with Analytical Model)",
+                xaxis_title="x (m)",
+                yaxis_title="y (m)"),
+        )
 
         return fig, range, total_t, rad_max, range_max, max_range_t, dist, max_dist
 
@@ -106,8 +135,8 @@ with model_tab:
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, range, total_t, rad_max, range_max, max_range_t, dist, max_dist = generate_task_6(
-            theta=theta, g=gravity, u=vel, h=height)
+        results = generate_task_6(theta=theta, g=gravity, u=vel, h=height)
+        fig, range, total_t, rad_max, range_max, max_range_t, dist, max_dist = results
 
         from math import degrees
 

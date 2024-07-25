@@ -13,7 +13,7 @@ config.apply_custom_styles()
 r"""
 ## Task 5 - Bounding Parabola
 
-**Description:** Update your projectile model of a trajectory which passes through (X,Y) with the bounding parabola, in addition to minimum speed, max range and high and low ball curves. The bounding parabola marks the region where possible (X,Y) coordinates could be reached given u,h,g inputs.
+**Description:** Update your projectile model of a trajectory which passes through $(x, y)$ with the bounding parabola, in addition to minimum speed, max range and high and low ball curves. The bounding parabola marks the region where possible $(x, y)$ coordinates could be reached given $u$, $h$, $g$ inputs.
 
 """
 
@@ -30,9 +30,6 @@ with code_tab, st.echo():
     @cache_data_default(**PLOT_DEFAULTS)
     def generate_task_5(*, target_x: float, target_y: float, g: float, u: float, h: float):
         from math import sqrt, atan
-
-        fig = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")
 
         min_u = sqrt(g) * sqrt(target_y - h + sqrt(target_x**2 + (target_y - h)**2))
         # since only tan(theta) is used in the equation for the parabola, we can optimize by not taking atan and use value directly
@@ -59,11 +56,37 @@ with code_tab, st.echo():
         max_range_y = bound_x * (
             -h + sqrt(max_x**2 + h**2)) / max_x - bound_x**2 * sqrt(max_x**2 + h**2) / max_x**2 + h
 
-        fig.add_trace(go.Scatter(name="Target", x=[target_x], y=[target_y], text=[f"({target_x}, {target_y})"], textposition="bottom center",
-                                 textfont=dict(size=15), marker_symbol="x", marker=dict(size=11), mode='markers+text'))\
-           .add_trace(go.Scatter(name="Min. Velocity", x=min_x_traj, y=min_y_traj, mode="lines", line_shape='spline'))\
-           .add_trace(go.Scatter(name="Bounding Parabola", x=bound_x, y = bound_parabola, mode="lines", line_shape='spline'))\
-           .add_trace(go.Scatter(name="Max. Range", x=bound_x, y = max_range_y, mode='lines', line_shape='spline'))
+        fig = go.Figure(
+            data=[
+                go.Scatter(name="Target",
+                           x=[target_x],
+                           y=[target_y],
+                           text=[f"({target_x}, {target_y})"],
+                           textposition="bottom center",
+                           textfont=dict(size=15),
+                           marker_symbol="x",
+                           marker=dict(size=11),
+                           mode='markers+text'),
+                go.Scatter(name="Min. Velocity",
+                           x=min_x_traj,
+                           y=min_y_traj,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Bounding Parabola",
+                           x=bound_x,
+                           y=bound_parabola,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Max. Range",
+                           x=bound_x,
+                           y=max_range_y,
+                           mode='lines',
+                           line_shape='spline')
+            ],
+            layout=config.GO_BASE_LAYOUT.update(title_text="Hitting a Target",
+                                                xaxis_title="x (m)",
+                                                yaxis_title="y (m)"),
+        )
 
         if u > min_u:
             # find high and low ball trajectories
@@ -89,10 +112,15 @@ with code_tab, st.echo():
             high_y_traj = h + high_x_list * high_tan_theta - high_x_list**2 * g * (
                 1 + high_tan_theta**2) / 2 / u**2
 
-            #
-
-            fig.add_trace(go.Scatter(name="Low ball", x=low_x_list, y=low_y_traj, mode="lines", line_shape='spline'))\
-               .add_trace(go.Scatter(name="High ball", x=high_x_list, y=high_y_traj, mode="lines", line_shape='spline'))
+            fig.add_traces(data=[
+                go.Scatter(
+                    name="Low Ball", x=low_x_list, y=low_y_traj, mode="lines", line_shape='spline'),
+                go.Scatter(name="High Ball",
+                           x=high_x_list,
+                           y=high_y_traj,
+                           mode="lines",
+                           line_shape='spline')
+            ])
 
             return fig, min_u, atan(min_tan_theta), atan(low_tan_theta), atan(high_tan_theta)
         else:
@@ -121,8 +149,8 @@ with model_tab:
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, min_u, min_theta, low_theta, high_theta = generate_task_5(  #
-            target_x=x, target_y=y, g=gravity, u=vel, h=height)
+        results = generate_task_5(target_x=x, target_y=y, g=gravity, u=vel, h=height)
+        fig, min_u, min_theta, low_theta, high_theta = results
 
         has_sufficient_vel = not (low_theta is None and high_theta is None)
 

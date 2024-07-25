@@ -30,9 +30,6 @@ with code_tab, st.echo():
     def generate_task_2(*, theta: float, g: float, u: float, h: float):
         from math import sin, cos, sqrt, radians
 
-        fig = go.Figure(layout=config.GO_BASE)\
-            .update_layout(title_text="Analytical Model", xaxis_title="x (m)",  yaxis_title="y (m)")
-
         rad = radians(theta)
 
         ux = u * cos(rad)
@@ -47,12 +44,33 @@ with code_tab, st.echo():
         x = np.linspace(0, total_x, config.GRAPH_SAMPLES)
         y = h + (uy / ux) * x - (g / 2 / ux**2) * x**2
 
-
-        fig.add_trace(go.Scatter(name="Trajectory", x=x, y=y, mode="lines",  line_shape='spline'))\
-           .add_trace(go.Scatter(name="Apogee", x=[xa], y=[ya], text=[f"({xa:.2f}, {ya:.2f})"],
-                textposition="bottom center", textfont=dict(size=14), marker_symbol="0", marker=dict(size=8), mode='markers+text'))\
-           .add_trace(go.Scatter(name="Range", x=[total_x], y=[0], text=[f"({total_x:.2f}, {0})"],
-                textposition="top center", textfont=dict(size=14), marker_symbol="x", marker=dict(size=11), mode='markers+text', showlegend = False))
+        fig = go.Figure(
+            data=[
+                go.Scatter(name="Trajectory", x=x, y=y, mode="lines", line_shape='spline'),
+                go.Scatter(name="Apogee",
+                           x=[xa],
+                           y=[ya],
+                           text=[f"({xa:.2f}, {ya:.2f})"],
+                           textposition="bottom center",
+                           textfont=dict(size=14),
+                           marker_symbol="0",
+                           marker=dict(size=8),
+                           mode='markers+text'),
+                go.Scatter(name="Range",
+                           x=[total_x],
+                           y=[0],
+                           text=[f"({total_x:.2f}, {0})"],
+                           textposition="top center",
+                           textfont=dict(size=14),
+                           marker_symbol="x",
+                           marker=dict(size=11),
+                           mode='markers+text',
+                           showlegend=False)
+            ],
+            layout=config.GO_BASE_LAYOUT.update(title_text="Analytical Model",
+                                                xaxis_title="x (m)",
+                                                yaxis_title="y (m)"),
+        )
 
         return fig, (xa, ya), total_x, total_t
 
@@ -81,10 +99,8 @@ with model_tab:
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig, (x_max, y_max), total_x, total_t = generate_task_2(theta=theta,
-                                                                g=gravity,
-                                                                u=vel,
-                                                                h=height)
+        results = generate_task_2(theta=theta, g=gravity, u=vel, h=height)
+        fig, (x_max, y_max), total_x, total_t = results
 
         st.write("")
         f"""
