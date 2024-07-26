@@ -89,7 +89,7 @@ with code_tab, st.echo():
             drag_v.append(current_v)
 
             ax = -current_vx * current_v * k
-            ay = -g - current_vx * current_v * k
+            ay = -g - current_vy * current_v * k
             current_x += current_vx * dt + ax * dt**2 / 2
             current_y += current_vy * dt + ay * dt**2 / 2
             current_vx += ax * dt
@@ -256,10 +256,10 @@ with model_tab:
                                  value=PLOT_DEFAULTS["Cd"],
                                  format="%.3f")
             area = st.number_input("Cross Sectional Area (m²)",
-                                   min_value=0.001,
-                                   step=0.001,
+                                   min_value=0.0001,
+                                   step=0.0001,
                                    value=PLOT_DEFAULTS["a"],
-                                   format="%.3f")
+                                   format="%.4f")
             density = st.number_input("Air Density (kg⋅m⁻³)",
                                       min_value=0.001,
                                       step=0.001,
