@@ -137,7 +137,8 @@ with math_tab:
     $$
     \begin{align}
     y &= h + u\sin{\theta}\left(\frac{x}{u\cos{\theta}}\right) + \frac{g}{2}\left(\frac{x}{u\cos{\theta}}\right)^2 \notag \\ 
-      &= h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}
+      &= h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta} \cdot x^2 \notag \\
+      &= \boxed{h + x\tan{\theta} + \frac{g}{2u^2}\left(1+\tan^2{\theta}\right)x^2}
     \end{align}
     $$
     
@@ -158,7 +159,7 @@ with math_tab:
     \begin{align}
     x_a &= u\cos{\theta} \cdot t_a \notag \\
         &= u\cos{\theta}\left(\frac{-u\sin{\theta}}{g}\right) \notag \\
-        &= \frac{-u^2}{g}\sin{\theta}\cos{\theta}
+        &= \boxed{\frac{-u^2}{g}\sin{\theta}\cos{\theta}}
     \end{align}
     $$
     
@@ -169,7 +170,7 @@ with math_tab:
     y_a &= h + u\sin{\theta} \cdot t_a + \frac{1}{2}gt_a^2  \notag \\
         &= h + u\sin{\theta}\left(\frac{-u\sin{\theta}}{g}\right) + \frac{g}{2}\left(\frac{-u\sin{\theta}}{g}\right)^2 \notag \\
         &= h - \frac{u^2}{g}\sin^2{\theta} + \frac{u^2}{2g}\sin^2{\theta} \notag \\
-        &= h - \frac{u^2}{2g}\sin^2{\theta}
+        &= \boxed{h - \frac{u^2}{2g}\sin^2{\theta}}
     \end{align}
     $$
     
@@ -192,7 +193,7 @@ with math_tab:
     \begin{align}
     R &= uT\cos{\theta} \notag \\
             &= u\cos{\theta}\cdot \frac{-u}{g}\left(\sin{\theta} + \sqrt{\sin^2{\theta} - \frac{2gh}{u^2}}\right) \notag \\
-            &= \frac{-u^2}{g}\left(\sin{\theta}\cos{\theta} + \cos{\theta}\sqrt{\sin^2{\theta} - \frac{2gh}{u^2}}\right)
+            &= \boxed{\frac{-u^2}{g}\left(\sin{\theta}\cos{\theta} + \cos{\theta}\sqrt{\sin^2{\theta} - \frac{2gh}{u^2}}\right)}
     \end{align}
     $$
     """

@@ -97,6 +97,8 @@ with model_tab:
 
 with math_tab:
     r"""
+    For simplification, projectiles are typically modelled as point masses falling under gravity. In other words, the internal motion and rotation is ignored and only the centre of mass of the projectile is considered. Air resistance is also often ignored, enabling analysis to proceed without a computer. Thus, the problem can be reduced to a 2-dimensional kinematics problem with constant acceleration. 
+    
     The dynamics of a projectile can be analyzed by decomposing its motion into the x and y axes. Given the initial speed of the projectile $u$ and the launch angle $\theta$, the initial speed in the x direction $u_x$ and the initial speed in the y direction $u_y$ are:
     
     $$
@@ -130,7 +132,7 @@ with math_tab:
     \begin{align}
     y &= \int_0^t{v_y \,\mathrm{d}t}  \notag \\
       &= \int_0^t{\left(u_y + g t\right) \,\mathrm{d}t} \notag \\
-      &= h + u_yt + \frac{1}{2}gt^2 
+      &= \boxed{h + u_yt + \frac{1}{2}gt^2}
     \end{align} 
     $$ 
     
@@ -146,7 +148,7 @@ with math_tab:
     
     $$
     \begin{equation}
-    T = \frac{-u_y - \sqrt{u_y^2-2gh}}{g}  \qquad (u_x \geq 0)
+    T = \boxed{\frac{-u_y - \sqrt{u_y^2-2gh}}{g}  \qquad (u_x \geq 0)}
     \end{equation}
     $$
     """
