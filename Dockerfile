@@ -18,6 +18,8 @@ RUN pip install poetry==${POETRY_VERSION} && \
     poetry install --only=main --no-root --no-ansi
 
 FROM base AS final
+ENV PORT=80
+EXPOSE ${PORT}
 COPY --from=build-venv /app/.venv ./.venv
 COPY . /app
 HEALTHCHECK --interval=30s --timeout=3s \
