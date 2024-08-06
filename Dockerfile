@@ -22,5 +22,6 @@ ENV PORT=80
 EXPOSE ${PORT}
 COPY --from=build-venv /app/.venv ./.venv
 COPY . /app
+ENTRYPOINT .venv/bin/streamlit run app.py --server.port=${PORT} --server.address=0.0.0.0
 HEALTHCHECK --interval=30s --timeout=3s \
     CMD curl --fail http://localhost:${PORT}/_stcore/health || exit 1
