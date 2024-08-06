@@ -16,7 +16,7 @@ r"""
 **Description:** Write a new projectile model which compares a drag-free model (use what you have already done in previous challenges) with a model incorporating the effect of air resistance. Use a _Verlet_ method to solve the air-resistance case with a $v^2$ drag dependence. It is possible to solve motion under drag which varies with the square of velocity analytically in 1D (see [here](http://www.eclecticon.info/index_htm_files/Mechanics%20-%20Modelling%20air%20resistance.pdf)) but in 2D projectile motion drag always opposes the velocity vector, which makes the maths much harder. So write a numerical recipe instead.
 """
 
-model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
+model_tab, code_tab, = st.tabs(["Model", "Source Code"])
 
 # =====================
 # CODE
@@ -307,13 +307,5 @@ with model_tab:
 
     except Exception as e:
         st.exception(e)
-
-# =====================
-# DERIVATION
-# =====================
-
-with math_tab:
-    r"""
-    """
 
 st.divider()

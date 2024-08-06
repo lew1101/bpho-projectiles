@@ -16,7 +16,7 @@ r"""
 **Description:** Use a numerical method assuming constant acceleration motion between small, discrete timesteps (e.g. the "Verlet" method) to compute a projectile trajectory which includes the possibility of a _bounce_. Define the _coefficient of restitution_ $C$ to be the vertical speed of separation divided by the vertical speed of approach. Assume a constant horizontal velocity, and stop the simulation after $N$ bounces. 
 """
 
-model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
+model_tab, code_tab, = st.tabs(["Model", "Source Code"])
 
 # =====================
 # CODE
@@ -184,13 +184,5 @@ with model_tab:
         st.plotly_chart(fig, **config.PLOTLY_CONFIG)
     except Exception as e:
         st.exception(e)
-
-# =====================
-# DERIVATION
-# =====================
-
-with math_tab:
-    r"""
-    """
 
 st.divider()
