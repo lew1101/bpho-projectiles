@@ -1,11 +1,12 @@
 version: "3.8"
 services:
   app:
-    env_file: .env
+    environment:
+      PORT: 8501
     build: .
-    command: streamlit run app/main.py --server.port 8501
+    command: streamlit run app/main.py --server.port ${PORT}
     volumes:
         - .:/app
     ports:
-        - 443:8501
+        - 80:${PORT}
     image: bpho-projectiles:latest
