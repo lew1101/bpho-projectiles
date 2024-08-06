@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     POETRY_CACHE_DIR="/opt/.cache" \
     POETRY_VIRTUALENVS_IN_PROJECT=true
 ENV PATH="$POETRY_HOME/bin:${PATH}"
-WORKDIR /app
+WORKDIR /usr/src/app
 
 FROM base AS build-venv
 COPY pyproject.toml ./
