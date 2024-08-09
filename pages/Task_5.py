@@ -193,6 +193,88 @@ with model_tab:
 
 with math_tab:
     r"""
+    This is an updated model based on Task 3
+    Please do refer there for derivations on finding trajectories of high ball, low ball and minimum launch speed through a fixed point (X,Y)
+    
+    There are 3 major updates in this task, such being: 
+    $$
+    \begin{enumerate}
+        \item Calculate bounding parabola
+        \item Calculate trajectory of projectile with maxmimum range
+        \item Extend projectile trajectories such that it is tracked until the projectile lands
+    \end{enumerate}
+    $$
+    
+    ##### Bounding Parabola Calculation
+    
+    The bounding parabola is defined as the region where possible (X,Y) coordinates could be reached given $u$,$h$,$g$ inputs, or in other words, the limit of the possible set of trajectories given a value of u.
+    
+    Recall that 
+    $$
+    \begin{equation}
+        y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}
+    \end{equation}
+    $$
+    
+    We can first simplify the equations by elimiating the h variable as shifting the y value by h at the end is equivalent. Hence:
+    $$
+    \begin{align*}
+        y &= x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}\\
+        \Rightarrow 2u^2y &= 2u^2x\tan{\theta} - gx^2 - gx^2\tan^2{\theta}\\
+        \Rightarrow 0 &= gx^2\tan^2{\theta} - 2u^2x\tan{\theta} + gx^2 + 2u^2y 
+    \end{align*}
+    $$
+    
+    As solutions only exist when discriminant is non-negative, hence:
+    
+    $$
+    \begin{align*}
+        4u^4x^2 - 4gx^2(2u^2y+gx^2) &\geq 0\\
+        \frac{u^4}{g} &\leq 2u^2y + gx^2\\
+        y &\leq frac{u^2}{2g} - frac{g}{2u^2}x^2
+    \end{align*}
+    $$
+    
+    Therefore, the bounding parabola is where:
+    $$
+    \begin{equation}
+        y &= frac{u^2}{2g} - frac{g}{2u^2}x^2
+    \end{equation}
+    $$
+    
+    ##### Calculation for Projectile of Maxmimum Range
+    
+    Recall from task 4 that the maxmimum range is given by
+    $$
+    \begin{equation}
+        R = frac{u^2}{g}\sqrt{1+frac{2gh}{u^2}}
+    \end{equation}
+    $$
+    
+    And from task 3 that minimum u parabola (with Y adjusted depending on u) is given by
+    $$
+    \begin{equation}
+        y = x\left(\frac{Y + \sqrt{X^2 + (Y)^2}}{X}\right) + \left(\frac{\sqrt{X^2+(Y)^2}}{X^2}\right)x^2}
+    \end{equation}
+    $$
+    
+    It is trivial that trajectory of maximum range with an initial velocity $u$ corresponds with trajectory of minimum velocity to reach a point with (X,Y) = (max_x, 0). Therefore the above equation describes the trajectory of maximum range.
+    
+    ##### Extension of Projectile Trajectories
+    
+    Here, the problem to solve is to find the values of x where the projectile lands on the ground so the entire trajectory can be tracked.
+    Referring back to task 2 for the equation of trajectory (ie equation 1 here):
+    \[y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}\]
+    
+    Using the same logic of equating y = 0 and to rearrange for x, we get:
+    $$
+    \begin{equation}
+        x = \theta + \sqrt{\theta^2 + frac{4gh(1+\theta^2)}{2u^2}frac{1}{4u^2g(1+\theta^2)}
+    \end{equation}
+    $$
+    
+    And we have solved it!
+    
     """
 
 st.divider()
