@@ -85,8 +85,13 @@ with code_tab, st.echo():
                            line_dash="dashdot",
                            line_shape='spline')
             ],
-            layout=(config.GO_BASE_LAYOUT |
-                    dict(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")),
+            layout=config.GO_BASE_LAYOUT,
+        )
+
+        fig.update_layout(
+            title_text="Hitting a Target",
+            xaxis_title="x (m)",
+            yaxis_title="y (m)",
         )
 
         if u > min_u:

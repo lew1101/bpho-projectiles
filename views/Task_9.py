@@ -101,8 +101,7 @@ with code_tab, st.echo():
         #exact apogee calculation not possible as graph plotted using verlet method
 
         y_x = go.Figure(
-            layout=(config.GO_BASE_LAYOUT | dict(
-                title_text="Projectile Motion Model", xaxis_title="x (m)", yaxis_title="y (m)")),
+            layout=config.GO_BASE_LAYOUT,
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_x,
@@ -147,25 +146,37 @@ with code_tab, st.echo():
             ],
         )
 
-        y_t = go.Figure(layout=(config.GO_BASE_LAYOUT | dict(
-            title_text="Y Position vs. Time", xaxis_title="t (s)", yaxis_title="y (m)")),
-                        data=[
-                            go.Scatter(name="Drag Included",
-                                       x=drag_t,
-                                       y=drag_y,
-                                       mode="lines",
-                                       line_shape='spline'),
-                            go.Scatter(name="Drag Free",
-                                       x=drag_free_t,
-                                       y=drag_free_y,
-                                       mode="lines",
-                                       line_dash="dashdot",
-                                       line_shape='spline'),
-                        ])
+        y_x.update_layout(
+            title_text="Projectile Motion Model",
+            xaxis_title="x (m)",
+            yaxis_title="y (m)",
+        )
+
+        y_t = go.Figure(
+            layout=config.GO_BASE_LAYOUT,
+            data=[
+                go.Scatter(name="Drag Included",
+                           x=drag_t,
+                           y=drag_y,
+                           mode="lines",
+                           line_shape='spline'),
+                go.Scatter(name="Drag Free",
+                           x=drag_free_t,
+                           y=drag_free_y,
+                           mode="lines",
+                           line_dash="dashdot",
+                           line_shape='spline'),
+            ],
+        )
+
+        y_t.update_layout(
+            title_text="Y Position vs. Time",
+            xaxis_title="t (s)",
+            yaxis_title="y (m)",
+        )
 
         vx_t = go.Figure(
-            layout=(config.GO_BASE_LAYOUT | dict(
-                title_text="X Velocity vs. Time", xaxis_title="t (s)", yaxis_title="vx (ms⁻¹)")),
+            layout=config.GO_BASE_LAYOUT,
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_t,
@@ -181,9 +192,14 @@ with code_tab, st.echo():
             ],
         )
 
+        vx_t.update_layout(
+            title_text="X Velocity vs. Time",
+            xaxis_title="t (s)",
+            yaxis_title="vx (ms⁻¹)",
+        )
+
         vy_t = go.Figure(
-            layout=(config.GO_BASE_LAYOUT | dict(
-                title_text="Y Velocity vs. Time", xaxis_title="t (s)", yaxis_title="vy (ms⁻¹)")),
+            layout=config.GO_BASE_LAYOUT,
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_t,
@@ -199,9 +215,14 @@ with code_tab, st.echo():
             ],
         )
 
+        vy_t.update_layout(
+            title_text="Y Velocity vs. Time",
+            xaxis_title="t (s)",
+            yaxis_title="vy (ms⁻¹)",
+        )
+
         v_t = go.Figure(
-            layout=(config.GO_BASE_LAYOUT | dict(
-                title_text="Velocity vs. Time", xaxis_title="t (s)", yaxis_title="v (ms⁻¹)")),
+            layout=config.GO_BASE_LAYOUT,
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_t,
@@ -215,6 +236,12 @@ with code_tab, st.echo():
                            line_dash="dashdot",
                            line_shape='spline')
             ],
+        )
+
+        v_t.update_layout(
+            title_text="Velocity vs. Time",
+            xaxis_title="t (s)",
+            yaxis_title="v (ms⁻¹)",
         )
 
         return y_x, y_t, vx_t, vy_t, v_t, total_t, total_t_drag, k

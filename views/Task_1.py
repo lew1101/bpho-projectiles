@@ -41,12 +41,16 @@ with code_tab, st.echo():
         x = ux * t
         y = h + uy * t - (g / 2) * t**2
 
-        fig = go.Figure(data=[go.Scatter(x=x, y=y, mode="markers")],
-                        layout=config.GO_BASE_LAYOUT | dict(
-                            title_text="Projectile Motion",
-                            xaxis_title="x (m)",
-                            yaxis_title="y (m)",
-                        ))
+        fig = go.Figure(
+            data=[go.Scatter(x=x, y=y, mode="markers")],
+            layout=config.GO_BASE_LAYOUT,
+        )
+
+        fig.update_layout(
+            title_text="Projectile Motion",
+            xaxis_title="x (m)",
+            yaxis_title="y (m)",
+        )
 
         return fig, total_t
 
