@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://ghcr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_9a5be997478e462d8828905678c83b9f }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_15c6be7b642640e393a2507b0f67d2e5 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_a485b07cc09e422caee21daa1f2ce741 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_4345917584464466b481dfd64bd7b619 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9a5be997478e462d8828905678c83b9f }}/bpho-image:${{ github.sha }}
+        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_a485b07cc09e422caee21daa1f2ce741 }}/bpho-projectiles:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'bpho-projectiles'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_94b22b966ec244a0bbf71354321ac5d0 }}
-        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9a5be997478e462d8828905678c83b9f }}/bpho-image:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_305d236b9533494c92c94d05de662704 }}
+        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_a485b07cc09e422caee21daa1f2ce741 }}/bpho-projectiles:${{ github.sha }}'
