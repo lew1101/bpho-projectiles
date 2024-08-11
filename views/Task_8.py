@@ -78,7 +78,7 @@ with code_tab, st.echo():
                                marker=dict(color="red", size=10))
                 ]) for i in range(0, frames_n, ANIMATION_STEP)
             ],
-            layout=config.GO_BASE_LAYOUT.update(
+            layout=(config.GO_BASE_LAYOUT | dict(
                 title_text="Bouncing Projectile",
                 xaxis_title="x (m)",
                 yaxis_title="y (m)",
@@ -125,7 +125,7 @@ with code_tab, st.echo():
                          yref="paper",
                          align="right")
                 ],
-                showlegend=False),
+                showlegend=False)),
         )
 
         return fig, total_t

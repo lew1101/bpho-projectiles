@@ -1,4 +1,8 @@
 import streamlit as st
+import plotly.io as pio
+import plotly.graph_objects as go
+
+from config import GO_BASE_LAYOUT
 
 app = st.navigation({
     "": [st.Page("views/Home.py", title="Home", icon=":material/home:")],

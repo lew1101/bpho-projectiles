@@ -1,5 +1,4 @@
 import streamlit as st
-import plotly.graph_objects as go
 
 GRAPH_SAMPLES = 50
 
@@ -7,24 +6,23 @@ PAGE_CONFIG = dict(layout="wide", page_icon="static/favicon/favicon.ico")
 
 PLOTLY_CONFIG = dict(use_container_width=True, displaylogo=False, include_mathjax="cdn")
 
-GO_BASE_LAYOUT = go.Layout(template="seaborn",
-                           modebar_remove=["select", "lasso"],
-                           autosize=True,
-                           title=dict(font=dict(size=22, color="#FFBD45"),
-                                      xanchor="left",
-                                      pad=dict(l=0)),
-                           xaxis=dict(ticks="outside",
-                                      minor_ticks="outside",
-                                      zeroline=True,
-                                      zerolinecolor="silver",
-                                      showgrid=True,
-                                      showline=True),
-                           yaxis=dict(ticks="outside",
-                                      minor_ticks="outside",
-                                      zeroline=True,
-                                      zerolinecolor="silver",
-                                      showgrid=True,
-                                      showline=True))
+GO_BASE_LAYOUT = dict(template="seaborn",
+                      modebar_remove=["select", "lasso"],
+                      autosize=True,
+                      title=dict(font=dict(size=22, color="#FFBD45"), xanchor="left",
+                                 pad=dict(l=0)),
+                      xaxis=dict(ticks="outside",
+                                 minor_ticks="outside",
+                                 zeroline=True,
+                                 zerolinecolor="silver",
+                                 showgrid=True,
+                                 showline=True),
+                      yaxis=dict(ticks="outside",
+                                 minor_ticks="outside",
+                                 zeroline=True,
+                                 zerolinecolor="silver",
+                                 showgrid=True,
+                                 showline=True))
 
 custom_styles = r"""
 <style>

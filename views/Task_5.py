@@ -85,9 +85,8 @@ with code_tab, st.echo():
                            line_dash="dashdot",
                            line_shape='spline')
             ],
-            layout=config.GO_BASE_LAYOUT.update(title_text="Hitting a Target",
-                                                xaxis_title="x (m)",
-                                                yaxis_title="y (m)"),
+            layout=(config.GO_BASE_LAYOUT |
+                    dict(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")),
         )
 
         if u > min_u:
@@ -193,18 +192,6 @@ with model_tab:
 
 with math_tab:
     r"""
-    This is an updated model based on Task 3
-    Please do refer there for derivations on finding trajectories of high ball, low ball and minimum launch speed through a fixed point (X,Y)
-    
-    There are 3 major updates in this task, such being: 
-    $$
-    \begin{enumerate}
-        \item Calculate bounding parabola
-        \item Calculate trajectory of projectile with maxmimum range
-        \item Extend projectile trajectories such that it is tracked until the projectile lands
-    \end{enumerate}
-    $$
-    
     ##### Bounding Parabola Calculation
     
     The bounding parabola is defined as the region where possible (X,Y) coordinates could be reached given $u$,$h$,$g$ inputs, or in other words, the limit of the possible set of trajectories given a value of u.

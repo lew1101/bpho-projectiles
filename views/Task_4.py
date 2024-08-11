@@ -86,9 +86,8 @@ with code_tab, st.echo():
                            mode='markers+text',
                            showlegend=False),
             ],
-            layout=config.GO_BASE_LAYOUT.update(title_text="Analytical Model",
-                                                xaxis_title="x (m)",
-                                                yaxis_title="y (m)"),
+            layout=(config.GO_BASE_LAYOUT |
+                    dict(title_text="Analytical Model", xaxis_title="x (m)", yaxis_title="y (m)")),
         )
 
         return fig, range, total_t, rad_max, range_max, max_range_t

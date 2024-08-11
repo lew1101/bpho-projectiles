@@ -32,11 +32,14 @@ with code_tab, st.echo():
 
         ANGLES = (30, 45, 60, 70.5, 78, 85)
 
-        fig1 = go.Figure(layout=config.GO_BASE_LAYOUT.update(
-            title_text="Range vs. Time", xaxis_title="t (s)", yaxis_title="r (m)"))
+        fig1 = go.Figure(
+            layout=(config.GO_BASE_LAYOUT |
+                    dict(title_text="Range vs. Time", xaxis_title="t (s)", yaxis_title="r (m)")))
 
-        fig2 = go.Figure(layout=config.GO_BASE_LAYOUT.update(
-            title_text="XY Graph", xaxis_title="x (m)", yaxis_title="y (m)"))
+        fig2 = go.Figure(layout=dict(**config.GO_BASE_LAYOUT,
+                                     title_text="XY Graph",
+                                     xaxis_title="x (m)",
+                                     yaxis_title="y (m)"))
 
         t = np.linspace(0, 2.5, config.GRAPH_SAMPLES)
 

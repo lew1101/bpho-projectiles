@@ -101,9 +101,8 @@ with code_tab, st.echo():
         #exact apogee calculation not possible as graph plotted using verlet method
 
         y_x = go.Figure(
-            layout=config.GO_BASE_LAYOUT.update(title_text="Projectile Motion Model",
-                                                xaxis_title="x (m)",
-                                                yaxis_title="y (m)"),
+            layout=(config.GO_BASE_LAYOUT | dict(
+                title_text="Projectile Motion Model", xaxis_title="x (m)", yaxis_title="y (m)")),
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_x,
@@ -148,9 +147,8 @@ with code_tab, st.echo():
             ],
         )
 
-        y_t = go.Figure(layout=config.GO_BASE_LAYOUT.update(title_text="Y Position vs. Time",
-                                                            xaxis_title="t (s)",
-                                                            yaxis_title="y (m)"),
+        y_t = go.Figure(layout=(config.GO_BASE_LAYOUT | dict(
+            title_text="Y Position vs. Time", xaxis_title="t (s)", yaxis_title="y (m)")),
                         data=[
                             go.Scatter(name="Drag Included",
                                        x=drag_t,
@@ -166,9 +164,8 @@ with code_tab, st.echo():
                         ])
 
         vx_t = go.Figure(
-            layout=config.GO_BASE_LAYOUT.update(title_text="X Velocity vs. Time",
-                                                xaxis_title="t (s)",
-                                                yaxis_title="vx (ms⁻¹)"),
+            layout=(config.GO_BASE_LAYOUT | dict(
+                title_text="X Velocity vs. Time", xaxis_title="t (s)", yaxis_title="vx (ms⁻¹)")),
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_t,
@@ -185,9 +182,8 @@ with code_tab, st.echo():
         )
 
         vy_t = go.Figure(
-            layout=config.GO_BASE_LAYOUT.update(title_text="Y Velocity vs. Time",
-                                                xaxis_title="t (s)",
-                                                yaxis_title="vy (ms⁻¹)"),
+            layout=(config.GO_BASE_LAYOUT | dict(
+                title_text="Y Velocity vs. Time", xaxis_title="t (s)", yaxis_title="vy (ms⁻¹)")),
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_t,
@@ -204,9 +200,8 @@ with code_tab, st.echo():
         )
 
         v_t = go.Figure(
-            layout=config.GO_BASE_LAYOUT.update(title_text="Velocity vs. Time",
-                                                xaxis_title="t (s)",
-                                                yaxis_title="v (ms⁻¹)"),
+            layout=(config.GO_BASE_LAYOUT | dict(
+                title_text="Velocity vs. Time", xaxis_title="t (s)", yaxis_title="v (ms⁻¹)")),
             data=[
                 go.Scatter(name="Drag Included",
                            x=drag_t,

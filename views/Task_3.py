@@ -51,9 +51,8 @@ with code_tab, st.echo():
                            marker=dict(size=11),
                            mode='markers+text')
             ],
-            layout=config.GO_BASE_LAYOUT.update(title_text="Hitting a Target",
-                                                xaxis_title="x (m)",
-                                                yaxis_title="y (m)"),
+            layout=(config.GO_BASE_LAYOUT |
+                    dict(title_text="Hitting a Target", xaxis_title="x (m)", yaxis_title="y (m)")),
         )
 
         if u > min_u:
