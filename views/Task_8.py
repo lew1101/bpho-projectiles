@@ -112,7 +112,7 @@ with code_tab, st.echo():
                          pad=dict(r=10, t=10),
                          xanchor="left",
                          yanchor="top",
-                         x=0.07,
+                         x=0.06,
                          y=1.18,
                          showactive=False)
                 ],

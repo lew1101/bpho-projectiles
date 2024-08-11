@@ -1,20 +1,19 @@
-from st_pages import Page, show_pages
+import streamlit as st
 
-
-def app() -> None:
-    show_pages([
-        Page("pages/Home.py", "Home"),
-        Page("pages/Task_1.py", "Task 1 - Projectile Motion"),
-        Page("pages/Task_2.py", "Task 2 - Analytical Model"),
-        Page("pages/Task_3.py", "Task 3 - Hitting a Target"),
-        Page("pages/Task_4.py", "Task 4 - Maximize Projectile Range"),
-        Page("pages/Task_5.py", "Task 5 - Bounding Parabola"),
-        Page("pages/Task_6.py", "Task 6 - Arc Length of Projectile Motion"),
-        Page("pages/Task_7.py", "Task 7 - Range of Projectile vs. Time"),
-        Page("pages/Task_8.py", "Task 8 - Bouncing Projectile"),
-        Page("pages/Task_9.py", "Task 9 - Air Resistance"),
-    ])
-
+app = st.navigation({
+    "": [st.Page("views/Home.py", title="Home", icon=":material/home:")],
+    "Tasks": [
+        st.Page("views/Task_1.py", title="1 - Projectile Motion"),
+        st.Page("views/Task_2.py", title="2 - Analytical Model"),
+        st.Page("views/Task_3.py", title="3 - Hitting a Target"),
+        st.Page("views/Task_4.py", title="4 - Maximize Projectile Range"),
+        st.Page("views/Task_5.py", title="5 - Bounding Parabola"),
+        st.Page("views/Task_6.py", title="6 - Arc Length of Projectile Motion"),
+        st.Page("views/Task_7.py", title="7 - Range of Projectile vs. Time"),
+        st.Page("views/Task_8.py", title="8 - Bouncing Projectile"),
+        st.Page("views/Task_9.py", title="9 - Air Resistance"),
+    ]
+})
 
 if __name__ == "__main__":
-    app()
+    app.run()

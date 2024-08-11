@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
     background-position: top center;
     background-size: 110px;
     background-repeat: no-repeat;
-    padding-top: 120px;
+    padding-top: 150px;
 }
 </style>
 """
