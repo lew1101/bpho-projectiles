@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App
+name: Build and deploy container app to Azure Web App - bpho-projectiles
 
 on:
   push:
@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://ghcr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_daf67b77a53a45a59921d971bb85ff15 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_59a5819464e94fe8bfee655bc250df91 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_9a5be997478e462d8828905678c83b9f }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_15c6be7b642640e393a2507b0f67d2e5 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_daf67b77a53a45a59921d971bb85ff15 }}/bpho-projectiles:${{ github.sha }}
+        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9a5be997478e462d8828905678c83b9f }}/bpho-image:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -45,7 +45,7 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'streamlit-instance'
+        app-name: 'bpho-projectiles'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_153fe25f60a244598cdd4f218fdbb9d9 }}
-        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_daf67b77a53a45a59921d971bb85ff15 }}/bpho-projectiles:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_94b22b966ec244a0bbf71354321ac5d0 }}
+        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9a5be997478e462d8828905678c83b9f }}/bpho-image:${{ github.sha }}'
