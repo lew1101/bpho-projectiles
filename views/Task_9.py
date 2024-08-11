@@ -98,7 +98,12 @@ with code_tab, st.echo():
 
             total_t_drag += dt
 
-        #exact apogee calculation not possible as graph plotted using verlet method
+        # get approximate apogee for drag included trajectory:
+
+        apogee_idx = max(range(len(drag_y)), key=drag_y.__getitem__)
+
+        drag_apogee_x = drag_x[apogee_idx]
+        drag_apogee_y = drag_y[apogee_idx]
 
         y_x = go.Figure(
             layout=config.GO_BASE_LAYOUT,
@@ -114,6 +119,24 @@ with code_tab, st.echo():
                            mode="lines",
                            line_dash="dashdot",
                            line_shape='spline'),
+                go.Scatter(name="Drag Included Apogee (Approx.)",
+                           x=[drag_apogee_x],
+                           y=[drag_apogee_y],
+                           text=[f"({drag_apogee_x:.2f}, {drag_apogee_y:.2f})"],
+                           textposition="bottom center",
+                           textfont=dict(size=14),
+                           marker_symbol="0",
+                           marker=dict(size=8),
+                           mode='markers+text'),
+                go.Scatter(name="Drag Free Apogee",
+                           x=[drag_free_apogee_x],
+                           y=[drag_free_apogee_y],
+                           text=[f"({drag_free_apogee_x:.2f}, {drag_free_apogee_y:.2f})"],
+                           textposition="bottom center",
+                           textfont=dict(size=14),
+                           marker_symbol="0",
+                           marker=dict(size=8),
+                           mode='markers+text'),
                 go.Scatter(name="Drag Included Range",
                            x=[drag_x[-1]],
                            y=[0],
@@ -124,15 +147,6 @@ with code_tab, st.echo():
                            marker=dict(size=11),
                            mode='markers+text',
                            showlegend=False),
-                go.Scatter(name="Drag Free Apogee",
-                           x=[drag_free_apogee_x],
-                           y=[drag_free_apogee_y],
-                           text=[f"({drag_free_apogee_x:.2f}, {drag_free_apogee_y:.2f})"],
-                           textposition="bottom center",
-                           textfont=dict(size=14),
-                           marker_symbol="0",
-                           marker=dict(size=8),
-                           mode='markers+text'),
                 go.Scatter(name="Drag Free Range",
                            x=[drag_free_x[-1]],
                            y=[0],
