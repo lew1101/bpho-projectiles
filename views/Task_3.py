@@ -200,13 +200,13 @@ with math_tab:
     
     ##### Finding the Minimum Launch Trajectory
     
-    By considering that the discriminant $b^2 - 4ac$ in equation 3 must be greater than zero to yield real solutions of $\theta$, the range of possible launch velocity $u$ (and consequently the minimum launch velocity) can be found.
+    By considering that the discriminant $b^2 - 4ac$ in equation 3 must be greater than zero to yield real solutions of $\theta$, the range of possible launch velocity $u$ (and consequently the minimum launch velocity) can be found. Without loss of generality, set a coordinate system such that $h=0$.
     
     $$
     \begin{align*}
-        X^2-4\left(\frac{gX^2}{2u^2}\right)\left(Y - h + \frac{gX^2}{2u^2}\right) &\geq 0\\
-        \Rightarrow 1-\frac{2g}{u^2}\left(Y-h\right)-\frac{g^2X^2}{u^4} &\geq 0 \\
-        \Rightarrow u^4-2gu^2(Y-h)-g^2X^2 &\geq 0
+        X^2-4\left(\frac{gX^2}{2u^2}\right)\left(Y + \frac{gX^2}{2u^2}\right) &\geq 0\\
+        \Rightarrow 1-\frac{2gY}{u^2}-\frac{g^2X^2}{u^4} &\geq 0 \\
+        \Rightarrow u^4-2gu^2Y-g^2X^2 &\geq 0
     \end{align*}
     $$
     
@@ -214,8 +214,8 @@ with math_tab:
     
     $$
     \begin{gather*}
-        \Rightarrow \left(u^2 - g(Y-h)\right)^2 - g^2(Y-h)^2 -g^2X^2 \geq 0 \\
-        \Rightarrow \left(u^2 - g(Y-h)\right)^2 \geq g^2(Y-h)^2 + g^2X^2
+        \Rightarrow \left(u^2 - gY\right)^2 - g^2Y^2 -g^2X^2 \geq 0 \\
+        \Rightarrow \left(u^2 - gY\right)^2 \geq g^2Y^2 + g^2X^2
     \end{gather*}
     $$
 
@@ -223,7 +223,7 @@ with math_tab:
     
     $$
     \begin{equation*}
-        \Rightarrow u^2 - g(Y-h) \geq g\sqrt{X^2 + (Y-h)^2}
+        \Rightarrow u^2 - gY \geq g\sqrt{X^2 + Y^2}
     \end{equation*}
     $$
     
@@ -231,24 +231,27 @@ with math_tab:
     
     $$
     \begin{align}
-        \Rightarrow u^2 &\geq g\left((Y-h) + \sqrt{X^2 + (Y-h)^2}\right) \notag \\
-        \Rightarrow u &\geq \boxed{\sqrt{g}\sqrt{(Y-h) + \sqrt{X^2 + (Y-h)^2}}}
+        \Rightarrow u^2 &\geq g\left(Y + \sqrt{X^2 + Y^2}\right) \notag \\
+        \Rightarrow u &\geq \boxed{\sqrt{g}\sqrt{Y + \sqrt{X^2 + Y^2}}}
     \end{align}
     $$
     
-    The launch angle of the minimum $u$ trajectory can be found by replacing the minimum solution for $u$ in equation 2 for $u$. Recognizing that $b^2-4ac=0$ for the minimum velocity $u$:
+    The launch angle of the minimum $u$ trajectory can be found by replacing the minimum solution for $u$ in equation 2 for $u$. Recognizing that the required intial velocity $u$ is at its minimum when $b^2-4ac=0$:
     
     $$
     \begin{align}
-            \tan{\theta} &= \frac{-b}{2a} \notag \\
+            \therefore \tan{\theta} &= \frac{-b}{2a} \notag \\
             &= \frac{X}{\frac{g}{u^2}X^2} \notag \\
             &= \frac{u^2}{gX} \notag \\
-            &= \frac{(Y-h) + \sqrt{X^2 + (Y-h)^2}}{X}
+            &= \frac{Y + \sqrt{X^2 + Y^2}}{X}
     \end{align}
     $$
+    
+    Isolating for $\theta$:
+    
     $$
     \begin{equation}
-        \therefore \theta = \boxed{\tan^{-1}{\frac{(Y-h) + \sqrt{X^2 + (Y-h)^2}}{X}}}
+        \theta = \boxed{\tan^{-1}\left(\frac{Y + \sqrt{X^2 + Y^2}}{X}\right)}
     \end{equation}
     $$
     
@@ -256,15 +259,13 @@ with math_tab:
     
     $$
     \begin{align}
-        y &= h + x\tan{\theta} + \frac{g}{2u^2}\left(1+\tan^2{\theta}\right)x^2 \notag \\
-        &= h + x\left(\frac{Y - h + \sqrt{X^2 + (Y-h)^2}}{X}\right) + \frac{g}{2g\left(Y - h + \sqrt{X^2 + (Y-h)^2}\right)}\left(1+\frac{\left(Y - h + \sqrt{X^2 + (Y-h)^2}\right)^2}{X^2}\right)x^2 \notag \\
-        &= h + x\left(\frac{Y - h + \sqrt{X^2 + (Y-h)^2}}{X}\right) + \frac{1}{2\left(Y - h + \sqrt{X^2 + (Y-h)^2}\right)}\left(\frac{X^2 + (Y-h)^2 + 2(Y-h)\sqrt{X^2+(Y-h)^2} + X^2 + (Y-h)^2}{X^2}\right)x^2 \notag \\
-        &= h + x\left(\frac{Y - h + \sqrt{X^2 + (Y-h)^2}}{X}\right) + \frac{\sqrt{X^2 + (Y-h)^2}}{Y - h + \sqrt{X^2 + (Y-h)^2}}\left(\frac{Y - h + \sqrt{X^2+(Y-h)^2}}{X^2}\right)x^2 \notag \\
-        &= \boxed{h + x\left(\frac{Y - h + \sqrt{X^2 + (Y-h)^2}}{X}\right) + \left(\frac{\sqrt{X^2+(Y-h)^2}}{X^2}\right)x^2} \\
+        y &= x\tan{\theta} + \frac{g}{2u^2}\left(1+\tan^2{\theta}\right)x^2 \notag \\
+        &= x\left(\frac{Y+ \sqrt{X^2 + Y^2}}{X}\right) + \frac{g}{2g\left(Y+ \sqrt{X^2 + Y^2}\right)}\left(1+\frac{\left(Y+ \sqrt{X^2 + Y^2}\right)^2}{X^2}\right)x^2 \notag \\
+        &= x\left(\frac{Y+ \sqrt{X^2 + Y^2}}{X}\right) + \frac{1}{2\left(Y+ \sqrt{X^2 + Y^2}\right)}\left(\frac{X^2 + Y^2 + 2Y\sqrt{X^2+Y^2} + X^2 + Y^2}{X^2}\right)x^2 \notag \\
+        &= x\left(\frac{Y+ \sqrt{X^2 + Y^2}}{X}\right) + \frac{\sqrt{X^2 + Y^2}}{Y+ \sqrt{X^2 + Y^2}}\left(\frac{Y+ \sqrt{X^2+Y^2}}{X^2}\right)x^2 \notag \\
+        &= \boxed{x\left(\frac{Y+ \sqrt{X^2 + Y^2}}{X}\right) + \left(\frac{\sqrt{X^2+Y^2}}{X^2}\right)x^2} \\
     \end{align}
     $$
-    
-    
     """
 
 st.divider()
