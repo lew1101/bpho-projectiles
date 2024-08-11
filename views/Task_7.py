@@ -32,19 +32,28 @@ with code_tab, st.echo():
 
         ANGLES = (30, 45, 60, 70.5, 78, 85)
 
-        fig1 = go.Figure(layout=config.GO_BASE_LAYOUT).update_layout(
-            title_text="Range vs. Time",
-            xaxis_title="t (s)",
-            yaxis_title="r (m)",
-        )
+        fig1 = go.Figure(
+            layout=(config.GO_BASE_LAYOUT |
+                    dict(title_text="Range vs. Time", xaxis_title="t (s)", yaxis_title="r (m)")))
 
-        fig2 = go.Figure(layout=config.GO_BASE_LAYOUT).update_layout(
-            title_text="XY Graph",
-            xaxis_title="x (m)",
-            yaxis_title="y (m)",
-        )
+        fig2 = go.Figure(layout=dict(**config.GO_BASE_LAYOUT,
+                                     title_text="XY Graph",
+                                     xaxis_title="x (m)",
+                                     yaxis_title="y (m)"))
 
         t = np.linspace(0, 2.5, config.GRAPH_SAMPLES)
+
+        minima_x_list = []
+        minima_y_list = []
+
+        maxima_x_list = []
+        maxima_y_list = []
+
+        xy_minima_x_list = []
+        xy_minima_y_list = []
+
+        xy_maxima_x_list = []
+        xy_maxima_y_list = []
 
         for theta in ANGLES:
             rad = radians(theta)
@@ -67,58 +76,66 @@ with code_tab, st.echo():
                 go.Scatter(name=rf"{theta} deg", x=x, y=y, mode="lines", line_shape="spline"))
 
             if theta > 70.5:
-                minima_x = 3 * u / 2 / g * (sin(rad) - sqrt(sin(rad)**2 - 8 / 9))
-                minima_y = sqrt(u**2 * minima_x**2 - g * minima_x**3 * u * sin(rad) +
-                                g**2 * minima_x**4 / 4)
+                minima_x_list.append(minima_x := 3 * u / 2 / g *
+                                     (sin(rad) - sqrt(sin(rad)**2 - 8 / 9)))
+                minima_y_list.append(
+                    sqrt(u**2 * minima_x**2 - g * minima_x**3 * u * sin(rad) +
+                         g**2 * minima_x**4 / 4))
 
-                maxima_x = 3 * u / 2 / g * (sin(rad) + sqrt(sin(rad)**2 - 8 / 9))
-                maxima_y = sqrt(u**2 * maxima_x**2 - g * maxima_x**3 * u * sin(rad) +
-                                g**2 * maxima_x**4 / 4)
+                maxima_x_list.append(maxima_x := 3 * u / 2 / g *
+                                     (sin(rad) + sqrt(sin(rad)**2 - 8 / 9)))
+                maxima_y_list.append(
+                    sqrt(u**2 * maxima_x**2 - g * maxima_x**3 * u * sin(rad) +
+                         g**2 * maxima_x**4 / 4))
 
-                fig1.add_traces(data=[
-                    go.Scatter(name="Minima",
-                               x=[minima_x],
-                               y=[minima_y],
-                               textfont=dict(size=14),
-                               marker_symbol="x",
-                               marker=dict(size=8, color="deepskyblue"),
-                               mode='markers+text',
-                               showlegend=False),
-                    go.Scatter(name="Maxima",
-                               x=[maxima_x],
-                               y=[maxima_y],
-                               textfont=dict(size=14),
-                               marker_symbol="x",
-                               marker=dict(size=8, color="limegreen"),
-                               mode='markers+text',
-                               showlegend=False)
-                ])
+                xy_minima_x_list.append(ux * minima_x)
+                xy_minima_y_list.append(uy * minima_x - g / 2 * minima_x**2)
 
-                # plot corresponding point on XY graph
-                xy_minima_x = ux * minima_x
-                xy_minima_y = uy * minima_x - g / 2 * minima_x**2
+                xy_maxima_x_list.append(ux * maxima_x)
+                xy_maxima_y_list.append(uy * maxima_x - g / 2 * maxima_x**2)
 
-                xy_maxima_x = ux * maxima_x
-                xy_maxima_y = uy * maxima_x - g / 2 * maxima_x**2
+        fig1.add_traces(data=[
+            go.Scatter(
+                name="Minima",
+                x=minima_x_list,
+                y=minima_y_list,
+                textfont=dict(size=14),
+                marker_symbol="x",
+                marker=dict(size=8, color="deepskyblue"),
+                mode='markers+text',
+            ),
+            go.Scatter(
+                name="Maxima",
+                x=maxima_x_list,
+                y=maxima_y_list,
+                textfont=dict(size=14),
+                marker_symbol="x",
+                marker=dict(size=8, color="limegreen"),
+                mode='markers+text',
+            )
+        ])
 
-                fig2.add_traces(data=[
-                    go.Scatter(name="R vs. t Minima",
-                               x=[xy_minima_x],
-                               y=[xy_minima_y],
-                               textfont=dict(size=14),
-                               marker_symbol="x",
-                               marker=dict(size=8, color="deepskyblue"),
-                               mode='markers+text',
-                               showlegend=False),
-                    go.Scatter(name="R vs. t Maxima",
-                               x=[xy_maxima_x],
-                               y=[xy_maxima_y],
-                               textfont=dict(size=14),
-                               marker_symbol="x",
-                               marker=dict(size=8, color="limegreen"),
-                               mode='markers+text',
-                               showlegend=False)
-                ])
+        # plot corresponding points on XY graph
+        fig2.add_traces(data=[
+            go.Scatter(
+                name="R vs. t Minima",
+                x=xy_minima_x_list,
+                y=xy_minima_y_list,
+                textfont=dict(size=14),
+                marker_symbol="x",
+                marker=dict(size=8, color="deepskyblue"),
+                mode='markers+text',
+            ),
+            go.Scatter(
+                name="R vs. t Maxima",
+                x=xy_maxima_x_list,
+                y=xy_maxima_y_list,
+                textfont=dict(size=14),
+                marker_symbol="x",
+                marker=dict(size=8, color="limegreen"),
+                mode='markers+text',
+            )
+        ])
 
         # Point of equality (ie having one saddle point instead of a maxima and minima)
         rad = asin(2 * sqrt(2) / 3)
@@ -127,28 +144,30 @@ with code_tab, st.echo():
         saddle_y = sqrt(u**2 * saddle_x**2 - g * saddle_x**3 * u * sin(rad) +
                         g**2 * saddle_x**4 / 4)
         fig1.add_trace(
-            go.Scatter(name='Saddle Point',
-                       x=[saddle_x],
-                       y=[saddle_y],
-                       textfont=dict(size=14),
-                       marker_symbol="x",
-                       marker=dict(size=8, color="salmon"),
-                       mode='markers+text',
-                       showlegend=False))
+            go.Scatter(
+                name='Saddle Point',
+                x=[saddle_x],
+                y=[saddle_y],
+                textfont=dict(size=14),
+                marker_symbol="x",
+                marker=dict(size=8, color="salmon"),
+                mode='markers+text',
+            ))
 
         # plot corresponding point on XY graph
         xy_maxima_x = u * cos(rad) * saddle_x
         xy_maxima_y = u * sin(rad) * saddle_x - g / 2 * saddle_x**2
 
         fig2.add_trace(
-            go.Scatter(name='Saddle Point',
-                       x=[xy_maxima_x],
-                       y=[xy_maxima_y],
-                       textfont=dict(size=14),
-                       marker_symbol="x",
-                       marker=dict(size=8, color="salmon"),
-                       mode='markers+text',
-                       showlegend=False))
+            go.Scatter(
+                name='Saddle Point',
+                x=[xy_maxima_x],
+                y=[xy_maxima_y],
+                textfont=dict(size=14),
+                marker_symbol="x",
+                marker=dict(size=8, color="salmon"),
+                mode='markers+text',
+            ))
 
         return fig1, fig2
 
