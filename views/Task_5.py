@@ -255,22 +255,6 @@ with math_tab:
     $$
     
     It is trivial that trajectory of maximum range with an initial velocity $u$ corresponds with trajectory of minimum velocity to reach a point with $(X,Y)$. Therefore equation 5 would describes the trajectory of maximum range that goes through $(X, Y)$.
-    
-    ##### Extension of Projectile Trajectories
-    
-    Here, the problem to solve is to find the values of $x$ where the projectile lands on the ground so the entire trajectory can be tracked. Referring back to equation 1:
-    $$
-    \begin{equation*}
-        y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}
-    \end{equation*}
-    $$
-    
-    Using the same logic of equating $y = 0$ and to rearrange for $x$, we get:
-    $$
-    \begin{equation}
-        x = \theta + \sqrt{\theta^2 + \frac{4gh\left(1+\theta^2\right)}{2u^2}}\frac{1}{4u^2g\left(1+\theta^2\right)}\\
-    \end{equation}
-    $$
     """
 
 st.divider()
