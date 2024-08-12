@@ -178,6 +178,93 @@ with model_tab:
 
 with math_tab:
     r"""
+    ##### Finding the Total Distance Travelled by the Projectile
+    
+    Recall that the trajectory of projectile motion is given by the below equation:
+    
+    $$
+    \begin{equation}    
+        y = h + x\tan{\theta} + \frac{g}{2u^2}\left(1+\tan^2{\theta}\right)x^2
+    \end{equation}
+    $$
+    
+    Thus the distance travelled by the projectile is the arc length of the equation above. The arc length, $L$, is defined as the distance travelled along the path of a curve from one point to another, and it can be evaluated by decomposing the curve into infinitesimally small line segments, $\text{d}L$, and adding their lengths. Thus:
+    
+    $$
+    L = \int{\text{d}L}
+    $$
+
+    However, what is $\text{d}L$? To find what $\text{d}L$ is, it is helpful to think of it as a 2D vector. One important property of vectors is that it can be exposed as a sum of vectors, and thus a 2D vector can be decomposed into its $x$ and $y$ components. Using this line of thinking, it can be similarly be said that $\text{d}L$ can be decomposed into the infinismals $\text{d}x$ and $\text{d}y$.
+    """
+    st.write("")
+    with st.columns(3)[1]:
+        st.image("static/images/arclength.png")
+    st.write("")
+    r"""
+    
+    Thus, applying the Pythagorean theorem, we get that:
+    
+    $$
+    \begin{equation}
+    \text{d}L = \sqrt{(\text{d}x)^2 + (\text{d}y)^2}
+    \end{equation}
+    $$
+    
+    Multiplying the equation above with $\frac{\text{d}x}{\text{d}x}$:
+    
+    $$
+    \begin{align}
+    \text{d}L &= \sqrt{\frac{(\text{d}x)^2}{(\text{d}x)^2} + \frac{(\text{d}y)^2}{(\text{d}x)^2}} \cdot \text{d}x \notag \\
+        &= \sqrt{1 + \left(\frac{\text{d}y}{\text{d}x}\right)^2} \cdot \text{d}x
+    \end{align}
+    $$
+    
+    Thus the arc length of a 2D curve is given by the equation:
+    
+    $$
+    \begin{equation}
+        L = \int_0^R{\sqrt{1 + \left(\frac{\text{d}y}{\text{d}x}\right)^2} \ \text{d}x}
+    \end{equation}
+    $$
+    
+    The bounds imposed on the integral is because the $x$ value of he projectile is restricted from $0$ to the maximum range $R$ (see task 4 for how to find $R$). The derivative $\frac{\text{d}y}{\text{d}x}$ of the curve is given by:
+    
+    $$
+    \begin{equation}
+        \frac{\text{d}y}{\text{d}x} = \tan\theta - \frac{gx}{u^2}\sec^2\theta
+    \end{equation}
+    $$
+    
+    Thus:
+    
+    $$
+    \begin{equation}
+        L = \int_0^R{\sqrt{1 + \left(\tan\theta - \frac{gx}{u^2}\sec^2\theta\right)^2}\ \text{d}x}
+    \end{equation}
+    $$
+    
+    Consider the subsitution $z = \tan\theta - \frac{gx}{u^2}\sec^2\theta$. Therefore $\text{d}z = - \frac{g}{u^2}\sec^2\theta$
+    
+    $$
+    \begin{equation}
+        L = \frac{u^2\cos^2\theta}{g} \int_{\tan\theta}^{\tan\theta-\frac{gR}{u^2}\sec^2\theta}{\sqrt{1 + z^2}\ \text{d}z}
+    \end{equation}
+    $$
+    
+    Note the standard integral (its derivation is omitted for brevity): 
+    
+    $$
+    \int\sqrt{1+x^2}\ \text{d}z = \frac{1}{2}\ln\left| \sqrt{1+z^2} + x \right| + \frac{1}{2}z\sqrt{1+z^2} + c
+    $$
+    
+    Therefore:
+    $$
+    \begin{equation}
+        L = \frac{u^2\cos^2\theta}{g}\left[\frac{1}{2}\ln\left| \sqrt{1+z^2} + x \right| + \frac{1}{2}z\sqrt{1+z^2}\right]_{\tan\theta}^{\tan\theta-\frac{gR}{u^2}}
+    \end{equation}
+    $$
+    
+    
     """
 
 st.divider()
