@@ -159,40 +159,7 @@ with model_tab:
 
 with math_tab:
     r"""
-    #### Calculated Values
-        
-        ##### _Original Trajectory_ 
-
-        **Range**: {range:.3f} m
-        
-        **Flight Time**: {total_t:.3f} s
-
-        """
-        st.write("")
-        f"""
-        ##### _Trajectory Maximizing Range_    
-    
-        **Maximum Range**: {range_max:.3f} m
-        
-        **Launch Angle**: {degrees(rad_max):.3f} deg
-        
-        **Flight Time**: {max_range_t:.3f} s
-        """
-
-        st.plotly_chart(fig, **config.PLOTLY_CONFIG)
-    except Exception as e:
-        st.exception(e)
-
-# =====================
-# DERIVATION
-# =====================
-
-with math_tab:
-    r"""
-    This model is built upon Task 2$\\$
-    Please do refer to Task 2 for queries on generation of inputted trajectory
-    
-    The method shown follows a geometric approach but there are various methods to achieve the same derivation
+    The method shown below follows a more elegant geometric approach, but there exists other methods to find the same solution.
     
     ##### Finding the Trajectory of Maximum Range with Same Launch Speed and Height
     
@@ -200,33 +167,26 @@ with math_tab:
     
     $$
     \begin{equation}
-        \bold{v} = \bold{u}+\bold{g}t
+        v = u+gt
     \end{equation}
     $$
     
-    Therefore, a vector triangle can be formed!
+    where $u$ is the initial velocity, $v$ is the final velocity, $g$ is gravity, and $t$ is the time at which the projectile is at $y=0$. The vectors $u$ and $v$ form a vector triangle, as shown in the diagram below. 
     """
-    
-    st.columns(9)[4].image('./static/images/Vector Diagram.png')
-    #Don't understand why doesn't work, if u have time, solve it: caption='Credit: BPhO Website pdf https://www.bpho.org.uk/bpho/computational-challenge/BPhO_CompPhys2024_Projectilesa.pdf'
-    
+    st.write("")
+    with st.columns(3)[1]:
+        st.image("./static/images/force_vector.png", width=250)
+
+    st.write("")
     r"""
-    We'll first label the angle between $\bold{u}$ and the horizontal line as $\theta\\$ 
-    And label the angle between $\bold{v}$ and $\bold{u}$ as $\phi$: $\\$
-    The area of such triangle can be computed in 2 ways:
+    We'll first label the angle between $u$ and the horizontal line as $\theta$, and label the angle between $v$ and $u$ as $\phi$. The area of the triangle formed by two vectors is given as half of their cross product:
     
     $$
-    \begin{equation}
-        A = \frac{1}{2}uv\sin{\phi}
-    \end{equation}
-    $$
-    
-    As well as:
-    
-    $$
-    \begin{equation}
-        A = \frac{1}{2}gt \times u\cos{\theta}
-    \end{equation}
+    \begin{align}
+        A &= \frac{1}{2}\vert u \times v \vert \notag \\
+        &= \frac{1}{2}uv\sin{\phi}  \\
+        &= \frac{1}{2}gt \times u\cos{\theta}
+    \end{align}
     $$
     
     Hence:
@@ -246,23 +206,21 @@ with math_tab:
     By conservation of energy:
     
     $$
-    \begin{align}
-        mgh + \frac{1}{2}mu^2 &= \frac{1}{2}mv^2\notag\\
-        \Rightarrow v &= \sqrt{2gh+u^2}
-    \end{align}
+    \begin{gather}
+        mgh + \frac{1}{2}mu^2 = \frac{1}{2}mv^2 \notag \\
+        \Rightarrow v = \sqrt{2gh+u^2}
+    \end{gather}
     $$
     
     Substituting $ut\cos{\theta}$ for $R$ and $v$ for $\sqrt{2gh+u^2}$ in equation 3, we get:
     $$
-    \begin{align}
-        \frac{u}{g}\sin{\phi}\sqrt{2gh+u^2} &= R\notag\\
-        \Rightarrow R &= \frac{u^2}{g}\sqrt{1+\frac{2gh}{u^2}}\sin{\phi}
-    \end{align}
+    \begin{gather}
+        \frac{u}{g}\sin{\phi}\sqrt{2gh+u^2} = R \notag\\
+        \Rightarrow R = \frac{u^2}{g}\sqrt{1+\frac{2gh}{u^2}}\sin{\phi}
+    \end{gather}
     $$
     
-    As the largest R value corresponds to $\sin{\phi} = 1$, $\phi = 90\\$
-    Therefore the velocity triangle is right angled at max range$\\$
-    Hence we can calculate time of flight using pythagoras
+    The maximum value for R is when $\sin{\phi}$ is at its maximum, which is when $\sin\phi = 1$. Therefore $\phi=90^\circ$  at max range. Hence, using Pythagoras:
     
     $$
     \begin{align}
@@ -272,7 +230,7 @@ with math_tab:
     \end{align}
     $$
     
-    Subbing the new expressions for $R$ and $t$ back into equation 4 gives:
+    Substituting the new expressions for $R$ and $t$ back into equation 4 gives:
     
     $$
     \begin{align}
@@ -282,7 +240,7 @@ with math_tab:
     \end{align}
     $$
     
-    Remember that $sin^2\theta = 1 - cos^2\theta$:
+    Recall $\sin^2\theta = 1 - \cos^2\theta$:
     
     $$
     \begin{align}
