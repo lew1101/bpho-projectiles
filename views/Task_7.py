@@ -22,12 +22,12 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
-PLOT_DEFAULTS = {"g": 9.81, "u": 10.0}
+PLOT_DEFAULTS = {"g": 9.81, "u": 10.0, "h": 2.0}
 
 with code_tab, st.echo():
 
     @cache_data_default(**PLOT_DEFAULTS)
-    def generate_task_7(*, u: float, g: float):
+    def generate_task_7(*, u: float, g: float, h: float):
         from math import sqrt, sin, cos, asin, radians
 
         ANGLES = (30, 45, 60, 70.5, 78, 85)
@@ -40,8 +40,6 @@ with code_tab, st.echo():
                                      title_text="XY Graph",
                                      xaxis_title="x (m)",
                                      yaxis_title="y (m)"))
-
-        t = np.linspace(0, 2.5, config.GRAPH_SAMPLES)
 
         minima_x_list = []
         minima_y_list = []
@@ -57,20 +55,24 @@ with code_tab, st.echo():
 
         for theta in ANGLES:
             rad = radians(theta)
+
+            ux = u * cos(rad)
+            uy = u * sin(rad)
+
+            total_t = (uy + sqrt(uy**2 + 2 * g * h)) / g
+
+            t = np.linspace(0, total_t, config.GRAPH_SAMPLES)
             range = np.sqrt(u**2 * t**2 - g * t**3 * u * sin(rad) + g**2 * t**4 / 4)
 
             fig1.add_trace(
                 go.Scatter(name=rf"{theta} deg", x=t, y=range, mode="lines", line_shape="spline"))
 
             # Using what we did in task 2 for figure
-            
-            ux = u * cos(rad)
-            uy = u * sin(rad)
 
-            total_x = ux * 2.5
+            total_x = ux * total_t
 
             x = np.linspace(0, total_x, config.GRAPH_SAMPLES)
-            y = (uy / ux) * x - (g / 2 / ux**2) * x**2
+            y = h + (uy / ux) * x - (g / 2 / ux**2) * x**2
 
             fig2.add_trace(
                 go.Scatter(name=rf"{theta} deg", x=x, y=y, mode="lines", line_shape="spline"))
@@ -89,10 +91,10 @@ with code_tab, st.echo():
                          g**2 * maxima_x**4 / 4))
 
                 xy_minima_x_list.append(ux * minima_x)
-                xy_minima_y_list.append(uy * minima_x - g / 2 * minima_x**2)
+                xy_minima_y_list.append(uy * minima_x - g / 2 * minima_x**2 + h)
 
                 xy_maxima_x_list.append(ux * maxima_x)
-                xy_maxima_y_list.append(uy * maxima_x - g / 2 * maxima_x**2)
+                xy_maxima_y_list.append(uy * maxima_x - g / 2 * maxima_x**2 + h)
 
         fig1.add_traces(data=[
             go.Scatter(
@@ -156,7 +158,7 @@ with code_tab, st.echo():
 
         # plot corresponding point on XY graph
         xy_maxima_x = u * cos(rad) * saddle_x
-        xy_maxima_y = u * sin(rad) * saddle_x - g / 2 * saddle_x**2
+        xy_maxima_y = u * sin(rad) * saddle_x - g / 2 * saddle_x**2 + h
 
         fig2.add_trace(
             go.Scatter(
@@ -184,6 +186,7 @@ with model_tab:
 
         with col1:
             vel = st.number_input("Initial Speed (m⋅s⁻¹)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            height = st.number_input("Height (m)", value=PLOT_DEFAULTS["h"])
 
         with col2:
             gravity = st.number_input("Gravity (m⋅s⁻²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
@@ -191,7 +194,7 @@ with model_tab:
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig1, fig2 = generate_task_7(u=vel, g=gravity)
+        fig1, fig2 = generate_task_7(u=vel, g=gravity, h=height)
 
         st.plotly_chart(fig1, **config.PLOTLY_CONFIG)
         st.plotly_chart(fig2, **config.PLOTLY_CONFIG)
