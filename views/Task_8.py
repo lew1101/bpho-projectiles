@@ -16,7 +16,7 @@ r"""
 **Description:** Use a numerical method assuming constant acceleration motion between small, discrete timesteps (e.g. the "Verlet" method) to compute a projectile trajectory which includes the possibility of a _bounce_. Define the _coefficient of restitution_ $C$ to be the vertical speed of separation divided by the vertical speed of approach. Assume a constant horizontal velocity, and stop the simulation after $N$ bounces. 
 """
 
-model_tab, code_tab, = st.tabs(["Model", "Source Code"])
+model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
 
 # =====================
 # CODE
@@ -187,5 +187,36 @@ with model_tab:
         st.plotly_chart(fig, **config.PLOTLY_CONFIG)
     except Exception as e:
         st.exception(e)
+
+with math_tab:
+    r"""
+    ##### The Verlet Method
+    
+    The Verlet method is a technique used to find numerical solutions of integrals. Using the Verle method, the path of the projectile can be approximated by assuming the accerlation is constant between small discrete time steps, $\Delta t$. Smaller values of $\Delta t$ leads to more accuracy. The $x$, $y$ coordinates and velocity at each time step is updated with the following numerical method:
+    
+    $$
+    \begin{equation}
+        \begin{aligned}
+            x_{n+1} &= x_n + v_x t_n + \frac{1}{2}a_x t_n^2 \\
+            y_{n+1} &= y_n + v_y t_n + \frac{1}{2}a_y t_n^2
+        \end{aligned} 
+    \end{equation}
+    $$
+    
+    $$
+    \begin{equation}
+        \begin{aligned}
+            v_{x_{n+1}} &= v_{x_n} + a_x t_n \\
+            v_{y_{n+1}} &= v_{y_n} + a_y t_n
+        \end{aligned} 
+    \end{equation}
+    $$
+    
+    $$    
+    \begin{equation}
+        t_{n+1} = t_n + \Delta t
+    \end{equation}
+    $$
+    """
 
 st.divider()

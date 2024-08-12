@@ -16,7 +16,7 @@ r"""
 **Description:** Write a new projectile model which compares a drag-free model (use what you have already done in previous challenges) with a model incorporating the effect of air resistance. Use a _Verlet_ method to solve the air-resistance case with a $v^2$ drag dependence. It is possible to solve motion under drag which varies with the square of velocity analytically in 1D (see [here](http://www.eclecticon.info/index_htm_files/Mechanics%20-%20Modelling%20air%20resistance.pdf)) but in 2D projectile motion drag always opposes the velocity vector, which makes the maths much harder. So write a numerical recipe instead.
 """
 
-model_tab, code_tab, = st.tabs(["Model", "Source Code"])
+model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
 
 # =====================
 # CODE
@@ -349,30 +349,22 @@ with model_tab:
 
 with math_tab:
     r"""
-    ##### Model Including Air Resistance
+    ##### Modelling Drag
     
     As air resistance always oppose the direction of velocity, components of air resistance can be modelled as:
+    
     $$
-    \begin{align}
-        ma_x &= -\frac{v_x}{v}mkv^2\\
-        ma_y &= -mg--\frac{v_y}{v}mkv^2
-    \end{align}
+    \begin{equation}
+        \begin{aligned}
+            ma_x &= -\frac{v_x}{v}mkv^2\\
+            ma_y &= -mg -\frac{v_y}{v}mkv^2
+        \end{aligned}
+    \end{equation}
     $$
     
-    k is calculated using the formulae $k = \frac{\frac{1}{2}C_D\rhoA}{m}
+    The air resistance factor, $k$ is calculated using the formula $k = \frac{C_D\rho A}{2m}$, where $C_D$ is the drag coefficient, $\rho$ is air density (in $\text{kg} \cdot \text{m}^{-3}$), $A$ is the cross sectional area (in $\text{m}^2$), and $m$ is mass (in $\text{kg}$)
     
-    Therefore, by using the verlet method as in task 8, we can model the path of the projectile by assuming the accerlation is constant between tiny time steps, with smaller time steps lead to more accuracy.
-    The x, y coordinates and velocity at each time step is updated with the following numerical method:
-    $$
-    \begin{align}
-        x_(n+1) &= x_n + v_x\deltat + \frac{1}{2}a_x\deltat^2\\
-        y_(n+1) &= y_n + v_y\deltat + \frac{1}{2}a_y\deltat^2\\
-        v_x^(n+1) & = v_x^n + a_x\deltat\\
-        v_y^(n+1) & = v_y^n + a_y\deltat\\
-        v &= \sqrt{v_x^2+v_y^2}
-    \end{align}
-    $$
-    
+    Then, using the Verlet method, we can model the approximate path of the projectile by assuming the accerlation is constant between small discrete time steps, $\Delta t$. 
     """
 
 st.divider()
