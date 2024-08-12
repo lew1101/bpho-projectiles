@@ -159,6 +159,139 @@ with model_tab:
 
 with math_tab:
     r"""
+    #### Calculated Values
+        
+        ##### _Original Trajectory_ 
+
+        **Range**: {range:.3f} m
+        
+        **Flight Time**: {total_t:.3f} s
+
+        """
+        st.write("")
+        f"""
+        ##### _Trajectory Maximizing Range_    
+    
+        **Maximum Range**: {range_max:.3f} m
+        
+        **Launch Angle**: {degrees(rad_max):.3f} deg
+        
+        **Flight Time**: {max_range_t:.3f} s
+        """
+
+        st.plotly_chart(fig, **config.PLOTLY_CONFIG)
+    except Exception as e:
+        st.exception(e)
+
+# =====================
+# DERIVATION
+# =====================
+
+with math_tab:
+    r"""
+    This model is built upon Task 2$\\$
+    Please do refer to Task 2 for queries on generation of inputted trajectory
+    
+    The method shown follows a geometric approach but there are various methods to achieve the same derivation
+    
+    ##### Finding the Trajectory of Maximum Range with Same Launch Speed and Height
+    
+    The velocity at maximum range R is given by the vector equation:
+    
+    $$
+    \begin{equation}
+        \bold{v} = \bold{u}+\bold{g}t
+    \end{equation}
+    $$
+    
+    Therefore, a vector triangle can be formed!
+    """
+    
+    st.columns(9)[4].image('./static/images/Vector Diagram.png')
+    #Don't understand why doesn't work, if u have time, solve it: caption='Credit: BPhO Website pdf https://www.bpho.org.uk/bpho/computational-challenge/BPhO_CompPhys2024_Projectilesa.pdf'
+    
+    r"""
+    We'll first label the angle between $\bold{u}$ and the horizontal line as $\theta\\$ 
+    And label the angle between $\bold{v}$ and $\bold{u}$ as $\phi$: $\\$
+    The area of such triangle can be computed in 2 ways:
+    
+    $$
+    \begin{equation}
+        A = \frac{1}{2}uv\sin{\phi}
+    \end{equation}
+    $$
+    
+    As well as:
+    
+    $$
+    \begin{equation}
+        A = \frac{1}{2}gt \times u\cos{\theta}
+    \end{equation}
+    $$
+    
+    Hence:
+    $$
+    \begin{equation}
+        uv\sin{\phi} = gut\cos{\theta}
+    \end{equation}
+    $$
+    
+    Since there is no air resistance:
+    $$
+    \begin{equation}
+        R = ut\cos{\theta}
+    \end{equation}
+    $$
+    
+    By conservation of energy:
+    
+    $$
+    \begin{align}
+        mgh + \frac{1}{2}mu^2 &= \frac{1}{2}mv^2\notag\\
+        \Rightarrow v &= \sqrt{2gh+u^2}
+    \end{align}
+    $$
+    
+    Substituting $ut\cos{\theta}$ for $R$ and $v$ for $\sqrt{2gh+u^2}$ in equation 3, we get:
+    $$
+    \begin{align}
+        \frac{u}{g}\sin{\phi}\sqrt{2gh+u^2} &= R\notag\\
+        \Rightarrow R &= \frac{u^2}{g}\sqrt{1+\frac{2gh}{u^2}}\sin{\phi}
+    \end{align}
+    $$
+    
+    As the largest R value corresponds to $\sin{\phi} = 1$, $\phi = 90\\$
+    Therefore the velocity triangle is right angled at max range$\\$
+    Hence we can calculate time of flight using pythagoras
+    
+    $$
+    \begin{align}
+        g^2t^2 &= u^2+v^2\notag\\
+        \Rightarrow g^2t^2 &= u^2+2gh+u^2\notag\\
+        \Rightarrow t &= \frac{u}{g}\sqrt{2+\frac{2gh}{u^2}} 
+    \end{align}
+    $$
+    
+    Subbing the new expressions for $R$ and $t$ back into equation 4 gives:
+    
+    $$
+    \begin{align}
+        R &= ut\cos{\theta}\notag\\
+        \Rightarrow \frac{u^2}{g}\sqrt{1+\frac{2gh}{u^2}} &= u\frac{u}{g}\sqrt{2+\frac{2gh}{u^2}}\cos{\theta}\notag\\
+        \Rightarrow \cos{\theta} &= \frac{\sqrt{1+\frac{2gh}{u^2}}}{\sqrt{2+\frac{2gh}{u^2}}}
+    \end{align}
+    $$
+    
+    Remember that $sin^2\theta = 1 - cos^2\theta$:
+    
+    $$
+    \begin{align}
+        \Rightarrow \sin^2\theta &= 1 - \frac{1+\frac{2gh}{u^2}}{2+\frac{2gh}{u^2}}\notag\\
+        \Rightarrow \sin^2\theta &= \frac{2+\frac{2gh}{u^2}-1-\frac{2gh}{u^2}}{2+\frac{2gh}{u^2}}\notag\\
+        \Rightarrow \sin^2\theta &= \frac{1}{2+\frac{2gh}{u^2}}\notag\\
+        \Rightarrow \theta & = \arcsin{\left(\frac{1}{2+\frac{2gh}{u^2}}\right)}
+    \end{align}
+    $$
     """
 
 st.divider()
