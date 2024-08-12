@@ -247,7 +247,7 @@ with math_tab:
     
     $$
     \begin{equation}
-        L = \frac{u^2\cos^2\theta}{g} \int_{\tan\theta}^{\tan\theta-\frac{gR}{u^2}\sec^2\theta}{\sqrt{1 + z^2}\ \text{d}z}
+        L = -\frac{u^2\cos^2\theta}{g} \int_{\tan\theta}^{\tan\theta-\frac{gR}{u^2}\sec^2\theta}{\sqrt{1 + z^2}\ \text{d}z}
     \end{equation}
     $$
     
@@ -260,11 +260,9 @@ with math_tab:
     Therefore:
     $$
     \begin{equation}
-        L = \frac{u^2\cos^2\theta}{g}\left[\frac{1}{2}\ln\left| \sqrt{1+z^2} + x \right| + \frac{1}{2}z\sqrt{1+z^2}\right]_{\tan\theta}^{\tan\theta-\frac{gR}{u^2}}
+        L = \frac{u^2\cos^2\theta}{g}\left[\frac{1}{2}\ln\left| \sqrt{1+z^2} + x \right| + \frac{1}{2}z\sqrt{1+z^2}\right]^{\tan\theta}_{\tan\theta-\frac{gR}{u^2}}
     \end{equation}
     $$
-    
-    
     """
 
 st.divider()
