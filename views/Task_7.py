@@ -22,12 +22,12 @@ model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"]
 # CODE
 # =====================
 
-PLOT_DEFAULTS = {"g": 9.81, "u": 10.0}
+PLOT_DEFAULTS = {"g": 9.81, "u": 10.0, "t":2.5}
 
 with code_tab, st.echo():
 
     @cache_data_default(**PLOT_DEFAULTS)
-    def generate_task_7(*, u: float, g: float):
+    def generate_task_7(*, u: float, g: float, time:float):
         from math import sqrt, sin, cos, asin, radians
 
         ANGLES = (30, 45, 60, 70.5, 78, 85)
@@ -41,7 +41,7 @@ with code_tab, st.echo():
                                      xaxis_title="x (m)",
                                      yaxis_title="y (m)"))
 
-        t = np.linspace(0, 2.5, config.GRAPH_SAMPLES)
+        t = np.linspace(0, time, config.GRAPH_SAMPLES)
 
         minima_x_list = []
         minima_y_list = []
@@ -62,11 +62,10 @@ with code_tab, st.echo():
             fig1.add_trace(
                 go.Scatter(name=rf"{theta} deg", x=t, y=range, mode="lines", line_shape="spline"))
 
-            # Using what we did in task 2 for figure
-            
             ux = u * cos(rad)
             uy = u * sin(rad)
 
+            # Using what we did in task 2 for figure
             total_x = ux * 2.5
 
             x = np.linspace(0, total_x, config.GRAPH_SAMPLES)
@@ -184,6 +183,7 @@ with model_tab:
 
         with col1:
             vel = st.number_input("Initial Speed (m⋅s⁻¹)", min_value=0.0, value=PLOT_DEFAULTS["u"])
+            time = st.number_input("Total Time Of Trajectory (s)", min_value=2.0, value = PLOT_DEFAULTS["t"])
 
         with col2:
             gravity = st.number_input("Gravity (m⋅s⁻²)", min_value=0.0, value=PLOT_DEFAULTS["g"])
@@ -191,7 +191,7 @@ with model_tab:
         submitted = st.form_submit_button("Generate")
 
     try:
-        fig1, fig2 = generate_task_7(u=vel, g=gravity)
+        fig1, fig2 = generate_task_7(u=vel, g=gravity, time=time)
 
         st.plotly_chart(fig1, **config.PLOTLY_CONFIG)
         st.plotly_chart(fig2, **config.PLOTLY_CONFIG)
