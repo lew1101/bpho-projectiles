@@ -197,6 +197,15 @@ with model_tab:
 
 with math_tab:
     r"""
+    This is an updated model based on Task 3. $\\$
+    Please do refer there for derivations on finding trajectories of high ball, low ball and minimum launch speed through a fixed point (X,Y)
+    
+    There are 3 major updates in this task, such being:
+    
+    1. Calculate bounding parabola $\\$
+    2. Calculate trajectory of projectile with maxmimum range $\\$
+    3. Extend projectile trajectories such that it is tracked until the projectile lands
+    
     ##### Bounding Parabola Calculation
     
     The bounding parabola is defined as the region where possible (X,Y) coordinates could be reached given $u$,$h$,$g$ inputs, or in other words, the limit of the possible set of trajectories given a value of u.
@@ -223,14 +232,14 @@ with math_tab:
     \begin{align*}
         4u^4x^2 - 4gx^2(2u^2y+gx^2) &\geq 0\\
         \frac{u^4}{g} &\leq 2u^2y + gx^2\\
-        y &\leq frac{u^2}{2g} - frac{g}{2u^2}x^2
+        y &\leq \frac{u^2}{2g} - \frac{g}{2u^2}x^2
     \end{align*}
     $$
     
     Therefore, the bounding parabola is where:
     $$
     \begin{equation}
-        y &= frac{u^2}{2g} - frac{g}{2u^2}x^2
+        y = \frac{u^2}{2g} - \frac{g}{2u^2}x^2
     \end{equation}
     $$
     
@@ -239,14 +248,14 @@ with math_tab:
     Recall from task 4 that the maxmimum range is given by
     $$
     \begin{equation}
-        R = frac{u^2}{g}\sqrt{1+frac{2gh}{u^2}}
+        R = \frac{u^2}{g}\sqrt{1+\frac{2gh}{u^2}}
     \end{equation}
     $$
     
     And from task 3 that minimum u parabola (with Y adjusted depending on u) is given by
     $$
     \begin{equation}
-        y = x\left(\frac{Y + \sqrt{X^2 + (Y)^2}}{X}\right) + \left(\frac{\sqrt{X^2+(Y)^2}}{X^2}\right)x^2}
+        y = x\left(\frac{Y + \sqrt{X^2 + Y^2}}{X}\right) + x^2\left(\frac{\sqrt{X^2+Y^2}}{X^2}\right)
     \end{equation}
     $$
     
@@ -256,17 +265,20 @@ with math_tab:
     
     Here, the problem to solve is to find the values of x where the projectile lands on the ground so the entire trajectory can be tracked.
     Referring back to task 2 for the equation of trajectory (ie equation 1 here):
-    \[y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}\]
+    $$
+    \begin{equation*}
+        y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}
+    \end{equation*}
+    $$
     
     Using the same logic of equating y = 0 and to rearrange for x, we get:
     $$
     \begin{equation}
-        x = \theta + \sqrt{\theta^2 + frac{4gh(1+\theta^2)}{2u^2}frac{1}{4u^2g(1+\theta^2)}
+        x = \theta + \sqrt{\theta^2 + \frac{4gh\left(1+\theta^2\right)}{2u^2}}\frac{1}{4u^2g\left(1+\theta^2\right)}\\
     \end{equation}
     $$
     
     And we have solved it!
-    
     """
 
 st.divider()
