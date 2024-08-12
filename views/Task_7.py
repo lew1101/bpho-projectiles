@@ -298,7 +298,7 @@ with math_tab:
     \end{align}
     $$
     
-    This is quite neat as it links to maximum horizontal range, R_{\text{max}},  of a projectile fired from the ground ($\theta=45^\circ$) is:
+    This is quite neat as it links to maximum horizontal range, $R_{\text{max}}$,  of a projectile fired from the ground ($\theta=45^\circ$) is:
     
     $$
     R_{\text{max}} = \frac{u}{g}
