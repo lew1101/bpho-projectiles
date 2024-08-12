@@ -254,7 +254,7 @@ with math_tab:
     \end{equation}
     $$
     
-    It is trivial that trajectory of maximum range with an initial velocity $u$ corresponds with trajectory of minimum velocity to reach a point with $(X,Y)$. Therefore equation 5 would describes the trajectory of maximum range that goes through $(X, Y)$.
+    It is trivial that trajectory of maximum range with an initial velocity $u$ corresponds with trajectory of minimum velocity to reach a point with $(X,Y)$. Therefore equation 6 would describes the trajectory of maximum range that goes through $(X, Y)$.
     """
 
 st.divider()

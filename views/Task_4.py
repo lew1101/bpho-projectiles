@@ -243,12 +243,17 @@ with math_tab:
     Recall $\sin^2\theta = 1 - \cos^2\theta$:
     
     $$
-    \begin{align}
-        \Rightarrow \sin^2\theta &= 1 - \frac{1+\frac{2gh}{u^2}}{2+\frac{2gh}{u^2}}\notag\\
-        \Rightarrow \sin^2\theta &= \frac{2+\frac{2gh}{u^2}-1-\frac{2gh}{u^2}}{2+\frac{2gh}{u^2}}\notag\\
-        \Rightarrow \sin^2\theta &= \frac{1}{2+\frac{2gh}{u^2}}\notag\\
-        \Rightarrow \theta & = \arcsin{\left(\frac{1}{2+\frac{2gh}{u^2}}\right)}
-    \end{align}
+    \begin{align*}
+        \Rightarrow \sin^2\theta &= 1 - \frac{1+\frac{2gh}{u^2}}{2+\frac{2gh}{u^2}} \\
+        \Rightarrow \sin^2\theta &= \frac{2+\frac{2gh}{u^2}-1-\frac{2gh}{u^2}}{2+\frac{2gh}{u^2}} \\
+        \Rightarrow \sin^2\theta &= \frac{1}{2+\frac{2gh}{u^2}} \\
+    \end{align*}
+    $$
+    
+    $$
+    \begin{equation}
+        \Rightarrow \theta = \arcsin{\left(\frac{1}{2+\frac{2gh}{u^2}}\right)}
+    \end{equation}
     $$
     """
 
