@@ -62,12 +62,12 @@ with code_tab, st.echo():
             fig1.add_trace(
                 go.Scatter(name=rf"{theta} deg", x=t, y=range, mode="lines", line_shape="spline"))
 
+            # Using what we did in task 2 for figure
+            
             ux = u * cos(rad)
             uy = u * sin(rad)
 
-            # Using what we did in task 2 for figure
-            total_t = uy * 2 / g
-            total_x = ux * total_t
+            total_x = ux * 2.5
 
             x = np.linspace(0, total_x, config.GRAPH_SAMPLES)
             y = (uy / ux) * x - (g / 2 / ux**2) * x**2
