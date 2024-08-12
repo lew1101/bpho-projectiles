@@ -197,46 +197,39 @@ with model_tab:
 
 with math_tab:
     r"""
-    This is an updated model based on Task 3. $\\$
-    Please do refer there for derivations on finding trajectories of high ball, low ball and minimum launch speed through a fixed point (X,Y)
-    
-    There are 3 major updates in this task, such being:
-    
-    1. Calculate bounding parabola $\\$
-    2. Calculate trajectory of projectile with maxmimum range $\\$
-    3. Extend projectile trajectories such that it is tracked until the projectile lands
+    This is an updated model based on Task 3. Please refer there for derivations on finding trajectories of high ball, low ball and minimum launch speed through a fixed point (X,Y).
     
     ##### Bounding Parabola Calculation
     
-    The bounding parabola is defined as the region where possible (X,Y) coordinates could be reached given $u$,$h$,$g$ inputs, or in other words, the limit of the possible set of trajectories given a value of u.
-    
-    Recall that 
+    The bounding parabola is defined as parabola where the region bounded underneath it denotes the possible solution sets of $(X, Y)$ coordinates that could be reached given $u$, $h$, $g$ inputs. Recall that the trajectory of the projectile is given by the equation:
+     
     $$
     \begin{equation}
-        y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}
+        y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}\cdot x^2
     \end{equation}
     $$
     
-    We can first simplify the equations by elimiating the h variable as shifting the y value by h at the end is equivalent. Hence:
+    We can first simplify the equations by elimiating the h variable as shifting the y value by h at the end is equivalent:
+    
     $$
-    \begin{align*}
-        y &= x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}\\
-        \Rightarrow 2u^2y &= 2u^2x\tan{\theta} - gx^2 - gx^2\tan^2{\theta}\\
+    \begin{align}
+        y &= x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}\cdot x^2 \notag \\
+        \Rightarrow 2u^2y &= 2u^2x\tan{\theta} - gx^2 - gx^2\tan^2{\theta} \notag \\
         \Rightarrow 0 &= gx^2\tan^2{\theta} - 2u^2x\tan{\theta} + gx^2 + 2u^2y 
-    \end{align*}
+    \end{align}
     $$
     
-    As solutions only exist when discriminant is non-negative, hence:
+    As solutions only exist when discriminant is non-negative:
     
     $$
-    \begin{align*}
-        4u^4x^2 - 4gx^2(2u^2y+gx^2) &\geq 0\\
-        \frac{u^4}{g} &\leq 2u^2y + gx^2\\
-        y &\leq \frac{u^2}{2g} - \frac{g}{2u^2}x^2
-    \end{align*}
+    \begin{gather}
+        4u^4x^2 - 4gx^2(2u^2y+gx^2) \geq 0 \notag \\
+        \Rightarrow \frac{u^4}{g} \leq 2u^2y + gx^2 \notag \\
+        \Rightarrow y \leq \frac{u^2}{2g} - \frac{g}{2u^2}x^2
+    \end{gather}
     $$
     
-    Therefore, the bounding parabola is where:
+    Therefore, the bounding parabola is given by the following equation:
     $$
     \begin{equation}
         y = \frac{u^2}{2g} - \frac{g}{2u^2}x^2
@@ -246,39 +239,38 @@ with math_tab:
     ##### Calculation for Projectile of Maxmimum Range
     
     Recall from task 4 that the maxmimum range is given by
+    
     $$
     \begin{equation}
         R = \frac{u^2}{g}\sqrt{1+\frac{2gh}{u^2}}
     \end{equation}
     $$
     
-    And from task 3 that minimum u parabola (with Y adjusted depending on u) is given by
+    Also, the minimum $u$ parabola (see task 3) is given by:
+    
     $$
     \begin{equation}
         y = x\left(\frac{Y + \sqrt{X^2 + Y^2}}{X}\right) + x^2\left(\frac{\sqrt{X^2+Y^2}}{X^2}\right)
     \end{equation}
     $$
     
-    It is trivial that trajectory of maximum range with an initial velocity $u$ corresponds with trajectory of minimum velocity to reach a point with (X,Y) = (max_x, 0). Therefore the above equation describes the trajectory of maximum range.
+    It is trivial that trajectory of maximum range with an initial velocity $u$ corresponds with trajectory of minimum velocity to reach a point with $(X,Y)$. Therefore equation 5 would describes the trajectory of maximum range that goes through $(X, Y)$.
     
     ##### Extension of Projectile Trajectories
     
-    Here, the problem to solve is to find the values of x where the projectile lands on the ground so the entire trajectory can be tracked.
-    Referring back to task 2 for the equation of trajectory (ie equation 1 here):
+    Here, the problem to solve is to find the values of $x$ where the projectile lands on the ground so the entire trajectory can be tracked. Referring back to equation 1:
     $$
     \begin{equation*}
         y = h + x\tan{\theta} + \frac{g}{2u^2}\sec^2{\theta}
     \end{equation*}
     $$
     
-    Using the same logic of equating y = 0 and to rearrange for x, we get:
+    Using the same logic of equating $y = 0$ and to rearrange for $x$, we get:
     $$
     \begin{equation}
         x = \theta + \sqrt{\theta^2 + \frac{4gh\left(1+\theta^2\right)}{2u^2}}\frac{1}{4u^2g\left(1+\theta^2\right)}\\
     \end{equation}
     $$
-    
-    And we have solved it!
     """
 
 st.divider()
