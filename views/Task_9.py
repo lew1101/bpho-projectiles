@@ -343,5 +343,12 @@ with model_tab:
 
     except Exception as e:
         st.exception(e)
+# =====================
+# DERIVATION
+# =====================
+
+with math_tab:
+    r"""
+    """
 
 st.divider()
