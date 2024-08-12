@@ -13,7 +13,7 @@ config.apply_custom_styles()
 r"""
 ## Task 7 - Range of Projectile vs. Time
 
-**Description:** A curious fact is that the range $R$ of a projectile from the launch point, plotted against time $t$ can, for launch angles greater than about $70.5^\circ$, actually pass through a _local maximum and then a minimum_, before increasing with increasing gradient. Use the derivations to recreate the graphs of $R$ vs $t$. Work out the times, $x$, $y$, and $r$ values for these maxima and minima and plot these via a suitable marker.
+**Description:** A curious fact is that the range $r$ of a projectile from the launch point, plotted against time $t$ can, for launch angles greater than about $70.5^\circ$, actually pass through a _local maximum and then a minimum_, before increasing with increasing gradient. Use the derivations to recreate the graphs of $r$ vs $t$. Work out the times, $x$, $y$, and $r$ values for these maxima and minima and plot these via a suitable marker.
 """
 
 model_tab, math_tab, code_tab, = st.tabs(["Model", "Derivations", "Source Code"])
@@ -120,7 +120,7 @@ with code_tab, st.echo():
         # plot corresponding points on XY graph
         fig2.add_traces(data=[
             go.Scatter(
-                name="R vs. t Minima",
+                name="r vs. t Minima",
                 x=xy_minima_x_list,
                 y=xy_minima_y_list,
                 textfont=dict(size=14),
@@ -129,7 +129,7 @@ with code_tab, st.echo():
                 mode='markers+text',
             ),
             go.Scatter(
-                name="R vs. t Maxima",
+                name="r vs. t Maxima",
                 x=xy_maxima_x_list,
                 y=xy_maxima_y_list,
                 textfont=dict(size=14),
