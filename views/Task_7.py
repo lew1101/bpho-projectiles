@@ -208,6 +208,81 @@ with model_tab:
 
 with math_tab:
     r"""
+    ##### Calculation of Projectile Range
+    
+    Before we begin, I just want to clarify the definition of the 'range of projectile from starting point' as it confused me when I started. $\\$
+    This does $\bold{NOT}$ refer to the maximum horizontal distance (x value when it lands), but the $\bold{shortest distance}$ between the projectile in one time-frame and the origin.
+    For slightly better clarity, this type of range is denoted with a small caps $r$.
+    
+    A diagram often clarfies so I had taken (another) screenshot to illustrate the problem visually from the BPhO pdf handout"""
+    
+    st.image('./static/images/Range Explanation.png')
+    
+    r"""
+    Recall that 
+    $$
+    \begin{align*}
+        x &= ut\cos{\theta}\\  
+        y &= ut\sin{\theta} - frac{1}{2}gt^2
+    \end(align*)
+    $$
+
+    From Pythagoras, we can also get that 
+    $$
+    \begin{equation*}
+        r^2 = x^2 + y^2
+    \end{equation*}
+    $$
+    
+    Therefore:
+    $$
+    \begin{align}
+        r^2 &= u^2t^2\cos^2{\theta} + left\(ut\sin{\theta} - frac{1}{2}gt^2right\)^2\notag\\
+        r^2 &= u^2t^2\cos^2{\theta} + u^2t^2\sin^2{\theta} - gt^2ut\sin{\theta} + frac{1}{4}g^2t^4\notag\\
+        r^2 &= u^2t^2 - gt^3u\sin{\theta} + frac{1}{4}g^2t^4\notag\\
+        r &= \sqrt{u^2t^2 - gt^3u\sin{\theta} + frac{1}{4}g^2t^4}
+    \end{align}
+    $$
+    
+    ##### Calculation of Minima and Maxima (For r vs t)
+    
+    We'll conduct the following derivation ignoring the 'obvious' minimum at 0.
+    
+    Since $\frac{dr^2}{dt} = 2r\frac{dr}{dt}$, $\frac{dr}{dt} = 0$ if $\frac{dr^2}{dt} = 0$ as $r>0$
+    
+    Taking second derivate of equation 1 would yield:
+    $$
+    \begin{align*}
+        \frac{dr^2}{dt} &= 2u^2t - 3gt^2u\sin{\theta} + g^2t^3\\
+        \frac{dr^2}{dt} = 0 \Rightarrow 0 &= 2u^2t - 3gt^2u\sin{\theta} + g^2t^3\\
+        0 &= t\left(2u^2 - 3gtu\sin{\theta} + g^2t^2\right)
+    \end(align*)
+    $$
+     
+    Since $t>0$:
+    $$
+    \begin{align}
+        0 &= 2u^2 - 3gtu\sin{\theta} + g^2t^2\notag\\
+        0 &= t^2 - \frac{3u}{g}\sin{\theta}t + \frac{2u^2}{g^2}\notag\\
+        0 &= \left(t-\frac{3u}{2g}\sin{\theta}\right)^2 - \frac{9u^2}{4g^2}\sin^2{\theta} + \frac{2u^2}{g^2}\notag\\
+        t &= \frac{3u}{2g}\sin{\theta} \pm \sqrt{\frac{9u^2}{4g^2}\sin^2{\theta} - \frac{2u^2}{g^2}}\notag\\
+        t &= \frac{3u}{2g}\left(\sin{\theta} \pm \sqrt{\sin^2{\theta} - \frac{8}{9}})
+    \end{align}
+    $$
+    
+    Real roots (ie when there's a maxima or minima), therefore occur when $\sin^2{\theta} > \frac{8}{9} or $\sin{\theta} > \frac{2\sqrt{2}}{3}$
+    
+    Therefore, as $0\degree \leq \theta \leq 90\degree, \theta \gtrapprox 70.5$
+    
+    At the critical angle, the saddle point occurs at:
+    $$
+    \begin{align}
+        t &= \frac{3u}{2g}\sin{\theta}\notag\\
+        t &= \frac{3u}{2g}\frac{2\sqrt{2}}{3}\notag\\
+        t &= \frac{u}{g}\sqrt{2}
+    \end{align}
+    
+    This is quite nice as it links to maximum horizontal range of a projectile fired from the ground is $R_max = \frac{u}{g}$!
     """
 
 st.divider()
