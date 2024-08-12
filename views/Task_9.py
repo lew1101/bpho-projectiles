@@ -349,6 +349,30 @@ with model_tab:
 
 with math_tab:
     r"""
+    ##### Model Including Air Resistance
+    
+    As air resistance always oppose the direction of velocity, components of air resistance can be modelled as:
+    $$
+    \begin{align}
+        ma_x &= -\frac{v_x}{v}mkv^2\\
+        ma_y &= -mg--\frac{v_y}{v}mkv^2
+    \end{align}
+    $$
+    
+    k is calculated using the formulae $k = \frac{\frac{1}{2}C_D\rhoA}{m}
+    
+    Therefore, by using the verlet method as in task 8, we can model the path of the projectile by assuming the accerlation is constant between tiny time steps, with smaller time steps lead to more accuracy.
+    The x, y coordinates and velocity at each time step is updated with the following numerical method:
+    $$
+    \begin{align}
+        x_(n+1) &= x_n + v_x\deltat + \frac{1}{2}a_x\deltat^2\\
+        y_(n+1) &= y_n + v_y\deltat + \frac{1}{2}a_y\deltat^2\\
+        v_x^(n+1) & = v_x^n + a_x\deltat\\
+        v_y^(n+1) & = v_y^n + a_y\deltat\\
+        v &= \sqrt{v_x^2+v_y^2}
+    \end{align}
+    $$
+    
     """
 
 st.divider()
