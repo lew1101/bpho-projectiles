@@ -103,7 +103,7 @@ with math_tab:
     r"""
     For simplification, projectiles are typically modelled as point masses falling under gravity. In other words, the internal motion and rotation is ignored and only the centre of mass of the projectile is considered. Air resistance is also often ignored, enabling analysis to proceed without a computer. Thus, the problem can be reduced to a 2-dimensional kinematics problem with constant acceleration. 
     
-    The dynamics of a projectile can be analyzed by decomposing its motion into the x and y axes. Given the initial speed of the projectile $u$ and the launch angle $\theta$, the initial speed in the x direction $u_x$ and the initial speed in the y direction $u_y$ are:
+    The dynamics of a projectile can be analyzed by decomposing its motion into the $x$ and $y$ axes. Given the initial speed of the projectile $u$ and the launch angle $\theta$, the initial speed in the $x$ direction $u_x$ and the initial speed in the $y$ direction $u_y$ are:
     
     $$
     \begin{gather*}
@@ -112,7 +112,7 @@ with math_tab:
     \end{gather*}
     $$
     
-    There is no force acting on the projectile horizonally. Thus, the acceleration of the projectile in the x direction is 0, meaning that the velocity of the projectile in the x direction is constant for the entire duration of the flight. The $x$ position of the projectile at time $t$ is equal to the integral of the velocity in the x direction:
+    There is no force acting on the projectile horizonally. Thus, the acceleration of the projectile in the $x$ direction is 0, meaning that the velocity of the projectile in the $x$ direction is constant for the entire duration of the flight. The $x$ position of the projectile at time $t$ is equal to the integral of the velocity in the $x$ direction:
     
     $$
     \begin{align}
@@ -121,7 +121,7 @@ with math_tab:
     \end{align}
     $$
     
-    In the y direction, the projectile is constantly accelerated downwards by gravity $g = -9.81\,\mathrm{m\cdot s^{-2}}$. Thus the y velocity $v_y$ of the projectile is constantly changing, and $v_y$ at time $t$ is equal to the integral the accleration in the y direction:
+    In the $y$ direction, the projectile is constantly accelerated downwards by gravity $g = -9.81\,\mathrm{m\cdot s^{-2}}$. Thus the $y$ velocity $v_y$ of the projectile is constantly changing, and $v_y$ at time $t$ is equal to the integral the accleration in the $y$ direction:
         
     $$
     \begin{align}
@@ -130,7 +130,7 @@ with math_tab:
     \end{align}
     $$
     
-    where $u_y$ is the initial velocity of the projectile in the y direction. The y position of the projectile at time $t$ is equal to the integral of the velocity in the y direction $v_y$:
+    where $u_y$ is the initial velocity of the projectile in the $y$ direction. The $y$ position of the projectile at time $t$ is equal to the integral of the velocity in the $y$ direction $v_y$:
     
     $$
     \begin{align}
