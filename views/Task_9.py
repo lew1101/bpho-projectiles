@@ -364,7 +364,7 @@ with math_tab:
     
     The air resistance factor, $k$, is calculated using the formula $k = \frac{C_D\rho A}{2m}$, where $C_D$ is the drag coefficient, $\rho$ is air density (in $\text{kg} \cdot \text{m}^{-3}$), $A$ is the cross sectional area (in $\text{m}^2$), and $m$ is mass (in $\text{kg}$)
     
-    Then, using the Verlet method, we can model the approximate path of the projectile by assuming the accerlation is constant between small discrete time steps, $\Delta t$. 
+    Then, using the Verlet method (see task 8), we can model the approximate path of the projectile by assuming the accerlation is constant between small discrete time steps, $\Delta t$. 
     """
 
 st.divider()

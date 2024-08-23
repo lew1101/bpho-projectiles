@@ -192,7 +192,7 @@ with math_tab:
     r"""
     ##### The Verlet Method
     
-    The Verlet method is a technique used to find numerical solutions of integrals. Using the Verle method, the path of the projectile can be approximated by assuming the accerlation is constant between small discrete time steps, $\Delta t$. Smaller values of $\Delta t$ leads to more accuracy. The $x$, $y$ coordinates and velocity at each time step is updated with the following numerical method:
+    The Verlet method is a technique used to find numerical solutions of integrals. Using the Verlet method, the path of the projectile can be approximated by assuming the accerlation is constant between small discrete time steps, $\Delta t$. Smaller values of $\Delta t$ leads to more accuracy. The $x$, $y$ coordinates and velocity at each time step is updated with the following numerical method:
     
     $$
     \begin{equation}
